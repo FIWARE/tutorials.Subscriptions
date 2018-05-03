@@ -133,14 +133,18 @@ This command will also import seed data from the previous [Stock Management exam
 
 #  Using Subscriptions
 
+To follow the tutorial correctly please ensure you have the follow pages available on tabs in your browser before you enter any cUrl commands.
 
-#### Event Montior
+#### Event Monitor
 
 The event monitor can be found at: `http://localhost:3000/app/monitor`
 
-`http://localhost:3000/app/store/urn:ngsi-ld:Store:001`
-`http://localhost:3000/app/store/urn:ngsi-ld:Store:002`
+#### Stores
 
+The stores can be found at:
+
+* Store 1 -  `http://localhost:3000/app/store/urn:ngsi-ld:Store:001`
+* Store 2 -  `http://localhost:3000/app/store/urn:ngsi-ld:Store:002`
 
 
 ## Setting up a simple Subscription 
@@ -213,6 +217,8 @@ This business logic emits socket io events to any registered parties (such as th
 The cash till has been set to reload if is receives an event - however in this case the prices have not changed yet, so the product prices
 remain the same - for example a bottle of beer remains at 0.99€
 
+#### `http://localhost:3000/app/store/urn:ngsi-ld:Store:002`
+
 ![](https://fiware.github.io/tutorials.Subscriptions/img/beer-99.png)
 
 Let's reduce the price of a bottle of beer to 0.89€. This can't be done programmatically yet, so it has to be done with a curl command
@@ -236,5 +242,6 @@ Whenever an attribute of the **Product** entity is updated, the Orion Context Br
 This business logic  on the Stock Management Front End again emits socket io events to any registered parties (such as the cash till)
 and since the price has changed the till now displays  a bottle of beer remains at 0.89€
 
-![](https://fiware.github.io/tutorials.Subscriptions/img/beer-89.png)   
+#### `http://localhost:3000/app/store/urn:ngsi-ld:Store:002`
 
+![](https://fiware.github.io/tutorials.Subscriptions/img/beer-89.png)   
