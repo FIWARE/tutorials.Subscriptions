@@ -14,13 +14,31 @@ cUrl commands are also available as [Postman documentation](http://fiware.github
 
 # Contents
 
+- [Subscribing to Changes of State](#subscribing-to-changes-of-state)
+  * [Entities within a stock management system](#entities-within-a-stock-management-system)
+  * [Stock Management Front-End](#stock-management-front-end)
+- [Architecture](#architecture)
+- [Prerequisites](#prerequisites)
+  * [Docker](#docker)
+  * [Cygwin](#cygwin)
+- [Start Up](#start-up)
+- [Using Subscriptions](#using-subscriptions)
+  * [Setting up a simple Subscription](#setting-up-a-simple-subscription)
+  * [Reducing Payload with `attrs` and `attrsFormat`](#reducing-payload-with--attrs-and-attrsformat)
+  * [Reducing Scope with `expression`](#reducing-scope-with--expression)
+- [Subscription CRUD Actions](#subscription-crud-actions)
+    + [Creating a Subscription](#creating-a-subscription)
+    + [Delete a Subscription](#delete-a-subscription)
+    + [Update an Existing Subscription](#update-an-existing-subscription)
+    + [List all Subscriptions](#list-all-subscriptions)
+    + [Read the detail of a Subscription](#read-the-detail-of-a-subscription)
+
 
 # Subscribing to Changes of State
 
 > "Don't call us, we'll call you"
 >
 > — Dorothy Kilgallen (The Voice Of Broadway)
-
 
 Within the FIWARE platform, an entity represents the state of a physical or conceptural object which exists in the real world. 
 Every smart solution needs to know the current state of these object at any given moment in time. 
@@ -166,12 +184,8 @@ curl --request POST \
   --data '{
   "description": "Notify me of all product price changes",
   "subject": {
-    "entities": [
-      {
-        "idPattern": ".*", "type": "Product"
-      }
-    ],
-     "condition": {
+    "entities": [{"idPattern": ".*", "type": "Product"}],
+    "condition": { 
       "attrs": [ "price" ]
     }
   },
@@ -239,9 +253,237 @@ Whenever an attribute of the **Product** entity is updated, the Orion Context Br
 
 ![](https://fiware.github.io/tutorials.Subscriptions/img/price-change.png)
 
-This business logic  on the Stock Management Front End again emits socket io events to any registered parties (such as the cash till)
-and since the price has changed the till now displays  a bottle of beer remains at 0.89€
+The business logic of the Stock Management Front End again emits socket io events to any registered parties (such as the cash till)
+and since the price has changed the till now displays a bottle of beer at 0.89€
 
 #### `http://localhost:3000/app/store/urn:ngsi-ld:Store:002`
 
 ![](https://fiware.github.io/tutorials.Subscriptions/img/beer-89.png)   
+
+
+##  Reducing Payload with  `attrs` and `attrsFormat`
+
+With the previous example the full verbose data from each affected **Product** entity was sent with the POST notification.
+This is not very efficient. 
+
+The amount of data to passed can be reduced by adding an `attrs` attribute which will specify a list of attributes to be 
+included in notification messages - other attributes are ignored
+
+>**Tip** an `exceptAttrs` attribute also exists to return all attributes except for those on the exclude list.
+> `attrs` and `exceptAttrs` cannot be used simualtaneously in the same subscription
+
+
+The `attrsFormat` attribute specifies how the entities are represented in notifications. A verbose response is returned by 
+default `keyValues` and `values` work in the same manner as a `v2/entities` GET request.
+
+##  Reducing Scope with  `expression` 
+
+Lets create two more subscriptions which will only fire under specific conditions - and will only return key-value pairs for
+the entity affected. Imagine that the warehouse of each store now wants to be informed whenever the amount of product on the 
+shelf falls below a threshold level. 
+
+The subscription is tested whenever the `shelfCount` of an **InventoryItem** is updated, however the addition of an `expression` 
+attribute will mean that the subscription will only fire if the expression returns valid data - for example
+`"q": "shelfCount<10;refStore==urn:ngsi-ld:Store:001` tests that the `shelfCount` is below ten and that the item is in store 001.
+This means that we can set up out business logic so that other stores wont be bothered by notifications.
+
+
+
+#### Request:
+
+The following command is a low stock notification for Store 001
+
+```console
+curl --request POST \
+  --url 'http://{{orion}}/v2/subscriptions' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "description": "Notify me of low stock in Store 001",
+  "subject": {
+    "entities": [{"idPattern": ".*","type": "InventoryItem"}],
+    "condition": {
+      "attrs": ["shelfCount"],
+      "expression": {"q": "shelfCount<10;refStore==urn:ngsi-ld:Store:001"}
+    }
+  },
+  "notification": {
+    "http": {
+      "url": "http://context-provider:3000/subscription/low-stock-store001"
+    },
+    "attrsFormat" : "keyValues"
+  }
+}'
+```
+
+
+#### Request:
+
+The following command is a low stock notification for Store 002
+
+```console
+curl --request POST \
+  --url 'http://{{orion}}/v2/subscriptions' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "description": "Notify me of low stock in Store 002",
+  "subject": {
+    "entities": [{"idPattern": ".*", "type": "InventoryItem"}],
+    "condition": {
+      "attrs": ["shelfCount"],
+      "expression": {"q": "shelfCount<10;refStore==urn:ngsi-ld:Store:002"}
+    }
+  },
+  "notification": {
+    "http": {
+      "url": "http://context-provider:3000/subscription/low-stock-store002"
+    },
+    "attrsFormat" : "keyValues"
+  }
+}'
+```
+
+The two requests are very similiar. It is merely the `url` and the `expresssion` attributes which differ. The first cUrl command
+will only fire if the affected **InventoryItem** entity has a reference to Store 001 and the second one if the affected
+**InventoryItem** entity has a reference to Store 001. Obviously the URLs must be different so that the business logic of our
+application is able to react diffferently to each request.
+
+> **Tip**: You can set stock levels directly by making a PUT request as shown:
+>
+>```console
+>curl --request PUT \
+>  --url 'http://{{orion}}/v2/entities/urn:ngsi-ld:InventoryItem:005/attrs/shelfCount/value' \
+>  --header 'Content-Type: text/plain' \
+>  --data 5
+>```
+
+If you now buy items from Store 002, once an **InventoryItem** dips below ten items the following occurs
+
+#### `http://localhost:3000/app/monitor`
+![](https://fiware.github.io/tutorials.Subscriptions/img/low-stock-monitor.png)
+
+As you can see the key value pairs of the affected  **InventoryItem**  have been passed to the Stock Managment Front End.
+
+If you look at the store itself:
+
+#### `http://localhost:3000/app/store/urn:ngsi-ld:Store:002`
+![](https://fiware.github.io/tutorials.Subscriptions/img/low-stock-warehouse.png)
+
+An alert has been raised by the business logic within the application.
+
+
+# Subscription CRUD Actions
+
+The **CRUD** operations for subscriptions map on to the expected HTTP verbs under the `/v2/subscriptions/` endpoint.
+
+* **Create** - HTTP POST
+* **Read** - HTTP GET
+* **Update** - HTTP PATCH
+* **Delete** - HTTP DELETE
+
+The `<subscription-id>` is auto generated when the subscription is created and returned in Header
+of the POST response to be used by the other operation thereafter.
+
+
+### Creating a Subscription 
+
+This example creates a new subscription. The subscription will fire an asynchronous notification to a URL whenever the context is changed and the conditions of the subscription - Any Changes to Product prices - are met.
+
+New subscriptions can be added by making a POST request to the /v2/subscriptions/ endpoint.
+
+The subject section of the request states that the subscription will be fired whenever the price attribute of any Product entity is altered.
+
+The notification section of the body states that a POST request containing all affected entities will be sent to the http://context-provider:3000/subscription/price-change endpoint.
+
+
+#### Request:
+
+```console
+curl --request POST \
+  --url 'http://{{orion}}/v2/subscriptions/' \
+  --header 'content-type: application/json' \
+  --data '{
+  "description": "Notify me of all product price changes",
+  "subject": {
+    "entities": [
+      {
+        "idPattern": ".*", "type": "Product"
+      }
+    ],
+     "condition": {
+      "attrs": [ "price" ]
+    }
+  },
+  "notification": {
+    "http": {
+      "url": "http://context-provider:3000/subscription/price-change"
+    }
+  }
+}'
+```
+
+
+### Delete a Subscription
+
+This example deletes the Subscription with `id=5ae079b86e4f353c5163c939` from the context.
+
+Subscriptions can be deleted by making a DELETE request to the `/v2/subscriptions/<subscription-id>` endpoint.
+
+
+#### Request:
+```console
+curl --request DELETE \
+  --url 'http://{{host}}:1026/v2/subscriptions/5ae079b86e4f353c5163c939'
+```
+
+### Update an Existing Subscription
+
+This example amends an existing subscription with the id `5ae07c7e6e4f353c5163c93e` and updates the notification URL.
+
+Subscriptions can be updated making a PATCH request to the `/v2/subscriptions/<subscription-id>` endpoint.
+
+
+#### Request:
+
+```console
+curl --request PATCH \
+  --url 'http://{{host}}:1026/v2/subscriptions/5ae07c7e6e4f353c5163c93e' \
+  --header 'content-type: application/json' \
+  --data '{
+    "status": "active",
+    "notification": {
+        "http": {
+            "url": "http://context-provider:3000/notify/price-change"
+        }
+    }
+}'
+```
+
+### List all Subscriptions
+
+This example lists all subscriptions by making a GET request to the /v2/subscriptions/ endpoint.
+
+The notification section of each subscription will also include the last time the conditions of the subscription were met, and whether associated the POST action was successful.
+
+#### Request:
+
+```console
+curl --request GET \
+  --url 'http://{{orion}}/v2/subscriptions/'
+```
+
+###  Read the detail of a Subscription
+
+This example obtains the full details of a subscription with a given id.
+
+The response includes additional details in the notification section showing the last time the conditions of the subscription were met, and whether associated the POST action was successful.
+
+Subscription details can be read by making a GET request to the `/v2/subscriptions/<subscription-id>` endpoint.
+
+
+#### Request:
+
+```console
+curl --request GET \
+  --url 'http://{{orion}}/v2/subscriptions/5aead3361587e1918de90aba'
+```
+
