@@ -179,7 +179,7 @@ A new subscription can be added by making a POST request to the `/v2/subscriptio
 
 ```console
 curl --request POST \
-  --url 'http://{{orion}}/v2/subscriptions/' \
+  --url 'http://localhost:1026/v2/subscriptions/' \
   --header 'content-type: application/json' \
   --data '{
   "description": "Notify me of all product price changes",
@@ -241,7 +241,7 @@ as shown:
 
 ```console
 curl --request PUT \
-  --url 'http://{{orion}}/v2/entities/urn:ngsi-ld:Product:001/attrs/price/value' \
+  --url 'http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001/attrs/price/value' \
   --header 'Content-Type: text/plain' \
   --data 89
 ```
@@ -295,7 +295,7 @@ The following command is a low stock notification for Store 001
 
 ```console
 curl --request POST \
-  --url 'http://{{orion}}/v2/subscriptions' \
+  --url 'http://localhost:1026/v2/subscriptions' \
   --header 'Content-Type: application/json' \
   --data '{
   "description": "Notify me of low stock in Store 001",
@@ -322,7 +322,7 @@ The following command is a low stock notification for Store 002
 
 ```console
 curl --request POST \
-  --url 'http://{{orion}}/v2/subscriptions' \
+  --url 'http://localhost:1026/v2/subscriptions' \
   --header 'Content-Type: application/json' \
   --data '{
   "description": "Notify me of low stock in Store 002",
@@ -351,7 +351,7 @@ application is able to react diffferently to each request.
 >
 >```console
 >curl --request PUT \
->  --url 'http://{{orion}}/v2/entities/urn:ngsi-ld:InventoryItem:005/attrs/shelfCount/value' \
+>  --url 'http://localhost:1026/v2/entities/urn:ngsi-ld:InventoryItem:005/attrs/shelfCount/value' \
 >  --header 'Content-Type: text/plain' \
 >  --data 5
 >```
@@ -399,7 +399,7 @@ The notification section of the body states that a POST request containing all a
 
 ```console
 curl --request POST \
-  --url 'http://{{orion}}/v2/subscriptions/' \
+  --url 'http://localhost:1026/v2/subscriptions/' \
   --header 'content-type: application/json' \
   --data '{
   "description": "Notify me of all product price changes",
@@ -432,7 +432,7 @@ Subscriptions can be deleted by making a DELETE request to the `/v2/subscription
 #### Request:
 ```console
 curl --request DELETE \
-  --url 'http://{{host}}:1026/v2/subscriptions/5ae079b86e4f353c5163c939'
+  --url 'http://localhost:1026/v2/subscriptions/5ae079b86e4f353c5163c939'
 ```
 
 ### Update an Existing Subscription
@@ -446,7 +446,7 @@ Subscriptions can be updated making a PATCH request to the `/v2/subscriptions/<s
 
 ```console
 curl --request PATCH \
-  --url 'http://{{host}}:1026/v2/subscriptions/5ae07c7e6e4f353c5163c93e' \
+  --url 'http://localhost:1026/v2/subscriptions/5ae07c7e6e4f353c5163c93e' \
   --header 'content-type: application/json' \
   --data '{
     "status": "active",
@@ -468,7 +468,7 @@ The notification section of each subscription will also include the last time th
 
 ```console
 curl --request GET \
-  --url 'http://{{orion}}/v2/subscriptions/'
+  --url 'http://localhost:1026/v2/subscriptions/'
 ```
 
 ###  Read the detail of a Subscription
@@ -484,6 +484,6 @@ Subscription details can be read by making a GET request to the `/v2/subscriptio
 
 ```console
 curl --request GET \
-  --url 'http://{{orion}}/v2/subscriptions/5aead3361587e1918de90aba'
+  --url 'http://localhost:1026/v2/subscriptions/5aead3361587e1918de90aba'
 ```
 
