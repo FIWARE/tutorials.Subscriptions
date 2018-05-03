@@ -285,7 +285,7 @@ shelf falls below a threshold level.
 The subscription is tested whenever the `shelfCount` of an **InventoryItem** is updated, however the addition of an `expression` 
 attribute will mean that the subscription will only fire if the expression returns valid data - for example
 `"q": "shelfCount<10;refStore==urn:ngsi-ld:Store:001` tests that the `shelfCount` is below ten and that the item is in store 001.
-This means that we can set up out business logic so that other stores wont be bothered by notifications.
+This means that we can set up our business logic so that other stores wont be bothered by notifications.
 
 
 
@@ -344,7 +344,7 @@ curl --request POST \
 
 The two requests are very similiar. It is merely the `url` and the `expresssion` attributes which differ. The first cUrl command
 will only fire if the affected **InventoryItem** entity has a reference to Store 001 and the second one if the affected
-**InventoryItem** entity has a reference to Store 001. Obviously the URLs must be different so that the business logic of our
+**InventoryItem** entity has a reference to Store 002. Obviously the URLs must be different so that the business logic of our
 application is able to react diffferently to each request.
 
 > **Tip**: You can set stock levels directly by making a PUT request as shown:
