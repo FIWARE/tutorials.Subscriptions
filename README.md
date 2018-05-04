@@ -12,6 +12,8 @@ cUrl commands are also available as [Postman documentation](http://fiware.github
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/fb5f564d9bc65fc3690e)
 
+* このチュートリアルは[日本語](README.ja.md)でもご覧いただけます。
+
 # Contents
 
 - [Subscribing to Changes of State](#subscribing-to-changes-of-state)
@@ -129,7 +131,7 @@ will need to follow the instructions found  [here](https://docs.docker.com/compo
 
 ## Cygwin 
 
-We will start up our services using a simple bash script. Windows users should download [cygwin](www.cygwin.com) to provide a
+We will start up our services using a simple bash script. Windows users should download [cygwin](http://www.cygwin.com/) to provide a
 command line functionality similar to a Linux distribution on Windows. 
 
 # Start Up
@@ -270,7 +272,7 @@ The amount of data to passed can be reduced by adding an `attrs` attribute which
 included in notification messages - other attributes are ignored
 
 >**Tip** an `exceptAttrs` attribute also exists to return all attributes except for those on the exclude list.
-> `attrs` and `exceptAttrs` cannot be used simualtaneously in the same subscription
+> `attrs` and `exceptAttrs` cannot be used simultaneously in the same subscription
 
 
 The `attrsFormat` attribute specifies how the entities are represented in notifications. A verbose response is returned by 
@@ -342,7 +344,7 @@ curl --request POST \
 }'
 ```
 
-The two requests are very similiar. It is merely the `url` and the `expresssion` attributes which differ. The first cUrl command
+The two requests are very similiar. It is merely the `url` and the `expression` attributes which differ. The first cUrl command
 will only fire if the affected **InventoryItem** entity has a reference to Store 001 and the second one if the affected
 **InventoryItem** entity has a reference to Store 002. Obviously the URLs must be different so that the business logic of our
 application is able to react diffferently to each request.
