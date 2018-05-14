@@ -1,5 +1,7 @@
 ![FIWARE Banner](https://fiware.github.io/tutorials.Subscriptions/img/fiware.png)
 
+[![NGSI v2](https://img.shields.io/badge/NGSI-v2-blue.svg)](http://fiware.github.io/context.Orion/api/v2/stable/)
+
 This tutorial teaches FIWARE users about how to create and manage context data subscriptions.
 
 The tutorial builds on the entities and [Stock Management Frontend](https://github.com/Fiware/tutorials.Subscriptions/tree/master/proxy)

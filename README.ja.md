@@ -1,5 +1,7 @@
 ![FIWARE Banner](https://fiware.github.io/tutorials.Subscriptions/img/fiware.png)
 
+[![NGSI v2](https://img.shields.io/badge/NGSI-v2-blue.svg)](http://fiware.github.io/context.Orion/api/v2/stable/)
+
 このチュートリアルでは、FIWAREユーザにコンテキスト・データのサブスクリプションを作成および管理する方法について説明しています。
 
 このチュートリアルでは、ユーザが [NGSI](https://swagger.lab.fiware.org/?url=https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json) サブスクリプション/通知のパラダイムを理解でき、NGSI サブスクリプションを独自のコードで使用する方法を説明するため、前の[例](https://github.com/Fiware/tutorials.Accessing-Context/)で作成したエンティティと[在庫管理のフロントエンド・アプリケーション](https://github.com/Fiware/tutorials.Subscriptions/tree/master/proxy)をベースにしています。
