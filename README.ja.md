@@ -51,7 +51,7 @@ FIWARE プラットフォームでは、エンティティは、実世界に存�
 
 エンティティ間の関係は、次のように定義されます :
 
-![](https://fiware.github.io/tutorials.Subscriptions/img/entities.svg)
+![](https://fiware.github.io/tutorials.Subscriptions/img/entities.png)
 
 青色で強調表示された項目は、外部コンテキスト・プロバイダによって提供されます。
 

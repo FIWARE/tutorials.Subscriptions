@@ -62,10 +62,7 @@ within the system. This reduction in network traffic will improve the overall re
 
 The relationship between our entities is defined as shown:
 
-![](https://fiware.github.io/tutorials.Subscriptions/img/entities.svg)
-
-The items highlighted in blue are provided by the external context providers. 
-
+![](https://fiware.github.io/tutorials.Subscriptions/img/entities.png)
 
 ## Stock Management Front-End
 
