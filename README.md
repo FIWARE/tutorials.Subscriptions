@@ -88,8 +88,8 @@ Store002 can be found at: `http://localhost:3000/app/store/urn:ngsi-ld:Store:002
 This application will make use of only one FIWARE component - the [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/). Usage of the Orion Context Broker is sufficient for an application to qualify as *“Powered by FIWARE”*.
 
 Currently, the Orion Context Broker relies on open source [MongoDB](https://www.mongodb.com/) technology to keep
-persistence of the context data it holds. To request context data from external sources, a simple Context Provider NGSI 
-proxy has also been added. To visualise and interact with the Context we will add a simple Express application 
+persistence of the context data it holds. To request context data from external sources, a simple **Context Provider NGSI 
+proxy** has also been added. To visualise and interact with the Context we will add a simple Express **Front End** application 
 
 
 Therefore, the architecture will consist of four elements:
