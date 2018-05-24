@@ -5,7 +5,7 @@
 This tutorial teaches FIWARE users about how to create and manage context data subscriptions.
 The tutorial builds on the entities and [Stock Management Frontend](https://github.com/Fiware/tutorials.Subscriptions/tree/master/proxy)
 application created in the previous [example](https://github.com/Fiware/tutorials.Accessing-Context/) to enable users to understand
-the [NGSI](https://swagger.lab.fiware.org/?url=https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json)
+the [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
 Subscribe/Notify paradigm and how to use NGSI subscriptions within their own code.
 
 The tutorial refers to Stock Management actions made within the browser combined with  [cUrl](https://ec.haxx.se/) commands. The
@@ -85,7 +85,7 @@ Store002 can be found at: `http://localhost:3000/app/store/urn:ngsi-ld:Store:002
 
 # Architecture
 
-This application will make use of only one FIWARE component - the [Orion Context Broker](https://catalogue.fiware.org/enablers/publishsubscribe-context-broker-orion-context-broker). Usage of the Orion Context Broker is sufficient for an application to qualify as *“Powered by FIWARE”*.
+This application will make use of only one FIWARE component - the [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/). Usage of the Orion Context Broker is sufficient for an application to qualify as *“Powered by FIWARE”*.
 
 Currently, the Orion Context Broker relies on open source [MongoDB](https://www.mongodb.com/) technology to keep
 persistence of the context data it holds. To request context data from external sources, a simple Context Provider NGSI 
@@ -94,12 +94,12 @@ proxy has also been added. To visualise and interact with the Context we will ad
 
 Therefore, the architecture will consist of four elements:
 
-* The Orion Context Broker server which will receive requests using [NGSI](https://swagger.lab.fiware.org/?url=https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json)
+* The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/)which will receive requests using [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
 * The underlying MongoDB database associated to the Orion Context Broker server
 * The Context Provider NGSI proxy which will will:
-  + receive requests using [NGSI](https://swagger.lab.fiware.org/?url=https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json)
+  + receive requests using [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
   + makes requests to publicly available data sources using their own APIs in a proprietory format 
-  + returns context data back to the Orion Context Broker in [NGSI](https://swagger.lab.fiware.org/?url=https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json) format.
+  + returns context data back to the Orion Context Broker in [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) format.
 * The Stock Management Frontend which will will:
   + Display store information
   + Show which products can be bought at each store

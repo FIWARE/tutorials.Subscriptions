@@ -4,7 +4,7 @@
 
 このチュートリアルでは、FIWAREユーザにコンテキスト・データのサブスクリプションを作成および管理する方法について説明しています。
 
-このチュートリアルでは、ユーザが [NGSI](https://swagger.lab.fiware.org/?url=https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json) サブスクリプション/通知のパラダイムを理解でき、NGSI サブスクリプションを独自のコードで使用する方法を説明するため、前の[例](https://github.com/Fiware/tutorials.Accessing-Context/)で作成したエンティティと[在庫管理のフロントエンド・アプリケーション](https://github.com/Fiware/tutorials.Subscriptions/tree/master/proxy)をベースにしています。
+このチュートリアルでは、ユーザが [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) サブスクリプション/通知のパラダイムを理解でき、NGSI サブスクリプションを独自のコードで使用する方法を説明するため、前の[例](https://github.com/Fiware/tutorials.Accessing-Context/)で作成したエンティティと[在庫管理のフロントエンド・アプリケーション](https://github.com/Fiware/tutorials.Subscriptions/tree/master/proxy)をベースにしています。
 
 このチュートリアルでは、[cUrl](https://ec.haxx.se/) コマンドを組み合わせて、ブラウザ内で行われた在庫管理アクションを示します。cUrl コマンドは、[Postman マニュアル](http://fiware.github.io/tutorials.Accessing-Context/) としても利用できます。
 
@@ -83,12 +83,12 @@ FIWARE プラットフォームでは、エンティティは、実世界に存�
 
 したがって、アーキテクチャは4つの要素で構成されます :
 
-* [NGSI](https://swagger.lab.fiware.org/?url=https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json) を使用してリクエストを受信する Orion Context Broker サーバ
+* [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) を使用してリクエストを受信する Orion Context Broker サーバ
 * Orion Context Broker サーバに関連付けられている MongoDB データベース
 * コンテキスト・プロバイダ NGSI プロキシは次のようになります :
-    + [NGSI](https://swagger.lab.fiware.org/?url=https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json) を使用してリクエストを受信します
+    + [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) を使用してリクエストを受信します
     + 独自の API を独自のフォーマットで使用して、公開されているデータソースへのリクエストを行います
-    + [NGSI](https://swagger.lab.fiware.org/?url=https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json) 形式でコンテキスト・データを Orion Context Broker に返します
+    + [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) 形式でコンテキスト・データを Orion Context Broker に返します
 * 在庫管理フロントエンドは以下を行います : 
     + ストア情報を表示します
     + 各ストアで購入できる製品を表示します
