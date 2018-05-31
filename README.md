@@ -43,7 +43,7 @@ cUrl commands are also available as [Postman documentation](http://fiware.github
 >
 > — Dorothy Kilgallen (The Voice Of Broadway)
 
-Within the FIWARE platform, an entity represents the state of a physical or conceptural object which exists in the real world. 
+Within the FIWARE platform, an entity represents the state of a physical or conceptual object which exists in the real world. 
 Every smart solution needs to know the current state of these object at any given moment in time. 
 
 The context of each of these entities is constantly changing. For example, within the stock management example, the context will
@@ -53,7 +53,7 @@ is even more pressing as the system will constantly be reacting to changes in th
 Until now all the operations we have used to change the state of the system have been **synchronous** - changes have been made by 
 directly by a user or application and they have been informed of the result. The Orion Context Broker offers also an **asynchronous**
 notification mechanism - applications can subscribe to changes of context information so that they can
-be informed when something happens. This means the application does not need to continously poll or repeat query requests.
+be informed when something happens. This means the application does not need to continuously poll or repeat query requests.
 
 Use of the subscription mechanism will therefore reduce both the volume of requests and amount of data being passed between components
 within the system. This reduction in network traffic will improve the overall responsiveness.
@@ -70,7 +70,7 @@ In the previous [tutorial](https://github.com/Fiware/tutorials.Accessing-Context
 This tutorial will use the monitor page to watch the status of recent requests, and a store page to buy products. Once the services
 are running these pages can be accessed from the following URLs:
 
-#### Event Montior
+#### Event Monitor
 
 The event monitor can be found at: `http://localhost:3000/app/monitor`
 
@@ -89,7 +89,7 @@ This application will make use of only one FIWARE component - the [Orion Context
 
 Currently, the Orion Context Broker relies on open source [MongoDB](https://www.mongodb.com/) technology to keep
 persistence of the context data it holds. To request context data from external sources, a simple **Context Provider NGSI 
-proxy** has also been added. To visualise and interact with the Context we will add a simple Express **Front End** application 
+proxy** has also been added. To visualize and interact with the Context we will add a simple Express **Front End** application 
 
 
 Therefore, the architecture will consist of four elements:
@@ -127,8 +127,8 @@ which allows to different components isolated into their respective environments
 
 **Docker Compose** is a tool for defining and running multi-container Docker applications. A 
 [YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Entity-Relationships/master/docker-compose.yml) is used
-configure the required services for the application. This means all container sevices can be brought up in a single 
-commmand. Docker Compose is installed by default  as part of Docker for Windows and  Docker for Mac, however Linux users 
+configure the required services for the application. This means all container services can be brought up in a single 
+command. Docker Compose is installed by default  as part of Docker for Windows and  Docker for Mac, however Linux users 
 will need to follow the instructions found  [here](https://docs.docker.com/compose/install/)
 
 ## Cygwin 
@@ -138,7 +138,7 @@ command line functionality similar to a Linux distribution on Windows.
 
 # Start Up
 
-All services can be initialised from the command line by running the bash script provided within the repository:
+All services can be initialized from the command line by running the bash script provided within the repository:
 
 ```console
 ./services create; ./services start;
@@ -230,7 +230,7 @@ function broadcastEvents(req, item, types) {
 }
 ```
 
-This business logic emits socket io events to any registered parties (such as the cash till)
+This business logic emits socket I/O events to any registered parties (such as the cash till)
 
 The cash till has been set to reload if is receives an event - however in this case the prices have not changed yet, so the product prices
 remain the same - for example a bottle of beer remains at 0.99€
@@ -257,7 +257,7 @@ Whenever an attribute of the **Product** entity is updated, the Orion Context Br
 
 ![](https://fiware.github.io/tutorials.Subscriptions/img/price-change.png)
 
-The business logic of the Stock Management Front End again emits socket io events to any registered parties (such as the cash till)
+The business logic of the Stock Management Front End again emits socket I/O events to any registered parties (such as the cash till)
 and since the price has changed the till now displays a bottle of beer at 0.89€
 
 #### `http://localhost:3000/app/store/urn:ngsi-ld:Store:002`
@@ -349,7 +349,7 @@ curl --request POST \
 The two requests are very similiar. It is merely the `url` and the `expression` attributes which differ. The first cUrl command
 will only fire if the affected **InventoryItem** entity has a reference to Store 001 and the second one if the affected
 **InventoryItem** entity has a reference to Store 002. Obviously the URLs must be different so that the business logic of our
-application is able to react diffferently to each request.
+application is able to react differently to each request.
 
 > **Tip**: You can set stock levels directly by making a PUT request as shown:
 >
@@ -365,7 +365,7 @@ If you now buy items from Store 002, once an **InventoryItem** dips below ten it
 #### `http://localhost:3000/app/monitor`
 ![](https://fiware.github.io/tutorials.Subscriptions/img/low-stock-monitor.png)
 
-As you can see the key value pairs of the affected  **InventoryItem**  have been passed to the Stock Managment Front End.
+As you can see the key value pairs of the affected  **InventoryItem**  have been passed to the Stock Management Front End.
 
 If you look at the store itself:
 
