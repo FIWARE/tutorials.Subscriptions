@@ -109,7 +109,7 @@ Therefore, the architecture will consist of four elements:
 Since all interactions between the elements are initiated by HTTP requests, the entities can be containerized and run
 from exposed ports. 
 
-![](https://fiware.github.io/tutorials.Subscriptions/img/architecture.svg)
+![](https://fiware.github.io/tutorials.Subscriptions/img/architecture.png)
 
 The necessary configuration information can be seen in the services section of the associated `docker-compose.yml` file. It
 has been described in a [previous tutorial](https://github.com/Fiware/tutorials.Context-Providers/)
