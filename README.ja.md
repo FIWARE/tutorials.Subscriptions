@@ -2,9 +2,7 @@
 
 [![NGSI v2](https://img.shields.io/badge/NGSI-v2-blue.svg)](http://fiware.github.io/context.Orion/api/v2/stable/)
 
-このチュートリアルでは、FIWAREユーザにコンテキスト・データのサブスクリプションを作成および管理する方法について説明しています。
-
-このチュートリアルでは、ユーザが [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) サブスクリプション/通知のパラダイムを理解でき、NGSI サブスクリプションを独自のコードで使用する方法を説明するため、前の[例](https://github.com/Fiware/tutorials.Accessing-Context/)で作成したエンティティと[在庫管理のフロントエンド・アプリケーション](https://github.com/Fiware/tutorials.Subscriptions/tree/master/proxy)をベースにしています。
+このチュートリアルでは、FIWAREユーザにコンテキスト・データのサブスクリプションを作成および管理する方法について説明しています。チュートリアルでは、ユーザが [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) サブスクリプション/通知のパラダイムを理解でき、NGSI サブスクリプションを独自のコードで使用する方法を説明するため、前の[例](https://github.com/Fiware/tutorials.Accessing-Context/)で作成したエンティティと[在庫管理のフロントエンド・アプリケーション](https://github.com/Fiware/tutorials.Subscriptions/tree/master/proxy)をベースにしています。
 
 このチュートリアルでは、[cUrl](https://ec.haxx.se/) コマンドを組み合わせて、ブラウザ内で行われた在庫管理アクションを示します。cUrl コマンドは、[Postman マニュアル](http://fiware.github.io/tutorials.Accessing-Context/) としても利用できます。
 
@@ -30,6 +28,7 @@
     + [既存のサブスクリプションの更新](#update-an-existing-subscription)
     + [すべてのサブスクリプションの一覧表示](#list-all-subscriptions)
     + [サブスクリプションの詳細を読み込む](#read-the-detail-of-a-subscription)
+- [次のステップ](#next-steps)
 
 <A name="subscribing-to-changes-of-state"></A>
 # 状態の変更をサブスクリプションする
@@ -77,19 +76,20 @@ FIWARE プラットフォームでは、エンティティは、実世界に存�
 <A name="architecture"></A>
 # アーキテクチャ
 
-このアプリケーションは、[Orion Context Broker](https://catalogue.fiware.org/enablers/publishsubscribe-context-broker-orion-context-broker) という1つの FIWARE コンポーネントのみを使用します。アプリケーションが *"Powered by FIWARE"* と認定するには、Orion Context Broker を使用するだけで十分です。
+このアプリケーションは、[Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) という1つの FIWARE コンポーネントのみを使用します。アプリケーションが *"Powered by FIWARE"* と認定するには、Orion Context Broker を使用するだけで十分です。
 
-現在、Orion Context Broker はオープンソースの [MongoDB](https://www.mongodb.com/) 技術を利用して、コンテキスト・データの永続性を維持しています。外部ソースからコンテキスト・データをリクエストするために、単純なコンテキスト・プロバイダ NGSI プロキシも追加されています。コンテキストを視覚化して操作するために、簡単な Express アプリケーションを追加します。
+現在、Orion Context Broker はオープンソースの [MongoDB](https://www.mongodb.com/) 技術を利用して、コンテキスト・データの永続性を維持しています。外部ソースからコンテキスト・データをリクエストするために、単純な**コンテキスト・プロバイダ NGSI proxy**も追加されています。コンテキストを視覚化して操作するために、簡単な Express **フロントエンド**・アプリケーションを追加します。
 
 したがって、アーキテクチャは4つの要素で構成されます :
 
 * [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) を使用してリクエストを受信する Orion Context Broker サーバ
-* Orion Context Broker サーバに関連付けられている MongoDB データベース
-* コンテキスト・プロバイダ NGSI プロキシは次のようになります :
+* バックエンドの [MongoDB](https://www.mongodb.com/) データベース
+  + Orion Context Broker が、データ・エンティティなどのコンテキスト・データ情報、サブスクリプション、登録などを保持するために使用します
+* **コンテキスト・プロバイダ NGSI proxy**は次のようになります :
     + [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) を使用してリクエストを受信します
     + 独自の API を独自のフォーマットで使用して、公開されているデータソースへのリクエストを行います
     + [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) 形式でコンテキスト・データを Orion Context Broker に返します
-* 在庫管理フロントエンドは以下を行います : 
+* **在庫管理フロントエンド**は以下を行います : 
     + ストア情報を表示します
     + 各ストアで購入できる製品を表示します
     + ユーザが製品を"購入"して、在庫数を減らすことを可能にします
@@ -97,6 +97,8 @@ FIWARE プラットフォームでは、エンティティは、実世界に存�
 要素間のすべての対話は HTTP リクエストによって開始されるため、エンティティはコンテナ化され、公開されたポートから実行されます。
 
 ![](https://fiware.github.io/tutorials.Subscriptions/img/architecture.png)
+
+必要な設定情報は、関連する `docker-compose.yml` ファイルの services セクションにあります。 [以前のチュートリアル](https://github.com/Fiware/tutorials.Context-Providers/)で説明しました。
 
 <A name="prerequisites"></A>
 # 前提条件
@@ -459,7 +461,7 @@ curl --request GET \
 <a name="next-steps"></a>
 # 次のステップ
 
-アドバンス機能を追加するアプリをもっと複雑にする方法を知りたいですか？ このシリーズの他のチュートリアルを読むことで、学ぶことができます。
+高度な機能を追加することで、アプリケーションに複雑さを加える方法を知りたいですか？このシリーズの他のチュートリアルを読むことで見つけることができます:
 
 &nbsp; 101. [Getting Started](https://github.com/Fiware/tutorials.Getting-Started)<br/>
 &nbsp; 102. [Entity Relationships](https://github.com/Fiware/tutorials.Entity-Relationships/)<br/>
