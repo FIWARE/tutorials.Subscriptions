@@ -179,7 +179,7 @@ a waste of resources and create a lot of unnecessary data traffic.
 The alternative is to create a subscription which will POST a payload to a "well-known" URL whenever a price has changed. 
 A new subscription can be added by making a POST request to the `/v2/subscriptions/` endpoint as shown below:
 
-#### Request:
+#### :one: Request:
 
 ```console
 curl -iX POST \
@@ -242,6 +242,7 @@ remain the same - for example a bottle of beer remains at 0.99€
 Let's reduce the price of a bottle of beer to 0.89€. This can't be done programmatically yet, so it has to be done with a curl command
 as shown:
 
+#### :two: Request:
 
 ```console
 curl -iX PUT \
@@ -293,7 +294,7 @@ This means that we can set up our business logic so that other stores wont be bo
 
 
 
-#### Request:
+#### :three: Request:
 
 The following command is a low stock notification for Store 001
 
@@ -320,7 +321,7 @@ curl -iX POST \
 ```
 
 
-#### Request:
+#### :four: Request:
 
 The following command is a low stock notification for Store 002
 
@@ -399,7 +400,7 @@ The subject section of the request states that the subscription will be fired wh
 The notification section of the body states that a POST request containing all affected entities will be sent to the http://context-provider:3000/subscription/price-change endpoint.
 
 
-#### Request:
+#### :five: Request:
 
 ```console
 curl -iX POST \
@@ -433,7 +434,7 @@ This example deletes the Subscription with `id=5ae079b86e4f353c5163c939` from th
 Subscriptions can be deleted by making a DELETE request to the `/v2/subscriptions/<subscription-id>` endpoint.
 
 
-#### Request:
+#### :six: Request:
 ```console
 curl -iX DELETE \
   --url 'http://localhost:1026/v2/subscriptions/5ae079b86e4f353c5163c939'
@@ -446,7 +447,7 @@ This example amends an existing subscription with the id `5ae07c7e6e4f353c5163c9
 Subscriptions can be updated making a PATCH request to the `/v2/subscriptions/<subscription-id>` endpoint.
 
 
-#### Request:
+#### :seven: Request:
 
 ```console
 curl -iX PATCH \
@@ -468,7 +469,7 @@ This example lists all subscriptions by making a GET request to the /v2/subscrip
 
 The notification section of each subscription will also include the last time the conditions of the subscription were met, and whether associated the POST action was successful.
 
-#### Request:
+#### :eight: Request:
 
 ```console
 curl -X GET \
@@ -484,7 +485,7 @@ The response includes additional details in the notification section showing the
 Subscription details can be read by making a GET request to the `/v2/subscriptions/<subscription-id>` endpoint.
 
 
-#### Request:
+#### :nine: Request:
 
 ```console
 curl -X GET \
