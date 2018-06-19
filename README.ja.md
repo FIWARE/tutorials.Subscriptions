@@ -164,8 +164,8 @@ FIWARE プラットフォームでは、エンティティは、実世界に存�
 #### リクエスト :
 
 ```console
-curl --request POST \
-  --url 'http://localhost:1026/v2/subscriptions/' \
+curl -iX POST \
+  --url 'http://localhost:1026/v2/subscriptions' \
   --header 'content-type: application/json' \
   --data '{
   "description": "Notify me of all product price changes",
@@ -223,7 +223,7 @@ function broadcastEvents(req, item, types) {
 
 
 ```console
-curl --request PUT \
+curl -iX PUT \
   --url 'http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001/attrs/price/value' \
   --header 'Content-Type: text/plain' \
   --data 89
@@ -266,7 +266,7 @@ curl --request PUT \
 次のコマンドは、ストア 001 の在庫不足通知です :
 
 ```console
-curl --request POST \
+curl -iX POST \
   --url 'http://localhost:1026/v2/subscriptions' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -293,7 +293,7 @@ curl --request POST \
 次のコマンドは、ストア 002 の在庫不足通知です :
 
 ```console
-curl --request POST \
+curl -iX POST \
   --url 'http://localhost:1026/v2/subscriptions' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -319,7 +319,7 @@ curl --request POST \
 > **ヒント** : 次のように PUT リクエストを行うことで、在庫レベルを直接設定することができます :
 >
 >```console
->curl --request PUT \
+>curl -iX PUT \
 >  --url 'http://localhost:1026/v2/entities/urn:ngsi-ld:InventoryItem:005/attrs/shelfCount/value' \
 >  --header 'Content-Type: text/plain' \
 >  --data 5
@@ -366,8 +366,8 @@ curl --request POST \
 #### リクエスト :
 
 ```console
-curl --request POST \
-  --url 'http://localhost:1026/v2/subscriptions/' \
+curl -iX POST \
+  --url 'http://localhost:1026/v2/subscriptions' \
   --header 'content-type: application/json' \
   --data '{
   "description": "Notify me of all product price changes",
@@ -399,7 +399,7 @@ curl --request POST \
 
 #### リクエスト :
 ```console
-curl --request DELETE \
+curl -iX DELETE \
   --url 'http://localhost:1026/v2/subscriptions/5ae079b86e4f353c5163c939'
 ```
 
@@ -414,7 +414,7 @@ curl --request DELETE \
 #### リクエスト :
 
 ```console
-curl --request PATCH \
+curl -iX PATCH \
   --url 'http://localhost:1026/v2/subscriptions/5ae07c7e6e4f353c5163c93e' \
   --header 'content-type: application/json' \
   --data '{
@@ -437,8 +437,8 @@ curl --request PATCH \
 #### リクエスト :
 
 ```console
-curl --request GET \
-  --url 'http://localhost:1026/v2/subscriptions/'
+curl -X GET \
+  --url 'http://localhost:1026/v2/subscriptions'
 ```
 
 <A name="update-an-existing-subscription"></A>
@@ -454,7 +454,7 @@ curl --request GET \
 #### リクエスト :
 
 ```console
-curl --request GET \
+curl -X GET \
   --url 'http://localhost:1026/v2/subscriptions/5aead3361587e1918de90aba'
 ```
 

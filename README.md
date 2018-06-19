@@ -182,8 +182,8 @@ A new subscription can be added by making a POST request to the `/v2/subscriptio
 #### Request:
 
 ```console
-curl --request POST \
-  --url 'http://localhost:1026/v2/subscriptions/' \
+curl -iX POST \
+  --url 'http://localhost:1026/v2/subscriptions' \
   --header 'content-type: application/json' \
   --data '{
   "description": "Notify me of all product price changes",
@@ -244,7 +244,7 @@ as shown:
 
 
 ```console
-curl --request PUT \
+curl -iX PUT \
   --url 'http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001/attrs/price/value' \
   --header 'Content-Type: text/plain' \
   --data 89
@@ -298,7 +298,7 @@ This means that we can set up our business logic so that other stores wont be bo
 The following command is a low stock notification for Store 001
 
 ```console
-curl --request POST \
+curl -iX POST \
   --url 'http://localhost:1026/v2/subscriptions' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -325,7 +325,7 @@ curl --request POST \
 The following command is a low stock notification for Store 002
 
 ```console
-curl --request POST \
+curl -iX POST \
   --url 'http://localhost:1026/v2/subscriptions' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -354,7 +354,7 @@ application is able to react differently to each request.
 > **Tip**: You can set stock levels directly by making a PUT request as shown:
 >
 >```console
->curl --request PUT \
+>curl -iX PUT \
 >  --url 'http://localhost:1026/v2/entities/urn:ngsi-ld:InventoryItem:005/attrs/shelfCount/value' \
 >  --header 'Content-Type: text/plain' \
 >  --data 5
@@ -402,8 +402,8 @@ The notification section of the body states that a POST request containing all a
 #### Request:
 
 ```console
-curl --request POST \
-  --url 'http://localhost:1026/v2/subscriptions/' \
+curl -iX POST \
+  --url 'http://localhost:1026/v2/subscriptions' \
   --header 'content-type: application/json' \
   --data '{
   "description": "Notify me of all product price changes",
@@ -435,7 +435,7 @@ Subscriptions can be deleted by making a DELETE request to the `/v2/subscription
 
 #### Request:
 ```console
-curl --request DELETE \
+curl -iX DELETE \
   --url 'http://localhost:1026/v2/subscriptions/5ae079b86e4f353c5163c939'
 ```
 
@@ -449,7 +449,7 @@ Subscriptions can be updated making a PATCH request to the `/v2/subscriptions/<s
 #### Request:
 
 ```console
-curl --request PATCH \
+curl -iX PATCH \
   --url 'http://localhost:1026/v2/subscriptions/5ae07c7e6e4f353c5163c93e' \
   --header 'content-type: application/json' \
   --data '{
@@ -471,8 +471,8 @@ The notification section of each subscription will also include the last time th
 #### Request:
 
 ```console
-curl --request GET \
-  --url 'http://localhost:1026/v2/subscriptions/'
+curl -X GET \
+  --url 'http://localhost:1026/v2/subscriptions'
 ```
 
 ###  Read the detail of a Subscription
@@ -487,7 +487,7 @@ Subscription details can be read by making a GET request to the `/v2/subscriptio
 #### Request:
 
 ```console
-curl --request GET \
+curl -X GET \
   --url 'http://localhost:1026/v2/subscriptions/5aead3361587e1918de90aba'
 ```
 
