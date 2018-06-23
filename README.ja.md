@@ -122,9 +122,12 @@ FIWARE プラットフォームでは、エンティティは、実世界に存�
 <A name="start-up"></A>
 # 起動
 
-リポジトリ内で提供される bash スクリプトを実行すると、コマンドラインからすべてのサービスを初期化できます :
+リポジトリ内で提供される bash スクリプトを実行すると、コマンドラインからすべてのサービスを初期化できます。リポジトリを複製し、以下のコマンドを実行して必要なイメージを作成してください :
 
 ```console
+git clone git@github.com:Fiware/tutorials.Subscriptions.git
+cd tutorials.Subscriptions
+
 ./services create; ./services start;
 ```
 
@@ -161,7 +164,7 @@ FIWARE プラットフォームでは、エンティティは、実世界に存�
 
 別の方法は、価格が変更されたときにペイロードを "よく知られた" URL に POST するサブスクリプションを作成することです。以下に示すように、`/v2/subscriptions/` エンドポイントに POST リクエストを行うことで、新しいサブスクリプションを追加できます :
 
-#### リクエスト :
+#### :one: リクエスト :
 
 ```console
 curl -iX POST \
@@ -221,6 +224,8 @@ function broadcastEvents(req, item, types) {
 
 ビールのボトルの価格を 0.89 ユーロに下げましょう。これはプログラムではまだできませんので、次のように curl コマンドを使用して実行する必要があります :
 
+#### :two: リクエスト :
+
 
 ```console
 curl -iX PUT \
@@ -261,7 +266,7 @@ curl -iX PUT \
 サブスクリプションは、**InventoryItem** の `shelfCount` が更新されるたびにテストされますが、`expression` 属性を追加すると、expression が有効なデータを返す場合にのみサブスクリプションが起動されます。例えば、`"q": "shelfCount<10;refStore==urn:ngsi-ld:Store:001"` は、`shelfCount`が 10 以下で、アイテムがストア 001 にあることをテストします。これは、他のストアが通知によって邪魔されないようにビジネス・ロジックを設定できることを意味します。
 
 
-#### リクエスト :
+#### :three: リクエスト :
 
 次のコマンドは、ストア 001 の在庫不足通知です :
 
@@ -288,7 +293,7 @@ curl -iX POST \
 ```
 
 
-#### リクエスト :
+#### :four: リクエスト :
 
 次のコマンドは、ストア 002 の在庫不足通知です :
 
@@ -363,7 +368,7 @@ curl -iX POST \
 ボディの `notification` セクションには、影響を受けるすべてのエンティティを含む POST リクエストが http://context-provider:3000/subscription/price-change endpoint エンドポイントに送信されることが記載されています。
 
 
-#### リクエスト :
+#### :five: リクエスト :
 
 ```console
 curl -iX POST \
@@ -397,7 +402,7 @@ curl -iX POST \
 サブスクリプションは、`/v2/subscriptions/<subscription-id>` エンドポイントに DELETE リクエストを行うことで削除できます。
 
 
-#### リクエスト :
+#### :six: リクエスト :
 ```console
 curl -iX DELETE \
   --url 'http://localhost:1026/v2/subscriptions/5ae079b86e4f353c5163c939'
@@ -411,7 +416,7 @@ curl -iX DELETE \
 サブスクリプションを更新して、`/v2/subscriptions/<subscription-id>` エンドポイントへの PATCH リクエストを行うことができます。
 
 
-#### リクエスト :
+#### :seven: リクエスト :
 
 ```console
 curl -iX PATCH \
@@ -434,7 +439,7 @@ curl -iX PATCH \
 
 各サブスクリプションの通知セクションには、サブスクリプションの条件が最後に満たされた時刻、および POST アクションが成功したかどうかが含まれます。
 
-#### リクエスト :
+#### :eight: リクエスト :
 
 ```console
 curl -X GET \
@@ -451,7 +456,7 @@ curl -X GET \
 サブスクリプションの詳細は、`/v2/subscriptions/<subscription-id>` エンドポイントに GET リクエストを行うことで読み取ることができます。
 
 
-#### リクエスト :
+#### :nine: リクエスト :
 
 ```console
 curl -X GET \
@@ -461,7 +466,7 @@ curl -X GET \
 <a name="next-steps"></a>
 # 次のステップ
 
-高度な機能を追加することで、アプリケーションに複雑さを加える方法を知りたいですか？このシリーズの他のチュートリアルを読むことで見つけることができます:
+高度な機能を追加することで、アプリケーションに複雑さを加える方法を知りたいですか？このシリーズの他のチュートリアルを読むことで見つけることができます :
 
 &nbsp; 101. [Getting Started](https://github.com/Fiware/tutorials.Getting-Started)<br/>
 &nbsp; 102. [Entity Relationships](https://github.com/Fiware/tutorials.Entity-Relationships)<br/>
