@@ -92,7 +92,7 @@ FIWARE プラットフォームでは、エンティティは、実世界に存�
     + [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) を使用してリクエストを受信します
     + 独自の API を独自のフォーマットで使用して、公開されているデータソースへのリクエストを行います
     + [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) 形式でコンテキスト・データを Orion Context Broker に返します
-* **在庫管理フロントエンド**は以下を行います : 
+* **在庫管理フロントエンド**は以下を行います :
     + ストア情報を表示します
     + 各ストアで購入できる製品を表示します
     + ユーザが製品を"購入"して、在庫数を減らすことを可能にします
@@ -117,8 +117,17 @@ FIWARE プラットフォームでは、エンティティは、実世界に存�
 
 **Docker Compose** は、マルチコンテナ Docker アプリケーションを定義して実行するためのツールです。[YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/docker-compose.yml) ファイルは、アプリケーションのために必要なサービスを構成するために使用します。つまり、すべてのコンテナ・サービスは1つのコマンドで呼び出すことができます。Docker Compose は、デフォルトで Docker for Windows とDocker for Mac の一部としてインストールされますが、Linux ユーザは[ここ](https://docs.docker.com/compose/install/)に記載されている手順に従う必要があります。
 
+次のコマンドを使用して、現在の **Docker** バージョンと **Docker Compose** バージョンを確認できます :
+
+```console
+docker-compose -v
+docker version
+```
+
+Docker バージョン 18.03 以降と Docker Compose 1.21 以上を使用していることを確認し、必要に応じてアップグレードしてください。
+
 <A name="prerequisites"></A>
-## Cygwin 
+## Cygwin
 
 シンプルな bash スクリプトを使用してサービスを開始します。Windows ユーザは [cygwin](http://www.cygwin.com/) をダウンロードして、Windows 上の Linux ディストリビューションと同様のコマンドライン機能を提供する必要があります。
 
@@ -140,7 +149,7 @@ cd tutorials.Subscriptions
 >
 >```console
 >./services stop
->``` 
+>```
 >
 
 <A name="start-up"></A>
@@ -177,7 +186,7 @@ curl -iX POST \
   "description": "Notify me of all product price changes",
   "subject": {
     "entities": [{"idPattern": ".*", "type": "Product"}],
-    "condition": { 
+    "condition": {
       "attrs": [ "price" ]
     }
   },
@@ -247,11 +256,11 @@ curl -iX PUT \
 
 #### `http://localhost:3000/app/store/urn:ngsi-ld:Store:002`
 
-![](https://fiware.github.io/tutorials.Subscriptions/img/beer-89.png)   
+![](https://fiware.github.io/tutorials.Subscriptions/img/beer-89.png)
 
 
 <A name="reducing-payload-with--attrs-and-attrsformat"></A>
-## `attrs` と `attrsFormat` でペイロードを削減 
+## `attrs` と `attrsFormat` でペイロードを削減
 
 前の例では、影響を受けた各 **Product** エンティティの完全な詳細なデータが POST 通知と共に送信されました。これはあまり効率的ではありません。
 
