@@ -53,5 +53,5 @@ Shelf : maxCapacity
 Store "1" *-- "*" Shelf : contains >
 InventoryItem "*" -o " 1" Shelf : < holds
 Product "0..*" - "0..*" Store
-(Product, Store) .. InventoryItem
+(Product, Store) .. InventoryItem : associates
 @enduml
