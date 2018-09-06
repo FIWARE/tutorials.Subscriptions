@@ -210,14 +210,14 @@ curl -iX POST \
   },
   "notification": {
     "http": {
-      "url": "http://context-provider:3000/subscription/price-change"
+      "url": "http://tutorial:3000/subscription/price-change"
     }
   }
 }'
 ```
 
 
-The body of the POST request consists of two parts, the `subject` section of the request (consisting of `entities` and `conditions`)states that the subscription will be fired whenever the `price` attribute of any **Product** entity is altered. The notification section of the body states that once the conditions of the subscription have been met, a POST request containing all affected **Product** entities will be sent to the URL `http://context-provider:3000/subscription/price-change` which is handled by the stock management front-end application.
+The body of the POST request consists of two parts, the `subject` section of the request (consisting of `entities` and `conditions`)states that the subscription will be fired whenever the `price` attribute of any **Product** entity is altered. The notification section of the body states that once the conditions of the subscription have been met, a POST request containing all affected **Product** entities will be sent to the URL `http://tutorial:3000/subscription/price-change` which is handled by the stock management front-end application.
 
 For a first run, when the subscription is created, the Orion Context Broker runs the `condition` test, and since it has not been run before makes the assumption that all products have been changed. Therefore a request is sent to `subscription/price-change` immediately as shown:
 
@@ -328,7 +328,7 @@ curl -iX POST \
   },
   "notification": {
     "http": {
-      "url": "http://context-provider:3000/subscription/low-stock-store001"
+      "url": "http://tutorial:3000/subscription/low-stock-store001"
     },
     "attrsFormat" : "keyValues"
   }
@@ -355,7 +355,7 @@ curl -iX POST \
   },
   "notification": {
     "http": {
-      "url": "http://context-provider:3000/subscription/low-stock-store002"
+      "url": "http://tutorial:3000/subscription/low-stock-store002"
     },
     "attrsFormat" : "keyValues"
   }
@@ -412,7 +412,7 @@ New subscriptions can be added by making a POST request to the /v2/subscriptions
 
 The subject section of the request states that the subscription will be fired whenever the price attribute of any Product entity is altered.
 
-The notification section of the body states that a POST request containing all affected entities will be sent to the http://context-provider:3000/subscription/price-change endpoint.
+The notification section of the body states that a POST request containing all affected entities will be sent to the http://tutorial:3000/subscription/price-change endpoint.
 
 
 #### :five: Request:
@@ -435,7 +435,7 @@ curl -iX POST \
   },
   "notification": {
     "http": {
-      "url": "http://context-provider:3000/subscription/price-change"
+      "url": "http://tutorial:3000/subscription/price-change"
     }
   }
 }'
@@ -472,7 +472,7 @@ curl -iX PATCH \
     "status": "active",
     "notification": {
         "http": {
-            "url": "http://context-provider:3000/notify/price-change"
+            "url": "http://tutorial:3000/notify/price-change"
         }
     }
 }'
@@ -480,7 +480,7 @@ curl -iX PATCH \
 
 ### List all Subscriptions
 
-This example lists all subscriptions by making a GET request to the /v2/subscriptions/ endpoint.
+This example lists all subscriptions by making a GET request to the `/v2/subscriptions/` endpoint.
 
 The notification section of each subscription will also include the last time the conditions of the subscription were met, and whether associated the POST action was successful.
 
