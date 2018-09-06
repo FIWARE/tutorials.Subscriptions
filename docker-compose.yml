@@ -36,7 +36,6 @@ services:
       - orion
     networks:
       default:
-        ipv4_address: 172.18.1.7
         aliases:
           - iot-sensors
           - context-provider
