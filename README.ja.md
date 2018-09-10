@@ -192,13 +192,13 @@ curl -iX POST \
   },
   "notification": {
     "http": {
-      "url": "http://context-provider:3000/subscription/price-change"
+      "url": "http://tutorial:3000/subscription/price-change"
     }
   }
 }'
 ```
 
-POST リクエストのボディは、2つの部分で構成されています。リクエストの `subject` セクション (`entities` および `conditions` からなる) は、**Product** エンティティの `price` 属性が変更されたときにサブスクリプションが起動されることを示します。ボディの `notification` セクションでは、サブスクリプションの条件が満たされると、影響を受けるすべての **Prodcut** エンティティを含む POST リクエストが、在庫管理フロントエンド・アプリケーションによって処理される URL `http://context-provider:3000/subscription/price-change` に送信されることが示されます。
+POST リクエストのボディは、2つの部分で構成されています。リクエストの `subject` セクション (`entities` および `conditions` からなる) は、**Product** エンティティの `price` 属性が変更されたときにサブスクリプションが起動されることを示します。ボディの `notification` セクションでは、サブスクリプションの条件が満たされると、影響を受けるすべての **Prodcut** エンティティを含む POST リクエストが、在庫管理フロントエンド・アプリケーションによって処理される URL `http://tutorial:3000/subscription/price-change` に送信されることが示されます。
 
 最初の実行では、サブスクリプションが作成されると、Orion Context Broker は `condition` テストを実行し、以前に実行されていないため、すべての製品が変更されたと仮定します。したがって、次のようにすぐに `subscription/price-change` にリクエストが送信されます。
 
@@ -297,7 +297,7 @@ curl -iX POST \
   },
   "notification": {
     "http": {
-      "url": "http://context-provider:3000/subscription/low-stock-store001"
+      "url": "http://tutorial:3000/subscription/low-stock-store001"
     },
     "attrsFormat" : "keyValues"
   }
@@ -324,7 +324,7 @@ curl -iX POST \
   },
   "notification": {
     "http": {
-      "url": "http://context-provider:3000/subscription/low-stock-store002"
+      "url": "http://tutorial:3000/subscription/low-stock-store002"
     },
     "attrsFormat" : "keyValues"
   }
@@ -377,7 +377,7 @@ curl -iX POST \
 
 **Product** エンティティの `price` 属性が変更されたときはいつでも、サブスクリプションが発生することがリクエストの `subject` セクションに記載されています。
 
-ボディの `notification` セクションには、影響を受けるすべてのエンティティを含む POST リクエストが http://context-provider:3000/subscription/price-change endpoint エンドポイントに送信されることが記載されています。
+ボディの `notification` セクションには、影響を受けるすべてのエンティティを含む POST リクエストが http://tutorial:3000/subscription/price-change endpoint エンドポイントに送信されることが記載されています。
 
 
 #### :five: リクエスト :
@@ -400,7 +400,7 @@ curl -iX POST \
   },
   "notification": {
     "http": {
-      "url": "http://context-provider:3000/subscription/price-change"
+      "url": "http://tutorial:3000/subscription/price-change"
     }
   }
 }'
@@ -438,7 +438,7 @@ curl -iX PATCH \
     "status": "active",
     "notification": {
         "http": {
-            "url": "http://context-provider:3000/notify/price-change"
+            "url": "http://tutorial:3000/notify/price-change"
         }
     }
 }'
