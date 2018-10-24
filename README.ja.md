@@ -3,7 +3,7 @@
 [![FIWARE Core Context Management](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/core.svg)](https://www.fiware.org/developers/catalogue/)
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.Subscriptions.svg)](https://opensource.org/licenses/MIT)
 [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
-[![NGSI v2](https://img.shields.io/badge/NGSI-v2-blue.svg)](http://fiware.github.io/context.Orion/api/v2/stable/)
+[![NGSI v2](https://img.shields.io/badge/NGSI-v2-blue.svg)](https://fiware-ges.github.io/core.Orion/api/v2/stable/)
 
 このチュートリアルでは、FIWAREユーザにコンテキスト・データのサブスクリプションを作成および管理する方法について説明しています。チュートリアルでは、ユーザが [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) サブスクリプション/通知のパラダイムを理解でき、NGSI サブスクリプションを独自のコードで使用する方法を説明するため、前の[例](https://github.com/Fiware/tutorials.Accessing-Context/)で作成したエンティティと[在庫管理のフロントエンド・アプリケーション](https://github.com/Fiware/tutorials.Subscriptions/tree/master/proxy)をベースにしています。
 
@@ -377,7 +377,7 @@ curl -iX POST \
 
 **Product** エンティティの `price` 属性が変更されたときはいつでも、サブスクリプションが発生することがリクエストの `subject` セクションに記載されています。
 
-ボディの `notification` セクションには、影響を受けるすべてのエンティティを含む POST リクエストが http://tutorial:3000/subscription/price-change endpoint エンドポイントに送信されることが記載されています。
+ボディの `notification` セクションには、影響を受けるすべてのエンティティを含む POST リクエストが `http://tutorial:3000/subscription/price-change endpoint` エンドポイントに送信されることが記載されています。
 
 
 #### :five: リクエスト :
