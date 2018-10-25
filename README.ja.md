@@ -7,9 +7,9 @@
 <br/>
 [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
-このチュートリアルでは、FIWAREユーザにコンテキスト・データのサブスクリプションを作成および管理する方法について説明しています。チュートリアルでは、ユーザが [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) サブスクリプション/通知のパラダイムを理解でき、NGSI サブスクリプションを独自のコードで使用する方法を説明するため、前の[例](https://github.com/Fiware/tutorials.Accessing-Context/)で作成したエンティティと[在庫管理のフロントエンド・アプリケーション](https://github.com/Fiware/tutorials.Subscriptions/tree/master/proxy)をベースにしています。
+このチュートリアルでは、FIWAREユーザにコンテキスト・データのサブスクリプションを作成および管理する方法について説明しています。チュートリアルでは、ユーザが [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) サブスクリプション/通知のパラダイムを理解でき、NGSI サブスクリプションを独自のコードで使用する方法を説明するため、前の[例](https://github.com/Fiware/tutorials.Accessing-Context/)で作成したエンティティと[在庫管理のフロントエンド・アプリケーション](https://github.com/Fiware/tutorials.Step-by-Step/tree/master/docker/context-provider)をベースにしています。
 
-このチュートリアルでは、[cUrl](https://ec.haxx.se/) コマンドを組み合わせて、ブラウザ内で行われた在庫管理アクションを示します。cUrl コマンドは、[Postman マニュアル](http://fiware.github.io/tutorials.Accessing-Context/) としても利用できます。
+このチュートリアルでは、[cUrl](https://ec.haxx.se/) コマンドを組み合わせて、ブラウザ内で行われた在庫管理アクションを示します。cUrl コマンドは、[Postman マニュアル](https://fiware.github.io/tutorials.Accessing-Context/) としても利用できます。
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/fb5f564d9bc65fc3690e)
 
