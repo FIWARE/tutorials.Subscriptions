@@ -14,7 +14,7 @@
 法を説明するため、前
 の[例](https://github.com/Fiware/tutorials.Accessing-Context/)で作成したエンティ
 ティ
-と[在庫管理のフロントエンド・アプリケーション](https://github.com/Fiware/tutorials.Step-by-Step/tree/master/docker/context-provider)を
+と[在庫管理のフロントエンド・アプリケーション](https://github.com/Fiware/tutorials.Step-by-Step/tree/master/context-provider)を
 ベースにしています。
 
 このチュートリアルでは、[cUrl](https://ec.haxx.se/) コマンドを組み合わせて、ブラ

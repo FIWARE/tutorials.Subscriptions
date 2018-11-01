@@ -9,7 +9,7 @@
 
 This tutorial teaches FIWARE users about how to create and manage context data
 subscriptions. The tutorial builds on the entities and
-[Stock Management Frontend](https://github.com/Fiware/tutorials.Step-by-Step/tree/master/docker/context-provider)
+[Stock Management Frontend](https://github.com/Fiware/tutorials.Step-by-Step/tree/master/context-provider)
 application created in the previous
 [example](https://github.com/Fiware/tutorials.Accessing-Context/) to enable
 users to understand the
