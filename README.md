@@ -24,7 +24,10 @@ as [Postman documentation](https://fiware.github.io/tutorials.Subscriptions/).
 
 -   このチュートリアルは[日本語](README.ja.md)でもご覧いただけます。
 
-# Contents
+## Contents
+
+<details>
+<summary><strong>Details</strong></summary>
 
 -   [Subscribing to Changes of State](#subscribing-to-changes-of-state)
     -   [Entities within a stock management system](#entities-within-a-stock-management-system)
@@ -45,6 +48,8 @@ as [Postman documentation](https://fiware.github.io/tutorials.Subscriptions/).
     -   [List all Subscriptions](#list-all-subscriptions)
     -   [Read the detail of a Subscription](#read-the-detail-of-a-subscription)
 -   [Next Steps](#next-steps)
+
+</details>
 
 # Subscribing to Changes of State
 

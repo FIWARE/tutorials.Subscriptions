@@ -24,7 +24,10 @@
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/fb5f564d9bc65fc3690e)
 
-# 内容
+## 内容
+
+<details>
+<summary>詳細 <b>(クリックして拡大)</b></summary>
 
 -   [状態の変更をサブスクリプションする](#subscribing-to-changes-of-state)
     -   [在庫管理システム内のエンティティ](#entities-within-a-stock-management-system)
@@ -45,6 +48,8 @@
     -   [すべてのサブスクリプションの一覧表示](#list-all-subscriptions)
     -   [サブスクリプションの詳細を読み込む](#read-the-detail-of-a-subscription)
 -   [次のステップ](#next-steps)
+
+</details>
 
 <A name="subscribing-to-changes-of-state"></A>
 
