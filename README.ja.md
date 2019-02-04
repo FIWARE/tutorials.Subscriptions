@@ -7,6 +7,8 @@
 <br/>
 [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
+<!-- prettier-ignore -->
+
 このチュートリアルでは、FIWARE ユーザにコンテキスト・データのサブスクリプション
 を作成および管理する方法について説明しています。チュートリアルでは、ユーザが
 [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) サブスクリプショ
