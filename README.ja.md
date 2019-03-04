@@ -14,9 +14,9 @@
 [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) サブスクリプショ
 ン/通知のパラダイムを理解でき、NGSI サブスクリプションを独自のコードで使用する方
 法を説明するため、前
-の[例](https://github.com/Fiware/tutorials.Accessing-Context/)で作成したエンティ
+の[例](https://github.com/FIWARE/tutorials.Accessing-Context/)で作成したエンティ
 ティ
-と[在庫管理のフロントエンド・アプリケーション](https://github.com/Fiware/tutorials.Step-by-Step/tree/master/context-provider)を
+と[在庫管理のフロントエンド・アプリケーション](https://github.com/FIWARE/tutorials.Step-by-Step/tree/master/context-provider)を
 ベースにしています。
 
 このチュートリアルでは、[cUrl](https://ec.haxx.se/) コマンドを組み合わせて、ブラ
@@ -95,7 +95,7 @@ FIWARE プラットフォームでは、エンティティは、実世界に存�
 
 ## 在庫管理フロントエンド
 
-前の[チュートリアル](https://github.com/Fiware/tutorials.Accessing-Context/)では
+前の[チュートリアル](https://github.com/FIWARE/tutorials.Accessing-Context/)では
 、単純な Node.js Express アプリケーションが作成しました。このチュートリアルでは
 、モニタ・ページを使用して最近のリクエストのステータスを表示し、商品を購入するス
 トア・ページを使用します。サービスが実行されると、次の URLs からこれらのページに
@@ -156,7 +156,7 @@ FIWARE"_ と認定するには、Orion Context Broker を使用するだけで�
 
 必要な設定情報は、関連する `docker-compose.yml` ファイルの services セクションに
 あります。
-[以前のチュートリアル](https://github.com/Fiware/tutorials.Context-Providers/)で
+[以前のチュートリアル](https://github.com/FIWARE/tutorials.Context-Providers/)で
 説明しました。
 
 <A name="prerequisites"></A>
@@ -224,7 +224,7 @@ cd tutorials.Subscriptions
 ```
 
 このコマンドは、起動時に以前
-の[在庫管理の例](https://github.com/Fiware/tutorials.Context-Providers)からシー
+の[在庫管理の例](https://github.com/FIWARE/tutorials.Context-Providers)からシー
 ドデータをインポートします。
 
 > :information_source: **注 :** クリーンアップをやり直したい場合は、次のコマンド

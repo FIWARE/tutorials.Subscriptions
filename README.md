@@ -7,8 +7,8 @@
 <br/> [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
 This tutorial teaches FIWARE users about how to create and manage context data subscriptions. The tutorial builds on the
-entities and [Stock Management Frontend](https://github.com/Fiware/tutorials.Step-by-Step/tree/master/context-provider)
-application created in the previous [example](https://github.com/Fiware/tutorials.Accessing-Context/) to enable users to
+entities and [Stock Management Frontend](https://github.com/FIWARE/tutorials.Step-by-Step/tree/master/context-provider)
+application created in the previous [example](https://github.com/FIWARE/tutorials.Accessing-Context/) to enable users to
 understand the [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) Subscribe/Notify paradigm and how to use
 NGSI subscriptions within their own code.
 
@@ -77,7 +77,7 @@ The relationship between our entities is defined as shown:
 
 ## Stock Management frontend
 
-In the previous [tutorial](https://github.com/Fiware/tutorials.Accessing-Context/), a simple Node.js Express application
+In the previous [tutorial](https://github.com/FIWARE/tutorials.Accessing-Context/), a simple Node.js Express application
 was created. This tutorial will use the monitor page to watch the status of recent requests, and a store page to buy
 products. Once the services are running these pages can be accessed from the following URLs:
 
@@ -127,7 +127,7 @@ from exposed ports.
 ![](https://fiware.github.io/tutorials.Subscriptions/img/architecture.png)
 
 The necessary configuration information can be seen in the services section of the associated `docker-compose.yml` file.
-It has been described in a [previous tutorial](https://github.com/Fiware/tutorials.Context-Providers/)
+It has been described in a [previous tutorial](https://github.com/FIWARE/tutorials.Context-Providers/)
 
 # Prerequisites
 
@@ -174,7 +174,7 @@ cd tutorials.Subscriptions
 ```
 
 This command will also import seed data from the previous
-[Stock Management example](https://github.com/Fiware/tutorials.Context-Providers) on startup.
+[Stock Management example](https://github.com/FIWARE/tutorials.Context-Providers) on startup.
 
 > :information_source: **Note:** If you want to clean up and start over again you can do so with the following command:
 >
