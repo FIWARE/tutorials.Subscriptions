@@ -565,7 +565,7 @@ DELETE リクエストを行うことで削除できます。
 #### :six: リクエスト :
 
 ```console
-curl -iX DELETE \
+curl -X DELETE \
   --url 'http://localhost:1026/v2/subscriptions/5ae079b86e4f353c5163c939'
 ```
 

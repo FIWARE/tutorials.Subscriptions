@@ -111,12 +111,12 @@ Therefore, the architecture will consist of four elements:
 -   The underlying [MongoDB](https://www.mongodb.com/) database:
     -   Used by the Orion Context Broker to hold context data information such as data entities, subscriptions and
         registrations
--   The **Context Provider NGSI proxy** which will will:
+-   The **Context Provider NGSI proxy** which will:
     -   receive requests using [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
     -   makes requests to publicly available data sources using their own APIs in a proprietary format
     -   returns context data back to the Orion Context Broker in
         [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) format.
--   The **Stock Management Frontend** which will will:
+-   The **Stock Management Frontend** which will:
     -   Display store information
     -   Show which products can be bought at each store
     -   Allow users to "buy" products and reduce the stock count.
@@ -468,7 +468,7 @@ Subscriptions can be deleted by making a DELETE request to the `/v2/subscription
 #### :six: Request:
 
 ```console
-curl -iX DELETE \
+curl -X DELETE \
   --url 'http://localhost:1026/v2/subscriptions/5ae079b86e4f353c5163c939'
 ```
 
