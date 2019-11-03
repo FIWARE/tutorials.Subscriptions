@@ -24,7 +24,7 @@
 、[Postman マニュアル](https://fiware.github.io/tutorials.Accessing-Context/) と
 しても利用できます。
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/18ea15017244c70d1fe4)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/18ea15017244c70d1fe4)
 
 ## 内容
 
