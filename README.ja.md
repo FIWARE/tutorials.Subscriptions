@@ -11,7 +11,7 @@
 
 このチュートリアルでは、FIWARE ユーザにコンテキスト・データのサブスクリプション
 を作成および管理する方法について説明しています。チュートリアルでは、ユーザが
-[NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) サブスクリプショ
+[NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) サブスクリプショ
 ン/通知のパラダイムを理解でき、NGSI サブスクリプションを独自のコードで使用する方
 法を説明するため、前
 の[例](https://github.com/FIWARE/tutorials.Accessing-Context/)で作成したエンティ
@@ -132,17 +132,17 @@ FIWARE"_ と認定するには、Orion Context Broker を使用するだけで�
 
 したがって、アーキテクチャは 4 つの要素で構成されます :
 
--   [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) を使用してリ
+-   [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) を使用してリ
     クエストを受信する Orion Context Broker サーバ
 -   バックエンドの [MongoDB](https://www.mongodb.com/) データベース
     -   Orion Context Broker が、データ・エンティティなどのコンテキスト・データ
         情報、サブスクリプション、登録などを保持するために使用します
 -   **コンテキスト・プロバイダ NGSI proxy**は次のようになります :
-    -   [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) を使用し
+    -   [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) を使用し
         てリクエストを受信します
     -   独自の API を独自のフォーマットで使用して、公開されているデータソースへ
         のリクエストを行います
-    -   [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) 形式でコ
+    -   [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) 形式でコ
         ンテキスト・データを Orion Context Broker に返します
 -   **在庫管理フロントエンド**は以下を行います :
     -   ストア情報を表示します
