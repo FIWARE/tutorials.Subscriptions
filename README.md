@@ -169,6 +169,7 @@ clone the repository and create the necessary images by running the commands as 
 ```console
 git clone https://github.com/FIWARE/tutorials.Subscriptions.git
 cd tutorials.Subscriptions
+git checkout NGSI-v2
 
 ./services create; ./services start;
 ```
