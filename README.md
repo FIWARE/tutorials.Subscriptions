@@ -4,8 +4,7 @@
 [![FIWARE Core Context Management](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/core.svg)](https://github.com/FIWARE/catalogue/blob/master/core/README.md)
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.Subscriptions.svg)](https://opensource.org/licenses/MIT)
 [![Support badge](https://img.shields.io/badge/tag-fiware-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware)
- <br/>
-[![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
+<br/> [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
 This tutorial teaches FIWARE users about how to create and manage context data subscriptions. The tutorial builds on the
 entities and [Stock Management Frontend](https://github.com/FIWARE/tutorials.Step-by-Step/tree/master/context-provider)
@@ -250,7 +249,7 @@ Code within the Stock Management frontend application handles received the POST 
 
 ```javascript
 router.post("/subscription/:type", (req, res) => {
-    _.forEach(req.body.data, item => {
+    _.forEach(req.body.data, (item) => {
         broadcastEvents(req, item, ["refStore", "refProduct", "refShelf", "type"]);
     });
     res.status(204).send();
@@ -258,7 +257,7 @@ router.post("/subscription/:type", (req, res) => {
 
 function broadcastEvents(req, item, types) {
     const message = req.params.type + " received";
-    _.forEach(types, type => {
+    _.forEach(types, (type) => {
         if (item[type]) {
             req.app.get("io").emit(item[type], message);
         }
