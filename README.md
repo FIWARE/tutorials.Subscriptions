@@ -50,15 +50,21 @@ commands. The cUrl commands are also available as
 
 # Subscribing to Changes of State
 
-> "Don't call us, we'll call you"
+> 'Another sandwich!' said the King.
 >
-> — Dorothy Kilgallen (The Voice Of Broadway)
+> 'There's nothing but hay left now,' the Messenger said, peeping into the bag.
+>
+> 'Hay, then,' the King murmured in a faint whisper.
+>
+> Alice was glad to see that it revived him a good deal. 'There's nothing like eating hay when you're faint,' he remarked to her, as he munched away.
+>
+> — Lewis Carroll (Through the Looking-Glass and What Alice Found There)
 
 Within the FIWARE platform, an entity represents the state of a physical or conceptual object which exists in the real
 world. Every smart solution needs to know the current state of these object at any given moment in time.
 
-The context of each of these entities is constantly changing. For example, within the stock management example, the
-context will change as new stores open up, products are sold, prices change and so on. For a smart solution based on IoT
+The context of each of these entities is constantly changing. For example, within the smart farm example, the
+context will change as animals and vehicles move, soil dries out, tasks are allocated on the farm and completed and so on. For a smart solution based on IoT
 sensor data, this issue is even more pressing as the system will constantly be reacting to changes in the real world.
 
 Until now all the operations we have used to change the state of the system have been **synchronous** - changes have
@@ -74,13 +80,12 @@ between components within the system. This reduction in network traffic will imp
 
 The relationship between our entities is defined as shown:
 
-![](https://fiware.github.io/tutorials.Subscriptions/img/entities.png)
+![](https://fiware.github.io/tutorials.Subscriptions/img/ngsi-ld-entities.png)
 
-## Stock Management frontend
+## Farm Management Information System frontend
 
-In the previous [tutorial](https://github.com/FIWARE/tutorials.Accessing-Context/), a simple Node.js Express application
-was created. This tutorial will use the monitor page to watch the status of recent requests, and a store page to buy
-products. Once the services are running these pages can be accessed from the following URLs:
+In a previous tutorial, a simple Node.js Express application
+was created. This tutorial will use the monitor page to watch the status of recent requests, and the devices page to alter the machines on the farm. Once the services are running these pages can be accessed from the following URLs:
 
 #### Event Monitor
 
@@ -88,19 +93,23 @@ The event monitor can be found at: `http://localhost:3000/app/monitor`
 
 ![FIWARE Monitor](https://fiware.github.io/tutorials.Subscriptions/img/monitor.png)
 
-#### Store 002
+#### Device Monitor
 
-Store002 can be found at: `http://localhost:3000/app/store/urn:ngsi-ld:Store:002`
+For the purpose of this tutorial, a series of dummy agricultural IoT devices have been created, which will be attached
+to the context broker. Details of the architecture and protocol used can be found in the
+[IoT Sensors tutorial](https://github.com/FIWARE/tutorials.IoT-Sensors/tree/NGSI-LD) The state of each device can be
+seen on the UltraLight device monitor web page found at: `http://localhost:3000/device/monitor`
 
-![Store](https://fiware.github.io/tutorials.Subscriptions/img/store2.png)
+![FIWARE Monitor](https://fiware.github.io/tutorials.Subscriptions/img/farm-devices.png)
 
 # Architecture
 
-This application will make use of only one FIWARE component - the
-[Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/). Usage of the Orion Context Broker is sufficient
+This application will make use of two FIWARE components - the
+[Orion-LD Context Broker](https://fiware-orion.readthedocs.io/en/latest/)and the
+[IoT Agent for UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/). Usage of any NGSI-LD Context Broker is sufficient
 for an application to qualify as _“Powered by FIWARE”_.
 
-Currently, the Orion Context Broker relies on open source [MongoDB](https://www.mongodb.com/) technology to keep
+Currently, the Orion-LD Context Broker relies on open source [MongoDB](https://www.mongodb.com/) technology to keep
 persistence of the context data it holds. To request context data from external sources, a simple **Context Provider
 NGSI proxy** has also been added. To visualize and interact with the Context we will add a simple Express **Frontend**
 application
@@ -108,27 +117,30 @@ application
 Therefore, the architecture will consist of four elements:
 
 -   The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) which will receive requests using
-    [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
+    [NGSI-LD](https://forge.etsi.org/swagger/ui/?url=https://forge.etsi.org/gitlab/NGSI-LD/NGSI-LD/raw/master/spec/updated/full_api.json)
+-   The FIWARE [IoT Agent for UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/) which will receive
+    southbound requests using
+    [NGSI-LD](https://forge.etsi.org/swagger/ui/?url=https://forge.etsi.org/gitlab/NGSI-LD/NGSI-LD/raw/master/spec/updated/full_api.json)
+    and convert them to
+    [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+    commands for the devices
 -   The underlying [MongoDB](https://www.mongodb.com/) database:
     -   Used by the Orion Context Broker to hold context data information such as data entities, subscriptions and
         registrations
--   The **Context Provider NGSI proxy** which will:
-    -   receive requests using [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
-    -   makes requests to publicly available data sources using their own APIs in a proprietary format
-    -   returns context data back to the Orion Context Broker in
-        [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) format.
--   The **Stock Management Frontend** which will:
-    -   Display store information
-    -   Show which products can be bought at each store
-    -   Allow users to "buy" products and reduce the stock count.
+-   The **Tutorial Application** does the following:
+    -   Offers static `@context` files defining the context entities within the system.
+    -   Acts as set of dummy [agricultural IoT devices](https://github.com/FIWARE/tutorials.IoT-Sensors/tree/NGSI-LD)
+        using the
+        [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+        protocol running over HTTP.
 
 Since all interactions between the elements are initiated by HTTP requests, the entities can be containerized and run
 from exposed ports.
 
-![](https://fiware.github.io/tutorials.Subscriptions/img/architecture.png)
+![](https://fiware.github.io/tutorials.Subscriptions/img/architecture-ld.png)
 
 The necessary configuration information can be seen in the services section of the associated `docker-compose.yml` file.
-It has been described in a [previous tutorial](https://github.com/FIWARE/tutorials.Context-Providers/)
+It has been described in a previous tutorial
 
 # Prerequisites
 
@@ -170,13 +182,14 @@ clone the repository and create the necessary images by running the commands as 
 ```console
 git clone https://github.com/FIWARE/tutorials.Subscriptions.git
 cd tutorials.Subscriptions
-git checkout NGSI-v2
+git checkout NGSI-LD
 
-./services create; ./services start;
+./services create;
+./services orion;
 ```
 
 This command will also import seed data from the previous
-[Stock Management example](https://github.com/FIWARE/tutorials.Context-Providers) on startup.
+Farm Management Information System example on startup, and provision a series of dummy devices on the farm.
 
 > :information_source: **Note:** If you want to clean up and start over again you can do so with the following command:
 >
@@ -186,72 +199,73 @@ This command will also import seed data from the previous
 
 # Using Subscriptions
 
-To follow the tutorial correctly please ensure you have the follow pages available on tabs in your browser before you
+To follow the tutorial correctly please ensure you have the follow two pages available on separate tabs in your browser before you
 enter any cUrl commands.
 
 #### Event Monitor
 
-The event monitor can be found at: `http://localhost:3000/app/monitor`
+The event monitor can be found at: `http://localhost:3000/app/monitor`.
 
-#### Stores
+#### Device Monitor
 
-The stores can be found at:
-
--   Store 1 - `http://localhost:3000/app/store/urn:ngsi-ld:Store:001`
--   Store 2 - `http://localhost:3000/app/store/urn:ngsi-ld:Store:002`
+The devices can be found at:  `http://localhost:3000/device/monitor`.
 
 ## Setting up a simple Subscription
 
-Within the stock management example, imagine that the regional manager of the company wants to alter the price of a
-product. The new price should immediately be reflected at the till in all stores within the system. It would be possible
-to set up the system so that it was constantly polling for new information, however prices are not changed very
+Within the Farm Management Information System, imagine that the farmer wants a contractor to refill his barn with hay when the level has reduced below a set level. It would be possible
+to set up the system so that the contractor was constantly polling for new information, however hay is not removed very
 frequently so this would be a waste of resources and create a lot of unnecessary data traffic.
 
 The alternative is to create a subscription which will POST a payload to a "well-known" URL whenever a price has
-changed. A new subscription can be added by making a POST request to the `/v2/subscriptions/` endpoint as shown below:
+changed. A new subscription can be added by making a POST request to the `/ngsi-ld/v1/subscriptions/` endpoint as shown below:
 
 #### :one: Request:
 
 ```console
-curl -iX POST \
-  --url 'http://localhost:1026/v2/subscriptions' \
-  --header 'content-type: application/json' \
-  --data '{
-  "description": "Notify me of all product price changes",
-  "subject": {
-    "entities": [{"idPattern": ".*", "type": "Product"}],
-    "condition": {
-      "attrs": [ "price" ]
+curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
+-H 'Content-Type: application/ld+json' \
+-H 'fiware-service: openiot' \
+--data-raw '{
+  "description": "Notify me of low stock on Farm:001",
+  "type": "Subscription",
+  "entities": [{"type": "FillingSensor"}],
+  "watchedAttributes": ["filling"],
+  "q": "filling<0.5;controllingAsset==urn:ngsi-ld:Building:farm001",
+  "notification": {
+    "attributes": ["filling", "controllingAsset"],
+    "format": "keyValues",
+    "endpoint": {
+      "uri": "http://tutorial:3000/subscription/low-stock-farm001",
+      "accept": "application/json"
     }
   },
-  "notification": {
-    "http": {
-      "url": "http://tutorial:3000/subscription/price-change"
-    }
-  }
+   "@context": "http://context-provider:3000/data-models/ngsi-context.jsonld"
 }'
 ```
 
-The body of the POST request consists of two parts, the `subject` section of the request (consisting of `entities` and
-`conditions`)states that the subscription will be fired whenever the `price` attribute of any **Product** entity is
-altered. The notification section of the body states that once the conditions of the subscription have been met, a POST
-request containing all affected **Product** entities will be sent to the URL
-`http://tutorial:3000/subscription/price-change` which is handled by the stock management frontend application.
+The body of the POST request consists of two parts, the first section of the request (consisting of `entities`, `type`, `watchedAttributes` and
+`q`)states that the subscription will be checked whenever the `filling`  attribute of  a **FillingSensor** entity is altered. This is further refined by the `q` parameter so that the actual subscription is only fired for any **FillingSensor** entity linked to the **Building** `urn:ngsi-ld:Building:farm001`  and only when the `filling` attribute drops below 10.51.
 
-For a first run, when the subscription is created, the Orion Context Broker runs the `condition` test, and since it has
-not been run before makes the assumption that all products have been changed. Therefore a request is sent to
-`subscription/price-change` immediately as shown:
+The notification section of the body states that once the conditions of the subscription have been met, a POST
+request containing all affected **FillingSensor** entities will be sent to the URL
+`http://tutorial:3000/subscription/low-stock-farm001` which is handled by the Farm Management Information System.
+
+Go to the Device Monitor `http://localhost:3000/device/monitor` and start removing hay from the barn. Nothing happens until the barn is half-empty, then a request is sent to
+`subscription/low-stock-farm001` as shown:
 
 #### `http://localhost:3000/app/monitor`
 
 ![](https://fiware.github.io/tutorials.Subscriptions/img/products-subscription.png)
 
-Code within the Stock Management frontend application handles received the POST request as shown:
+Code within the Farm Management Information System handles received the POST request as shown:
 
 ```javascript
-router.post("/subscription/:type", (req, res) => {
+const NOTIFY_ATTRIBUTES = ['controllingAsset', 'type', 'filling', 'humidity', 'temperature'];
+
+router.post('/subscription/:type', (req, res) => {
+    monitor('notify', req.params.type + ' received', req.body);
     _.forEach(req.body.data, (item) => {
-        broadcastEvents(req, item, ["refStore", "refProduct", "refShelf", "type"]);
+        broadcastEvents(req, item, NOTIFY_ATTRIBUTES);
     });
     res.status(204).send();
 });
@@ -266,149 +280,20 @@ function broadcastEvents(req, item, types) {
 }
 ```
 
-This business logic emits socket I/O events to any registered parties (such as the cash till)
+This business logic emits socket I/O events to any registered parties (such as the contractor who will then refill the barn.)
 
-The cash till has been set to reload if is receives an event - however in this case the prices have not changed yet, so
-the product prices remain the same - for example a bottle of beer remains at 0.99€
 
-#### `http://localhost:3000/app/store/urn:ngsi-ld:Store:002`
 
-![](https://fiware.github.io/tutorials.Subscriptions/img/beer-99.png)
 
-Let's reduce the price of a bottle of beer to 0.89€. This can't be done programmatically yet, so it has to be done with
-a curl command as shown:
 
-#### :two: Request:
 
-```console
-curl -iX PUT \
-  --url 'http://localhost:1026/v2/entities/urn:ngsi-ld:Product:001/attrs/price/value' \
-  --header 'Content-Type: text/plain' \
-  --data 89
-```
 
-Whenever an attribute of the **Product** entity is updated, the Orion Context Broker checks for any existing
-subscriptions (which exist for that entity) and applies the `condition` test. This time only one **Product** entity has
-changed since the last run therefore a POST request is sent to `subscription/price-change` - which only contains one
-**Product** in the body:
 
-#### `http://localhost:3000/app/monitor`
 
-![](https://fiware.github.io/tutorials.Subscriptions/img/price-change.png)
 
-The business logic of the Stock Management frontend again emits socket I/O events to any registered parties (such as the
-cash till) and since the price has changed the till now displays a bottle of beer at 0.89€
 
-#### `http://localhost:3000/app/store/urn:ngsi-ld:Store:002`
 
-![](https://fiware.github.io/tutorials.Subscriptions/img/beer-89.png)
 
-## Reducing Payload with `attrs` and `attrsFormat`
-
-With the previous example the full verbose data from each affected **Product** entity was sent with the POST
-notification. This is not very efficient.
-
-The amount of data to passed can be reduced by adding an `attrs` attribute which will specify a list of attributes to be
-included in notification messages - other attributes are ignored
-
-> **Tip** an `exceptAttrs` attribute also exists to return all attributes except for those on the exclude list. `attrs`
-> and `exceptAttrs` cannot be used simultaneously in the same subscription
-
-The `attrsFormat` attribute specifies how the entities are represented in notifications. A verbose response is returned
-by default `keyValues` and `values` work in the same manner as a `v2/entities` GET request.
-
-## Reducing Scope with `expression`
-
-Lets create two more subscriptions which will only fire under specific conditions - and will only return key-value pairs
-for the entity affected. Imagine that the warehouse of each store now wants to be informed whenever the amount of
-product on the shelf falls below a threshold level.
-
-The subscription is tested whenever the `shelfCount` of an **InventoryItem** is updated, however the addition of an
-`expression` attribute will mean that the subscription will only fire if the expression returns valid data - for example
-`"q": "shelfCount<10;refStore==urn:ngsi-ld:Store:001` tests that the `shelfCount` is below ten and that the item is in
-store 001. This means that we can set up our business logic so that other stores wont be bothered by notifications.
-
-#### :three: Request:
-
-The following command is a low stock notification for Store 001
-
-```console
-curl -iX POST \
-  --url 'http://localhost:1026/v2/subscriptions' \
-  --header 'Content-Type: application/json' \
-  --data '{
-  "description": "Notify me of low stock in Store 001",
-  "subject": {
-    "entities": [{"idPattern": ".*","type": "InventoryItem"}],
-    "condition": {
-      "attrs": ["shelfCount"],
-      "expression": {"q": "shelfCount<10;refStore==urn:ngsi-ld:Store:001"}
-    }
-  },
-  "notification": {
-    "http": {
-      "url": "http://tutorial:3000/subscription/low-stock-store001"
-    },
-    "attrsFormat" : "keyValues"
-  }
-}'
-```
-
-#### :four: Request:
-
-The following command is a low stock notification for Store 002
-
-```console
-curl -iX POST \
-  --url 'http://localhost:1026/v2/subscriptions' \
-  --header 'Content-Type: application/json' \
-  --data '{
-  "description": "Notify me of low stock in Store 002",
-  "subject": {
-    "entities": [{"idPattern": ".*", "type": "InventoryItem"}],
-    "condition": {
-      "attrs": ["shelfCount"],
-      "expression": {"q": "shelfCount<10;refStore==urn:ngsi-ld:Store:002"}
-    }
-  },
-  "notification": {
-    "http": {
-      "url": "http://tutorial:3000/subscription/low-stock-store002"
-    },
-    "attrsFormat" : "keyValues"
-  }
-}'
-```
-
-The two requests are very similar. It is merely the `url` and the `expression` attributes which differ. The first cUrl
-command will only fire if the affected **InventoryItem** entity has a reference to Store 001 and the second one if the
-affected **InventoryItem** entity has a reference to Store 002. Obviously the URLs must be different so that the
-business logic of our application is able to react differently to each request.
-
-> **Tip**: You can set stock levels directly by making a PUT request as shown:
->
-> ```console
-> curl -iX PUT \
->  --url 'http://localhost:1026/v2/entities/urn:ngsi-ld:InventoryItem:005/attrs/shelfCount/value' \
->  --header 'Content-Type: text/plain' \
->  --data 5
-> ```
-
-If you now buy items from Store 002, once an **InventoryItem** dips below ten items the following occurs
-
-#### `http://localhost:3000/app/monitor`
-
-![](https://fiware.github.io/tutorials.Subscriptions/img/low-stock-monitor.png)
-
-As you can see the key-value pairs of the affected **InventoryItem** have been passed to the Stock Management frontend.
-
-If you look at the store itself:
-
-#### `http://localhost:3000/app/store/urn:ngsi-ld:Store:002`
-
-![](https://fiware.github.io/tutorials.Subscriptions/img/low-stock-warehouse.png)
-
-An alert has been raised by the business logic within the application.
 
 # Subscription CRUD Actions
 
