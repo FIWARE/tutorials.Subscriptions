@@ -74,12 +74,16 @@ curl -s -o /dev/null -X POST \
      "timezone":    "Europe/Berlin",
      "attributes": [
        { "object_id": "f", "name":"filling", "type": "Number",
-         "metadata": {"unitCode": {"type": "Property","value": "C62"}}
+         "metadata": {
+            "unitCode": {"type": "Property","value": "C62"},
+            "accuracy": {"type": "Number","value": 0.05}
+          }
        }
       ],
       "commands": [
         {"name": "add", "type": "command"},
-        {"name": "remove", "type": "command"}
+        {"name": "remove", "type": "command"},
+        {"name": "remove", "type": "refill"}
       ],
       "static_attributes": [
         {"name": "supportedProtocol", "type": "Property", "value": ["ul20"]},

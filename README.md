@@ -19,31 +19,27 @@ commands. The cUrl commands are also available as
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/18ea15017244c70d1fe4)
 
--   このチュートリアルは[日本語](README.ja.md)でもご覧いただけます。
-
 ## Contents
 
 <details>
 <summary><strong>Details</strong></summary>
 
--   [Subscribing to Changes of State](#subscribing-to-changes-of-state)
-    -   [Entities within a stock management system](#entities-within-a-stock-management-system)
-    -   [Stock Management frontend](#stock-management-front-end)
--   [Architecture](#architecture)
--   [Prerequisites](#prerequisites)
-    -   [Docker](#docker)
-    -   [Cygwin](#cygwin)
--   [Start Up](#start-up)
--   [Using Subscriptions](#using-subscriptions)
-    -   [Setting up a simple Subscription](#setting-up-a-simple-subscription)
-    -   [Reducing Payload with `attrs` and `attrsFormat`](#reducing-payload-with--attrs-and-attrsformat)
-    -   [Reducing Scope with `expression`](#reducing-scope-with--expression)
--   [Subscription CRUD Actions](#subscription-crud-actions)
-    -   [Creating a Subscription](#creating-a-subscription)
-    -   [Delete a Subscription](#delete-a-subscription)
-    -   [Update an Existing Subscription](#update-an-existing-subscription)
-    -   [List all Subscriptions](#list-all-subscriptions)
-    -   [Read the detail of a Subscription](#read-the-detail-of-a-subscription)
+- [Subscribing to Changes of State](#subscribing-to-changes-of-state)
+  * [Entities within a smart Agrifood system](#entities-within-a-smart-agrifood-system)
+  * [Farm Management Information System frontend](#farm-management-information-system-frontend)
+- [Architecture](#architecture)
+- [Prerequisites](#prerequisites)
+  * [Docker](#docker)
+  * [Cygwin](#cygwin)
+- [Start Up](#start-up)
+- [Using Subscriptions](#using-subscriptions)
+  * [Setting up a simple Subscription](#setting-up-a-simple-subscription)
+- [Subscription CRUD Actions](#subscription-crud-actions)
+    + [Creating a Subscription](#creating-a-subscription)
+    + [Delete a Subscription](#delete-a-subscription)
+    + [Update an Existing Subscription](#update-an-existing-subscription)
+    + [List all Subscriptions](#list-all-subscriptions)
+    + [Read the detail of a Subscription](#read-the-detail-of-a-subscription)
 -   [Next Steps](#next-steps)
 
 </details>
@@ -76,7 +72,7 @@ repeat query requests.
 Use of the subscription mechanism will therefore reduce both the volume of requests and amount of data being passed
 between components within the system. This reduction in network traffic will improve the overall responsiveness.
 
-## Entities within a stock management system
+## Entities within a smart Agrifood system
 
 The relationship between our entities is defined as shown:
 
@@ -202,13 +198,13 @@ Farm Management Information System example on startup, and provision a series of
 To follow the tutorial correctly please ensure you have the follow two pages available on separate tabs in your browser before you
 enter any cUrl commands.
 
+#### FMIS System
+
+Details of various buildings around the farm can be found in the tutorial application. Open `http://localhost:3000/app/farm/urn:ngsi-ld:Building:farm001` to display a building with an associated filling sensor and thermostat.
+
 #### Event Monitor
 
 The event monitor can be found at: `http://localhost:3000/app/monitor`.
-
-#### Device Monitor
-
-The devices can be found at:  `http://localhost:3000/device/monitor`.
 
 ## Setting up a simple Subscription
 
@@ -216,7 +212,7 @@ Within the Farm Management Information System, imagine that the farmer wants a c
 to set up the system so that the contractor was constantly polling for new information, however hay is not removed very
 frequently so this would be a waste of resources and create a lot of unnecessary data traffic.
 
-The alternative is to create a subscription which will POST a payload to a "well-known" URL whenever a price has
+The alternative is to create a subscription which will POST a payload to a "well-known" URL whenever a value has
 changed. A new subscription can be added by making a POST request to the `/ngsi-ld/v1/subscriptions/` endpoint as shown below:
 
 #### :one: Request:
@@ -224,13 +220,13 @@ changed. A new subscription can be added by making a POST request to the `/ngsi-
 ```console
 curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 -H 'Content-Type: application/ld+json' \
--H 'fiware-service: openiot' \
+-H 'NGSILD-Tenant: openiot' \
 --data-raw '{
-  "description": "Notify me of low stock on Farm:001",
+  "description": "Notify me of low feedstock on Farm:001",
   "type": "Subscription",
   "entities": [{"type": "FillingSensor"}],
   "watchedAttributes": ["filling"],
-  "q": "filling<0.5;controllingAsset==urn:ngsi-ld:Building:farm001",
+  "q": "filling>0.6;filling<0.8;controllingAsset==urn:ngsi-ld:Building:farm001",
   "notification": {
     "attributes": ["filling", "controllingAsset"],
     "format": "keyValues",
@@ -244,18 +240,39 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 ```
 
 The body of the POST request consists of two parts, the first section of the request (consisting of `entities`, `type`, `watchedAttributes` and
-`q`)states that the subscription will be checked whenever the `filling`  attribute of  a **FillingSensor** entity is altered. This is further refined by the `q` parameter so that the actual subscription is only fired for any **FillingSensor** entity linked to the **Building** `urn:ngsi-ld:Building:farm001`  and only when the `filling` attribute drops below 10.51.
+`q`)states that the subscription will be checked whenever the `filling`  attribute of  a **FillingSensor** entity is altered. This is further refined by the `q` parameter so that the actual subscription is only fired for any **FillingSensor** entity linked to the **Building** `urn:ngsi-ld:Building:farm001`  and only when the `filling` attribute drops below 0.8
 
 The notification section of the body states that once the conditions of the subscription have been met, a POST
 request containing all affected **FillingSensor** entities will be sent to the URL
-`http://tutorial:3000/subscription/low-stock-farm001` which is handled by the Farm Management Information System.
+`http://tutorial:3000/subscription/low-stock-farm001` which is handled by the contractor's own system.
 
-Go to the Device Monitor `http://localhost:3000/device/monitor` and start removing hay from the barn. Nothing happens until the barn is half-empty, then a request is sent to
+It should be noted that the subscription is using the `NGSILD-Tenant` header because the IoT Devices have been provisioned using a separate tenant to the buildings for now. Tenants allow for context data to be distributed across separate databases and allow multiple application clients to access the same context broker but keep their own data sets apart.
+
+Go to the Device Monitor `http://localhost:3000/app/farm/urn:ngsi-ld:Building:farm001` and start removing hay from the barn. Nothing happens until the barn is half-empty, then a request is sent to
 `subscription/low-stock-farm001` as shown:
 
 #### `http://localhost:3000/app/monitor`
 
 ![](https://fiware.github.io/tutorials.Subscriptions/img/products-subscription.png)
+
+#### Subscription Payload:
+
+```json
+{
+ "id": "urn:ngsi-ld:Notification:5fd0f3824eb81930c97005d8",
+ "type": "Notification",
+ "subscriptionId": "urn:ngsi-ld:Subscription:5fd0ee554eb81930c97005c1",
+ "notifiedAt": "2020-12-09T15:55:46.520Z",
+ "data": [
+  {
+   "id": "urn:ngsi-ld:Device:filling001",
+   "type": "FillingSensor",
+   "controllingAsset": "urn:ngsi-ld:Building:farm001",
+   "filling": 0.59
+  }
+ ]
+}
+```
 
 Code within the Farm Management Information System handles received the POST request as shown:
 
@@ -284,20 +301,142 @@ This business logic emits socket I/O events to any registered parties (such as t
 
 
 
+#### :two: Request:
+
+This second subsscription will fire when the `filling` level is between 0.6 and 0.4. The `format` attribute has been altered to inform the subscriber using NGSI-LD normalized format.
+
+```console
+curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
+-H 'Content-Type: application/ld+json' \
+-H 'NGSILD-Tenant: openiot' \
+--data-raw '{
+  "description": "Notify me of low feedstock on Farm:001",
+  "type": "Subscription",
+  "entities": [{"type": "FillingSensor"}],
+  "watchedAttributes": ["filling"],
+  "q": "filling>0.4;filling<0.6;controllingAsset==urn:ngsi-ld:Building:farm001",
+  "notification": {
+    "attributes": ["filling", "controllingAsset"],
+    "format": "normalized",
+    "endpoint": {
+      "uri": "http://tutorial:3000/subscription/low-stock-farm001-ngsild",
+      "accept": "application/json"
+    }
+  },
+   "@context": "http://context-provider:3000/data-models/ngsi-context.jsonld"
+}'
+```
 
 
+#### Subscription Payload:
+
+When a `low-stock-farm001-ngsild` event is fired, the response is as shown:
+
+```json
+{
+ "id": "urn:ngsi-ld:Notification:5fd0fa684eb81930c97005f3",
+ "type": "Notification",
+ "subscriptionId": "urn:ngsi-ld:Subscription:5fd0f69b4eb81930c97005db",
+ "notifiedAt": "2020-12-09T16:25:12.193Z",
+ "data": [
+  {
+   "id": "urn:ngsi-ld:Device:filling001",
+   "type": "FillingSensor",
+   "filling": {
+    "type": "Property",
+    "value": 0.25,
+    "unitCode": "C62",
+    "observedAt": "2020-12-09T16:25:12.000Z"
+   },
+   "controllingAsset": {
+    "type": "Relationship",
+    "object": "urn:ngsi-ld:Building:farm001",
+    "observedAt": "2020-12-09T16:25:12.000Z"
+   }
+  }
+ ]
+}
+```
+
+Because the `accept` attribute has been set to `application/json`, the `@context` is sent as a `Link` header rather than an attribute within the payload body.
+
+#### :three: Request:
+
+Context brokers may offer additional custom payload formats (typically prefixed with an `x-`). The Orion-LD broker offers a backwards compatible **NGSI-v2** payload option for legacy systems.
+
+This third subsscription will fire when the `filling` level is below 0.4. The `format` attribute has been altered to inform the subscriber using NGSI-v2 normalized format.
 
 
+```console
+curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
+-H 'Content-Type: application/ld+json' \
+-H 'NGSILD-Tenant: openiot' \
+--data-raw '{
+  "description": "Notify me of low feedstock on Farm:001",
+  "type": "Subscription",
+  "entities": [{"type": "FillingSensor"}],
+  "watchedAttributes": ["filling"],
+  "q": "filling<0.4;controllingAsset==urn:ngsi-ld:Building:farm001",
+  "notification": {
+    "attributes": ["filling", "controllingAsset"],
+    "format": "x-ngsiv2-normalized",
+    "endpoint": {
+      "uri": "http://tutorial:3000/subscription/low-stock-farm001-ngsiv2",
+      "accept": "application/json"
+    }
+  },
+   "@context": "http://context-provider:3000/data-models/ngsi-context.jsonld"
+}'
+```
 
+#### Subscription Payload:
 
+When a `low-stock-farm001-ngsiv2` event is fired, the response is a normalzed NGSI-v2 payload as shown:
 
+```json
+{
+ "subscriptionId": "urn:ngsi-ld:Subscription:5fd1f31e8b9b83697b855a5d",
+ "data": [
+  {
+   "id": "urn:ngsi-ld:Device:filling001",
+   "type": "https://uri.etsi.org/ngsi-ld/default-context/FillingSensor",
+   "https://w3id.org/saref#fillingLevel": {
+    "type": "Property",
+    "value": 0.33,
+    "metadata": {
+     "unitCode":  "C62",
+     "accuracy": {
+      "type": "Property",
+      "value": 0.05
+     },
+     "observedAt": "2020-12-10T10:11:57.000Z"
+    }
+   },
+   "https://uri.etsi.org/ngsi-ld/default-context/controllingAsset": {
+    "type": "Relationship",
+    "value": "urn:ngsi-ld:Building:farm001",
+    "metadata": {
+     "observedAt": "2020-12-10T10:11:57.000Z"
+    }
+   }
+  }
+ ]
+}
+```
 
+As can be seen, by default the attributes are returned using URN long names. It is also possible to request that the Orion-LD context broker pre-applies a compaction operation to the payload.
 
+-  `x-nsgiv2-keyValues` - Key Value pairs with URN attribute names
+-  `x-nsgiv2-keyValues-compacted` - Key Value pairs with short name attribute aliases
+-  `x-ngsiv2-normalized` - NGSI-v2 normalized payload with URN attribute names
+-  `x-ngsiv2-normalized-compacted`- NGSI-v2 normalized payload pairs with short name attribute aliases
+
+The set of available custom formats will vary between Context Brokers.
 
 
 # Subscription CRUD Actions
 
-The **CRUD** operations for subscriptions map on to the expected HTTP verbs under the `/v2/subscriptions/` endpoint.
+The **CRUD** operations for subscriptions map on to the expected HTTP verbs under the `/ngsi-ld/v1/subscriptions/` endpoint.
 
 -   **Create** - HTTP POST
 -   **Read** - HTTP GET
@@ -312,7 +451,7 @@ to be used by the other operation thereafter.
 This example creates a new subscription. The subscription will fire an asynchronous notification to a URL whenever the
 context is changed and the conditions of the subscription - Any Changes to Product prices - are met.
 
-New subscriptions can be added by making a POST request to the /v2/subscriptions/ endpoint.
+New subscriptions can be added by making a POST request to the `/ngsi-ld/v1/subscriptions/` endpoint.
 
 The subject section of the request states that the subscription will be fired whenever the price attribute of any
 Product entity is altered.
@@ -320,79 +459,75 @@ Product entity is altered.
 The notification section of the body states that a POST request containing all affected entities will be sent to the
 `http://tutorial:3000/subscription/price-change` endpoint.
 
-#### :five: Request:
+#### :four: Request:
 
 ```console
-curl -iX POST \
-  --url 'http://localhost:1026/v2/subscriptions' \
-  --header 'content-type: application/json' \
-  --data '{
+curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
+-H 'Content-Type: application/ld+json' \
+--data-raw '{
   "description": "Notify me of all product price changes",
-  "subject": {
-    "entities": [
-      {
-        "idPattern": ".*", "type": "Product"
-      }
-    ],
-     "condition": {
-      "attrs": [ "price" ]
+  "type": "Subscription",
+  "entities": [{"type": "Product"}],
+  "watchedAttributes": ["price"],
+  "notification": {
+    "format": "keyValues",
+    "endpoint": {
+      "uri": "http://tutorial:3000/subscription/price-change",
+      "accept": "application/json"
     }
   },
-  "notification": {
-    "http": {
-      "url": "http://tutorial:3000/subscription/price-change"
-    }
-  }
+   "@context": "http://context-provider:3000/data-models/ngsi-context.jsonld"
 }'
 ```
 
 ### Delete a Subscription
 
-This example deletes the Subscription with `id=5ae079b86e4f353c5163c939` from the context.
+This example deletes the Subscription with `id=urn:ngsi-ld:Subscription:5fd228838b9b83697b855a72` from the context.
 
-Subscriptions can be deleted by making a DELETE request to the `/v2/subscriptions/<subscription-id>` endpoint.
+Subscriptions can be deleted by making a DELETE request to the `/ngsi-ld/v1/subscriptions/<subscription-id>` endpoint.
 
-#### :six: Request:
+#### :five: Request:
 
 ```console
 curl -X DELETE \
-  --url 'http://localhost:1026/v2/subscriptions/5ae079b86e4f353c5163c939'
+  --url 'http://localhost:1026/ngsi-ld/v1/subscriptions/urn:ngsi-ld:Subscription:5fd228838b9b83697b855a72'
 ```
 
 ### Update an Existing Subscription
 
-This example amends an existing subscription with the ID `5ae07c7e6e4f353c5163c93e` and updates the notification URL.
+This example amends an existing subscription with the ID `urn:ngsi-ld:Subscription:5fd228838b9b83697b855a72` and updates the notification URL.
 
-Subscriptions can be updated making a PATCH request to the `/v2/subscriptions/<subscription-id>` endpoint.
+Subscriptions can be updated making a PATCH request to the `/ngsi-ld/v1/subscriptions/<subscription-id>` endpoint.
 
-#### :seven: Request:
+#### :six: Request:
 
 ```console
 curl -iX PATCH \
-  --url 'http://localhost:1026/v2/subscriptions/5ae07c7e6e4f353c5163c93e' \
+  --url 'http://localhost:1026/ngsi-ld/v1/subscriptions/urn:ngsi-ld:Subscription:5fd228838b9b83697b855a72' \
   --header 'content-type: application/json' \
   --data '{
-    "status": "active",
-    "notification": {
-        "http": {
-            "url": "http://tutorial:3000/notify/price-change"
-        }
+  "notification": {
+    "format": "normalized",
+    "endpoint": {
+      "uri": "http://tutorial:3000/subscription/price-change",
+      "accept": "application/json"
     }
+  }
 }'
 ```
 
 ### List all Subscriptions
 
-This example lists all subscriptions by making a GET request to the `/v2/subscriptions/` endpoint.
+This example lists all subscriptions by making a GET request to the `/ngsi-ld/v1/subscriptions/` endpoint.
 
 The notification section of each subscription will also include the last time the conditions of the subscription were
 met, and whether associated the POST action was successful.
 
-#### :eight: Request:
+#### :seven: Request:
 
 ```console
 curl -X GET \
-  --url 'http://localhost:1026/v2/subscriptions'
+  --url 'http://localhost:1026/ngsi-ld/v1/subscriptions/
 ```
 
 ### Read the detail of a Subscription
@@ -402,13 +537,13 @@ This example obtains the full details of a subscription with a given ID.
 The response includes additional details in the notification section showing the last time the conditions of the
 subscription were met, and whether associated the POST action was successful.
 
-Subscription details can be read by making a GET request to the `/v2/subscriptions/<subscription-id>` endpoint.
+Subscription details can be read by making a GET request to the `/ngsi-ld/v1/subscriptions/<subscription-id>` endpoint.
 
-#### :nine: Request:
+#### :eight: Request:
 
 ```console
 curl -X GET \
-  --url 'http://localhost:1026/v2/subscriptions/5aead3361587e1918de90aba'
+  --url 'http://localhost:1026/ngsi-ld/v1/subscriptions/5aead3361587e1918de90aba'
 ```
 
 # Next Steps
@@ -420,4 +555,4 @@ the other [tutorials in this series](https://fiware-tutorials.rtfd.io)
 
 ## License
 
-[MIT](LICENSE) © 2018-2020 FIWARE Foundation e.V.
+[MIT](LICENSE) © 2020 FIWARE Foundation e.V.
