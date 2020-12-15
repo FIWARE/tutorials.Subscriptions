@@ -1,14 +1,131 @@
 {
 	"info": {
-		
+		"_postman_id": "41c2de83-48e2-46bb-9073-2a9fbe4fc5c3",
 		"name": "NGSI-LD Subscriptions",
-		"description": "The tutorial builds on the entities and [Stock Management Frontend](https://github.com/Fiware/tutorials.Subscriptions/tree/master/proxy)\napplication created in the previous [example](https://github.com/Fiware/tutorials.Accessing-Context/) to enable users to understand\nthe [NGSI](https://swagger.lab.fiware.org/?url=https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json)\nSubscribe/Notify paradigm and how to use NGSI subscriptions within their own code.\n\nThe `docker-compose` file for this tutorial can be found on GitHub: \n\n![GitHub](https://fiware.github.io/tutorials.Subscriptions/icon/GitHub-Mark-32px.png) [FIWARE 106: Subscribing to Changes in Context](https://github.com/Fiware/tutorials.Subscriptions)\n\n# Subscribing to Changes of State\n\n> \"Don't call us, we'll call you\"\n>\n> — Dorothy Kilgallen (The Voice Of Broadway)\n\nWithin the FIWARE platform, an entity represents the state of a physical or conceptural object which exists in the real world. \nEvery smart solution needs to know the current state of these object at any given moment in time. \n\nThe context of each of these entities is constantly changing. For example, within the stock management example, the context will\nchange as new stores open up, products are sold, prices change and so on. For a smart solution based on IoT sensor data, this issue\nis even more pressing as the system will constantly be reacting to changes in the real world.\n\nUntil now all the operations we have used to change the state of the system have been **synchronous** - changes have been made by \ndirectly by a user or application and they have been informed of the result. The Orion Context Broker offers also an **asynchronous**\nnotification mechanism - applications can subscribe to changes of context information so that they can\nbe informed when something happens. This means the application does not need to continously poll or repeat query requests.\n\nUse of the subscription mechanism will therefore reduce both the volume of requests and amount of data being passed between components\nwithin the system. This reduction in network traffic will improve the overall responsiveness.\n\n## Entities within a stock management system\n\nThe relationship between our entities is defined as shown:\n\n![](https://fiware.github.io/tutorials.Subscriptions/img/entities.png)\n\n\n## Stock Management Front-End\n\nIn the previous [tutorial](https://github.com/Fiware/tutorials.Accessing-Context/), a simple Node.js Express application was created.\nThis tutorial will use the monitor page to watch the status of recent requests, and a store page to buy products. Once the services\nare running these pages can be accessed from the following URLs:\n\n#### Event Montior\n\nThe event monitor can be found at: `http://localhost:3000/app/monitor`\n\n![FIWARE Monitor](https://fiware.github.io/tutorials.Subscriptions/img/monitor.png)\n\n#### Store 002\n\nStore002 can be found at: `http://localhost:3000/app/store/urn:ngsi-ld:Store:002`\n\n![Store](https://fiware.github.io/tutorials.Subscriptions/img/store2.png)\n\n\n# Architecture\n\nThis application will make use of only one FIWARE component - the [Orion Context Broker](https://catalogue.fiware.org/enablers/publishsubscribe-context-broker-orion-context-broker). Usage of the Orion Context Broker is sufficient for an application to qualify as *“Powered by FIWARE”*.\n\nCurrently, the Orion Context Broker relies on open source [MongoDB](https://www.mongodb.com/) technology to keep\npersistence of the context data it holds. To request context data from external sources, a simple Context Provider NGSI \nproxy has also been added. To visualise and interact with the Context we will add a simple Express application \n\n\nTherefore, the architecture will consist of four elements:\n\n* The Orion Context Broker server which will receive requests using [NGSI](https://swagger.lab.fiware.org/?url=https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json)\n* The underlying MongoDB database associated to the Orion Context Broker server\n* The Context Provider NGSI proxy which will will:\n  + receive requests using [NGSI](https://swagger.lab.fiware.org/?url=https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json)\n  + makes requests to publicly available data sources using their own APIs in a proprietory format \n  + returns context data back to the Orion Context Broker in [NGSI](https://swagger.lab.fiware.org/?url=https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json) format.\n* The Stock Management Frontend which will will:\n  + Display store information\n  + Show which products can be bought at each store\n  + Allow users to \"buy\" products and reduce the stock count.\n\nSince all interactions between the elements are initiated by HTTP requests, the entities can be containerized and run\nfrom exposed ports. \n\n![](https://fiware.github.io/tutorials.Subscriptions/img/architecture.png)\n\nThe necessary configuration information can be seen in the services section of the associated `docker-compose.yml` file. It\nhas been described in a [previous tutorial](https://github.com/Fiware/tutorials.Context-Providers/)\n\n# Prerequisites\n\n## Docker\n\nTo keep things simple both components will be run using [Docker](https://www.docker.com). **Docker** is a container technology\nwhich allows to different components isolated into their respective environments. \n\n* To install Docker on Windows follow the instructions [here](https://docs.docker.com/docker-for-windows/)\n* To install Docker on Mac follow the instructions [here](https://docs.docker.com/docker-for-mac/)\n* To install Docker on Linux follow the instructions [here](https://docs.docker.com/install/)\n\n**Docker Compose** is a tool for defining and running multi-container Docker applications. A \n[YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Entity-Relationships/master/docker-compose.yml) is used\nconfigure the required services for the application. This means all container sevices can be brought up in a single \ncommmand. Docker Compose is installed by default  as part of Docker for Windows and  Docker for Mac, however Linux users \nwill need to follow the instructions found  [here](https://docs.docker.com/compose/install/)\n\n## Cygwin \n\nWe will start up our services using a simple bash script. Windows users should download [cygwin](www.cygwin.com) to provide a\ncommand line functionality similar to a Linux distribution on Windows. \n\n# Start Up\n\nAll services can be initialised from the command line by running the bash script provided within the repository:\n\n```console\n./services create; ./services start;\n```\n\nThis command will also import seed data from the previous [Stock Management example](https://github.com/Fiware/tutorials.Context-Providers) on startup.\n\n>:information_source: **Note:** If you want to clean up and start over again you can do so with the following command:\n>\n>```console\n>./services stop\n>``` \n>\n\n#  Using Subscriptions\n\nTo follow the tutorial correctly please ensure you have the follow pages available on tabs in your browser before you enter any cUrl commands.\n\n#### Event Monitor\n\nThe event monitor can be found at: `http://localhost:3000/app/monitor`\n\n#### Stores\n\nThe stores can be found at:\n\n* Store 1 -  `http://localhost:3000/app/store/urn:ngsi-ld:Store:001`\n* Store 2 -  `http://localhost:3000/app/store/urn:ngsi-ld:Store:002`\n\n\n## Setting up a simple Subscription \n\nWithin the stock management example, imagine that the regional manager of the company wants to alter the price of a product. \nThe new price should immediately be reflected at the till in all stores within the system. It would be possible to set up the\nsystem so that it was constantly polling for new information, however prices are not changed very frequently so this would be\na waste of resources and create a lot of unnecessary data traffic.\n\nThe alternative is to create a subscription which will POST a payload to a \"well-known\" URL whenever a price has changed. \nA new subscription can be added by making a POST request to the `/v2/subscriptions/` endpoint as shown below:\n\n#### Request:\n\n```console\ncurl --request POST \\\n  --url 'http://{{orion}}/v2/subscriptions/' \\\n  --header 'content-type: application/json' \\\n  --data '{\n  \"description\": \"Notify me of all product price changes\",\n  \"subject\": {\n    \"entities\": [{\"idPattern\": \".*\", \"type\": \"Product\"}],\n    \"condition\": { \n      \"attrs\": [ \"price\" ]\n    }\n  },\n  \"notification\": {\n    \"http\": {\n      \"url\": \"http://context-provider:3000/subscription/price-change\"\n    }\n  }\n}'\n```\n\n\nThe body of the POST request consists of two parts, the `subject` section of the request (consisting of `entities` and `conditions`)states that the subscription will be fired whenever the `price` attribute of any **Product** entity is altered. The notification section of the body states that once the conditions of the subscription have been met, a POST request containing all affected **Product** entities will be sent to the URL `http://context-provider:3000/subscription/price-change` which is handled by the stock management front-end application.\n\nFor a first run, when the subscription is created, the Orion Context Broker runs the `condition` test, and since it has not been run before makes the assumption that all products have been changed. Therefore a request is sent to `subscription/price-change` immediately as shown:\n\n#### `http://localhost:3000/app/monitor`\n\n![](https://fiware.github.io/tutorials.Subscriptions/img/products-subscription.png)\n\nCode within the Stock Management Front-End application handles received the POST request as shown:\n\n```javascript\nrouter.post('/subscription/:type', (req, res) => {\n    _.forEach(req.body.data, item => {\n        broadcastEvents(req, item, ['refStore', 'refProduct', 'refShelf', 'type']);\n    });\n    res.status(204).send();\n});\n\nfunction broadcastEvents(req, item, types) {\n    const message = req.params.type + ' received';\n    _.forEach(types, type => {\n        if (item[type]) {\n            req.app.get('io').emit(item[type], message);\n        }\n    });\n}\n```\n\nThis business logic emits socket io events to any registered parties (such as the cash till)\n\nThe cash till has been set to reload if is receives an event - however in this case the prices have not changed yet, so the product prices\nremain the same - for example a bottle of beer remains at 0.99€\n\n#### `http://localhost:3000/app/store/urn:ngsi-ld:Store:002`\n\n![](https://fiware.github.io/tutorials.Subscriptions/img/beer-99.png)\n\nLet's reduce the price of a bottle of beer to 0.89€. This can't be done programmatically yet, so it has to be done with a curl command\nas shown:\n\n\n```console\ncurl --request PUT \\\n  --url 'http://{{orion}}/v2/entities/urn:ngsi-ld:Product:001/attrs/price/value' \\\n  --header 'Content-Type: text/plain' \\\n  --data 89\n```\n\nWhenever an attribute of the **Product** entity is updated, the Orion Context Broker checks for any existing subscriptions \n(which exist for that entity) and  applies the `condition` test. This time only one **Product** entity has changed since the last run therefore a POST request is sent to `subscription/price-change` - which only contains one **Product** in the body:\n\n#### `http://localhost:3000/app/monitor`\n\n![](https://fiware.github.io/tutorials.Subscriptions/img/price-change.png)\n\nThe business logic of the Stock Management Front End again emits socket io events to any registered parties (such as the cash till)\nand since the price has changed the till now displays a bottle of beer at 0.89€\n\n#### `http://localhost:3000/app/store/urn:ngsi-ld:Store:002`\n\n![](https://fiware.github.io/tutorials.Subscriptions/img/beer-89.png)   \n\n\n##  Reducing Payload with  `attrs` and `attrsFormat`\n\nWith the previous example the full verbose data from each affected **Product** entity was sent with the POST notification.\nThis is not very efficient. \n\nThe amount of data to passed can be reduced by adding an `attrs` attribute which will specify a list of attributes to be \nincluded in notification messages - other attributes are ignored\n\n>**Tip** an `exceptAttrs` attribute also exists to return all attributes except for those on the exclude list.\n> `attrs` and `exceptAttrs` cannot be used simualtaneously in the same subscription\n\n\nThe `attrsFormat` attribute specifies how the entities are represented in notifications. A verbose response is returned by \ndefault `keyValues` and `values` work in the same manner as a `v2/entities` GET request.\n\n##  Reducing Scope with  `expression` \n\nLets create two more subscriptions which will only fire under specific conditions - and will only return key-value pairs for\nthe entity affected. Imagine that the warehouse of each store now wants to be informed whenever the amount of product on the \nshelf falls below a threshold level. \n\nThe subscription is tested whenever the `shelfCount` of an **InventoryItem** is updated, however the addition of an `expression` \nattribute will mean that the subscription will only fire if the expression returns valid data - for example\n`\"q\": \"shelfCount<10;refStore==urn:ngsi-ld:Store:001` tests that the `shelfCount` is below ten and that the item is in store 001.\nThis means that we can set up out business logic so that other stores wont be bothered by notifications.\n\n\n\n#### Request:\n\nThe following command is a low stock notification for Store 001\n\n```console\ncurl --request POST \\\n  --url 'http://{{orion}}/v2/subscriptions' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"description\": \"Notify me of low stock in Store 001\",\n  \"subject\": {\n    \"entities\": [{\"idPattern\": \".*\",\"type\": \"InventoryItem\"}],\n    \"condition\": {\n      \"attrs\": [\"shelfCount\"],\n      \"expression\": {\"q\": \"shelfCount<10;refStore==urn:ngsi-ld:Store:001\"}\n    }\n  },\n  \"notification\": {\n    \"http\": {\n      \"url\": \"http://context-provider:3000/subscription/low-stock-store001\"\n    },\n    \"attrsFormat\" : \"keyValues\"\n  }\n}'\n```\n\n\n#### Request:\n\nThe following command is a low stock notification for Store 002\n\n```console\ncurl --request POST \\\n  --url 'http://{{orion}}/v2/subscriptions' \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"description\": \"Notify me of low stock in Store 002\",\n  \"subject\": {\n    \"entities\": [{\"idPattern\": \".*\", \"type\": \"InventoryItem\"}],\n    \"condition\": {\n      \"attrs\": [\"shelfCount\"],\n      \"expression\": {\"q\": \"shelfCount<10;refStore==urn:ngsi-ld:Store:002\"}\n    }\n  },\n  \"notification\": {\n    \"http\": {\n      \"url\": \"http://context-provider:3000/subscription/low-stock-store002\"\n    },\n    \"attrsFormat\" : \"keyValues\"\n  }\n}'\n```\n\nThe two requests are very similiar. It is merely the `url` and the `expresssion` attributes which differ. The first cUrl command\nwill only fire if the affected **InventoryItem** entity has a reference to Store 001 and the second one if the affected\n**InventoryItem** entity has a reference to Store 001. Obviously the URLs must be different so that the business logic of our\napplication is able to react diffferently to each request.\n\n> **Tip**: You can set stock levels directly by making a PUT request as shown:\n>\n>```console\n>curl --request PUT \\\n>  --url 'http://{{orion}}/v2/entities/urn:ngsi-ld:InventoryItem:005/attrs/shelfCount/value' \\\n>  --header 'Content-Type: text/plain' \\\n>  --data 5\n>```\n\nIf you now buy items from Store 002, once an **InventoryItem** dips below ten items the following occurs\n\n#### `http://localhost:3000/app/monitor`\n![](https://fiware.github.io/tutorials.Subscriptions/img/low-stock-monitor.png)\n\nAs you can see the key value pairs of the affected  **InventoryItem**  have been passed to the Stock Managment Front End.\n\nIf you look at the store itself:\n\n#### `http://localhost:3000/app/store/urn:ngsi-ld:Store:002`\n![](https://fiware.github.io/tutorials.Subscriptions/img/low-stock-warehouse.png)\n\nAn alert has been raised by the business logic within the application.\n",
+		"description": "This tutorial teaches NGSI-LD users about how to create and manage context data subscriptions. The tutorial builds on the\nentities and [Smart Farm](https://github.com/FIWARE/tutorials.Getting-Started/tree/NGSI-LD)\napplication created in the previous examples to enable users to\nunderstand the [NGSI-LD](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.03.01_60/gs_cim009v010301p.pdf) Subscribe/Notify paradigm and how to\nuse NGSI subscriptions within their own code.\n\nThe tutorial refers to devices and actions made within the browser combined with [cUrl](https://ec.haxx.se/)\ncommands. The cUrl commands are also available as\n[Postman documentation](https://github.com/FIWARE/tutorials.Subscriptions/tree/NGSI-LD).\n\nThe `docker-compose` file for this tutorial can be found on GitHub: \n\n![GitHub](https://fiware.github.io/tutorials.Subscriptions/icon/GitHub-Mark-32px.png) [FIWARE 106: Subscribing to Changes in Context](https://github.com/FIWARE/tutorials.Subscriptions/tree/NGSI-LD)\n\n# Subscribing to Changes of State\n\n> 'Another sandwich!' said the King.\n>\n> 'There's nothing but hay left now,' the Messenger said, peeping into the bag.\n>\n> 'Hay, then,' the King murmured in a faint whisper.\n>\n> Alice was glad to see that it revived him a good deal. 'There's nothing like eating hay when you're faint,' he remarked to her, as he munched away.\n>\n> — Lewis Carroll (Through the Looking-Glass and What Alice Found There)\n\nWithin the FIWARE platform, an entity represents the state of a physical or conceptual object which exists in the real\nworld. Every smart solution needs to know the current state of these object at any given moment in time.\n\nThe context of each of these entities is constantly changing. For example, within the smart farm example, the\ncontext will change as animals and vehicles move, soil dries out, tasks are allocated on the farm and completed and so on. For a smart solution based on IoT\nsensor data, this issue is even more pressing as the system will constantly be reacting to changes in the real world.\n\nUntil now all the operations we have used to change the state of the system have been **synchronous** - changes have\nbeen made by directly by a user or application and they have been informed of the result. The Orion Context Broker\noffers also an **asynchronous** notification mechanism - applications can subscribe to changes of context information so\nthat they can be informed when something happens. This means the application does not need to continuously poll or\nrepeat query requests.\n\nUse of the subscription mechanism will therefore reduce both the volume of requests and amount of data being passed\nbetween components within the system. This reduction in network traffic will improve the overall responsiveness.\n\n## Entities within a smart Agrifood system\n\nThe relationship between our entities is defined as shown:\n\n![](https://fiware.github.io/tutorials.Subscriptions/img/ngsi-ld-entities.png)\n\n## Farm Management Information System frontend\n\nIn a previous tutorial, a simple Node.js Express application\nwas created. This tutorial will use the monitor page to watch the status of recent requests, and the devices page to alter the machines on the farm. Once the services are running these pages can be accessed from the following URLs:\n\n#### Event Monitor\n\nThe event monitor can be found at: `http://localhost:3000/app/monitor`\n\n![FIWARE Monitor](https://fiware.github.io/tutorials.Subscriptions/img/monitor.png)\n\n#### Device Monitor\n\nFor the purpose of this tutorial, a series of dummy agricultural IoT devices have been created, which will be attached\nto the context broker. Details of the architecture and protocol used can be found in the\n[IoT Sensors tutorial](https://github.com/FIWARE/tutorials.IoT-Sensors/tree/NGSI-LD) The state of each device can be\nseen on the UltraLight device monitor web page found at: `http://localhost:3000/device/monitor`\n\n![FIWARE Monitor](https://fiware.github.io/tutorials.Subscriptions/img/farm-devices.png)\n\n# Architecture\n\nThis application will make use of two FIWARE components - the\n[Orion-LD Context Broker](https://fiware-orion.readthedocs.io/en/latest/)and the\n[IoT Agent for UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/). Usage of any NGSI-LD Context Broker is sufficient\nfor an application to qualify as _“Powered by FIWARE”_.\n\nCurrently, the Orion-LD Context Broker relies on open source [MongoDB](https://www.mongodb.com/) technology to keep\npersistence of the context data it holds. To request context data from external sources, a simple **Context Provider\nNGSI proxy** has also been added. To visualize and interact with the Context we will add a simple Express **Frontend**\napplication\n\nTherefore, the architecture will consist of four elements:\n\n-   The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) which will receive requests using\n    [NGSI-LD](https://forge.etsi.org/swagger/ui/?url=https://forge.etsi.org/gitlab/NGSI-LD/NGSI-LD/raw/master/spec/updated/full_api.json)\n-   The FIWARE [IoT Agent for UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/) which will receive\n    southbound requests using\n    [NGSI-LD](https://forge.etsi.org/swagger/ui/?url=https://forge.etsi.org/gitlab/NGSI-LD/NGSI-LD/raw/master/spec/updated/full_api.json)\n    and convert them to\n    [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)\n    commands for the devices\n-   The underlying [MongoDB](https://www.mongodb.com/) database:\n    -   Used by the Orion Context Broker to hold context data information such as data entities, subscriptions and\n        registrations\n-   The **Tutorial Application** does the following:\n    -   Offers static `@context` files defining the context entities within the system.\n    -   Acts as set of dummy [agricultural IoT devices](https://github.com/FIWARE/tutorials.IoT-Sensors/tree/NGSI-LD)\n        using the\n        [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)\n        protocol running over HTTP.\n\nSince all interactions between the elements are initiated by HTTP requests, the entities can be containerized and run\nfrom exposed ports.\n\n![](https://fiware.github.io/tutorials.Subscriptions/img/architecture-ld.png)\n\nThe necessary configuration information can be seen in the services section of the associated `docker-compose.yml` file.\nIt has been described in a previous tutorial\n\n# Prerequisites\n\n## Docker\n\nTo keep things simple both components will be run using [Docker](https://www.docker.com). **Docker** is a container\ntechnology which allows to different components isolated into their respective environments.\n\n-   To install Docker on Windows follow the instructions [here](https://docs.docker.com/docker-for-windows/)\n-   To install Docker on Mac follow the instructions [here](https://docs.docker.com/docker-for-mac/)\n-   To install Docker on Linux follow the instructions [here](https://docs.docker.com/install/)\n\n**Docker Compose** is a tool for defining and running multi-container Docker applications. A\n[YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Entity-Relationships/master/docker-compose.yml) is used\nconfigure the required services for the application. This means all container services can be brought up in a single\ncommand. Docker Compose is installed by default as part of Docker for Windows and Docker for Mac, however Linux users\nwill need to follow the instructions found [here](https://docs.docker.com/compose/install/)\n\nYou can check your current **Docker** and **Docker Compose** versions using the following commands:\n\n```console\ndocker-compose -v\ndocker version\n```\n\nPlease ensure that you are using Docker version 18.03 or higher and Docker Compose 1.21 or higher and upgrade if\nnecessary.\n\n## Cygwin\n\nWe will start up our services using a simple bash script. Windows users should download [cygwin](http://www.cygwin.com/)\nto provide a command-line functionality similar to a Linux distribution on Windows.\n\n# Start Up\n\nAll services can be initialized from the command-line by running the bash script provided within the repository. Please\nclone the repository and create the necessary images by running the commands as shown:\n\n```console\ngit clone https://github.com/FIWARE/tutorials.Subscriptions.git\ncd tutorials.Subscriptions\ngit checkout NGSI-LD\n\n./services create;\n./services orion;\n```\n\nThis command will also import seed data from the previous\nFarm Management Information System example on startup, and provision a series of dummy devices on the farm.\n\n> :information_source: **Note:** If you want to clean up and start over again you can do so with the following command:\n>\n> ```console\n> ./services stop\n> ```\n\n# Using Subscriptions\n\nTo follow the tutorial correctly please ensure you have the follow two pages available on separate tabs in your browser before you\nenter any cUrl commands.\n\n#### FMIS System\n\nDetails of various buildings around the farm can be found in the tutorial application. Open `http://localhost:3000/app/farm/urn:ngsi-ld:Building:farm001` to display a building with an associated filling sensor and thermostat.\n\n![](https://fiware.github.io/tutorials.Subscriptions/img/fmis.png)\n\n#### Event Monitor\n\nThe event monitor can be found at: `http://localhost:3000/app/monitor`.\n\n![](https://fiware.github.io/tutorials.Subscriptions/img/low-stock-farm.png)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Subscription Actions",
-			"description": "A subscription notifies another service by making a POST request to a specified URL when the conditions of the subscription have been met.\n\nThe **CRUD** operations for subscriptions map on to the expected HTTP verbs under the `/v2/subscriptions/` endpoint.\n\n* **Create** - HTTP POST\n* **Read** - HTTP GET\n* **Update** - HTTP PATCH\n* **Delete** - HTTP DELETE\n\nThe `<subscription-id>` is auto generated when the subscription is created and returned in Header\nof the POST response to be used by the other operation thereafter.\n",
+			"name": "Setting up a simple Subscription",
+			"item": [
+				{
+					"name": "Key-Values Payload",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/ld+json",
+								"type": "text"
+							},
+							{
+								"key": "NGSILD-Tenant",
+								"value": "openiot",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"description\": \"Notify me of low feedstock on Farm:001\",\n  \"type\": \"Subscription\",\n  \"entities\": [{\"type\": \"FillingSensor\"}],\n  \"watchedAttributes\": [\"filling\"],\n  \"q\": \"filling>0.6;filling<0.8;controllingAsset==urn:ngsi-ld:Building:farm001\",\n  \"notification\": {\n    \"attributes\": [\"filling\", \"controllingAsset\"],\n    \"format\": \"keyValues\",\n    \"endpoint\": {\n      \"uri\": \"http://tutorial:3000/subscription/low-stock-farm001\",\n      \"accept\": \"application/json\"\n    }\n  },\n   \"@context\": \"http://context-provider:3000/data-models/ngsi-context.jsonld\"\n}"
+						},
+						"url": {
+							"raw": "http://{{orion}}/ngsi-ld/v1/subscriptions/",
+							"protocol": "http",
+							"host": [
+								"{{orion}}"
+							],
+							"path": [
+								"ngsi-ld",
+								"v1",
+								"subscriptions",
+								""
+							]
+						},
+						"description": "A new subscription can be added by making a POST request to the `/ngsi-ld/v1/subscriptions/` endpoint as shown below.\n\nThe body of the POST request consists of two parts, the first section of the request (consisting of `entities`, `type`, `watchedAttributes` and\n`q`)states that the subscription will be checked whenever the `filling`  attribute of  a **FillingSensor** entity is altered. This is further refined by the `q` parameter so that the actual subscription is only fired for any **FillingSensor** entity linked to the **Building** `urn:ngsi-ld:Building:farm001`  and only when the `filling` attribute drops below 0.8\n\nThe notification section of the body states that once the conditions of the subscription have been met, a POST\nrequest containing all affected **FillingSensor** entities will be sent to the URL\n`http://tutorial:3000/subscription/low-stock-farm001` which is handled by the contractor's own system.\n\nIt should be noted that the subscription is using the `NGSILD-Tenant` header because the IoT Devices have been provisioned using a separate tenant to the buildings for now. Tenants allow for context data to be distributed across separate databases and allow multiple application clients to access the same context broker but keep their own data sets apart.\n\nGo to the Device Monitor `http://localhost:3000/app/farm/urn:ngsi-ld:Building:farm001` and start removing hay from the barn. Nothing happens until the barn is half-empty, then a request is sent to\n`subscription/low-stock-farm001` as shown:\n\n#### `http://localhost:3000/app/monitor`\n\n![](https://fiware.github.io/tutorials.Subscriptions/img/low-stock-farm.png)\n\n#### Subscription Payload:\n\n```json\n{\n \"id\": \"urn:ngsi-ld:Notification:5fd0f3824eb81930c97005d8\",\n \"type\": \"Notification\",\n \"subscriptionId\": \"urn:ngsi-ld:Subscription:5fd0ee554eb81930c97005c1\",\n \"notifiedAt\": \"2020-12-09T15:55:46.520Z\",\n \"data\": [\n  {\n   \"id\": \"urn:ngsi-ld:Device:filling001\",\n   \"type\": \"FillingSensor\",\n   \"controllingAsset\": \"urn:ngsi-ld:Building:farm001\",\n   \"filling\": 0.59\n  }\n ]\n}\n```\n\nCode within the Farm Management Information System handles received the POST request as shown:\n\n```javascript\nconst NOTIFY_ATTRIBUTES = ['controllingAsset', 'type', 'filling', 'humidity', 'temperature'];\n\nrouter.post('/subscription/:type', (req, res) => {\n    monitor('notify', req.params.type + ' received', req.body);\n    _.forEach(req.body.data, (item) => {\n        broadcastEvents(req, item, NOTIFY_ATTRIBUTES);\n    });\n    res.status(204).send();\n});\n\nfunction broadcastEvents(req, item, types) {\n    const message = req.params.type + \" received\";\n    _.forEach(types, (type) => {\n        if (item[type]) {\n            req.app.get(\"io\").emit(item[type], message);\n        }\n    });\n}\n```\n\nThis business logic emits socket I/O events to any registered parties (such as the contractor who will then refill the barn.)"
+					},
+					"response": []
+				},
+				{
+					"name": "NGSI-LD normalized Payload",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/ld+json",
+								"type": "text"
+							},
+							{
+								"key": "NGSILD-Tenant",
+								"value": "openiot",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"description\": \"Notify me of low feedstock on Farm:001\",\n  \"type\": \"Subscription\",\n  \"entities\": [{\"type\": \"FillingSensor\"}],\n  \"watchedAttributes\": [\"filling\"],\n  \"q\": \"filling>0.4;filling<0.6;controllingAsset==urn:ngsi-ld:Building:farm001\",\n  \"notification\": {\n    \"attributes\": [\"filling\", \"controllingAsset\"],\n    \"format\": \"normalized\",\n    \"endpoint\": {\n      \"uri\": \"http://tutorial:3000/subscription/low-stock-farm001-ngsild\",\n      \"accept\": \"application/json\"\n    }\n  },\n   \"@context\": \"http://context-provider:3000/data-models/ngsi-context.jsonld\"\n}"
+						},
+						"url": {
+							"raw": "http://{{orion}}/ngsi-ld/v1/subscriptions/",
+							"protocol": "http",
+							"host": [
+								"{{orion}}"
+							],
+							"path": [
+								"ngsi-ld",
+								"v1",
+								"subscriptions",
+								""
+							]
+						},
+						"description": "This second subscription will fire when the `filling` level is between 0.6 and 0.4. The `format` attribute has been altered to inform the subscriber using NGSI-LD normalized format.\n\n#### Subscription Payload:\n\nWhen a `low-stock-farm001-ngsild` event is fired, the response is as shown:\n\n```json\n{\n \"id\": \"urn:ngsi-ld:Notification:5fd0fa684eb81930c97005f3\",\n \"type\": \"Notification\",\n \"subscriptionId\": \"urn:ngsi-ld:Subscription:5fd0f69b4eb81930c97005db\",\n \"notifiedAt\": \"2020-12-09T16:25:12.193Z\",\n \"data\": [\n  {\n   \"id\": \"urn:ngsi-ld:Device:filling001\",\n   \"type\": \"FillingSensor\",\n   \"filling\": {\n    \"type\": \"Property\",\n    \"value\": 0.25,\n    \"unitCode\": \"C62\",\n    \"observedAt\": \"2020-12-09T16:25:12.000Z\"\n   },\n   \"controllingAsset\": {\n    \"type\": \"Relationship\",\n    \"object\": \"urn:ngsi-ld:Building:farm001\",\n    \"observedAt\": \"2020-12-09T16:25:12.000Z\"\n   }\n  }\n ]\n}\n```\n\nBecause the `accept` attribute has been set to `application/json`, the `@context` is sent as a `Link` header rather than an attribute within the payload body."
+					},
+					"response": []
+				},
+				{
+					"name": "NGSI-v2 normalized Payload",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/ld+json",
+								"type": "text"
+							},
+							{
+								"key": "NGSILD-Tenant",
+								"value": "openiot",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"description\": \"Notify me of low feedstock on Farm:001\",\n  \"type\": \"Subscription\",\n  \"entities\": [{\"type\": \"FillingSensor\"}],\n  \"watchedAttributes\": [\"filling\"],\n  \"q\": \"filling<0.4;controllingAsset==urn:ngsi-ld:Building:farm001\",\n  \"notification\": {\n    \"attributes\": [\"filling\", \"controllingAsset\"],\n    \"format\": \"x-ngsiv2-normalized\",\n    \"endpoint\": {\n      \"uri\": \"http://tutorial:3000/subscription/low-stock-farm001-ngsiv2\",\n      \"accept\": \"application/json\"\n    }\n  },\n   \"@context\": \"http://context-provider:3000/data-models/ngsi-context.jsonld\"\n}"
+						},
+						"url": {
+							"raw": "http://{{orion}}/ngsi-ld/v1/subscriptions/",
+							"protocol": "http",
+							"host": [
+								"{{orion}}"
+							],
+							"path": [
+								"ngsi-ld",
+								"v1",
+								"subscriptions",
+								""
+							]
+						},
+						"description": "Context brokers may offer additional custom payload formats (typically prefixed with an `x-`). The Orion-LD broker offers a backwards compatible **NGSI-v2** payload option for legacy systems.\n\nThis third subscription will fire when the `filling` level is below 0.4. The `format` attribute has been altered to inform the subscriber using NGSI-v2 normalized format.\n\n#### Subscription Payload:\n\nWhen a `low-stock-farm001-ngsiv2` event is fired, the response is a normalzed NGSI-v2 payload as shown:\n\n```json\n{\n \"subscriptionId\": \"urn:ngsi-ld:Subscription:5fd1f31e8b9b83697b855a5d\",\n \"data\": [\n  {\n   \"id\": \"urn:ngsi-ld:Device:filling001\",\n   \"type\": \"https://uri.etsi.org/ngsi-ld/default-context/FillingSensor\",\n   \"https://w3id.org/saref#fillingLevel\": {\n    \"type\": \"Property\",\n    \"value\": 0.33,\n    \"metadata\": {\n     \"unitCode\":  \"C62\",\n     \"accuracy\": {\n      \"type\": \"Property\",\n      \"value\": 0.05\n     },\n     \"observedAt\": \"2020-12-10T10:11:57.000Z\"\n    }\n   },\n   \"https://uri.etsi.org/ngsi-ld/default-context/controllingAsset\": {\n    \"type\": \"Relationship\",\n    \"value\": \"urn:ngsi-ld:Building:farm001\",\n    \"metadata\": {\n     \"observedAt\": \"2020-12-10T10:11:57.000Z\"\n    }\n   }\n  }\n ]\n}\n```\n\nAs can be seen, by default the attributes are returned using URN long names. It is also possible to request that the Orion-LD context broker pre-applies a compaction operation to the payload.\n\n-  `x-nsgiv2-keyValues` - Key Value pairs with URN attribute names\n-  `x-nsgiv2-keyValues-compacted` - Key Value pairs with short name attribute aliases\n-  `x-ngsiv2-normalized` - NGSI-v2 normalized payload with URN attribute names\n-  `x-ngsiv2-normalized-compacted`- NGSI-v2 normalized payload pairs with short name attribute aliases\n\nThe set of available custom formats will vary between Context Brokers."
+					},
+					"response": []
+				}
+			],
+			"description": "Within the Farm Management Information System, imagine that the farmer wants a contractor to refill his barn with hay when the level has reduced below a set level. It would be possible\nto set up the system so that the contractor was constantly polling for new information, however hay is not removed very\nfrequently so this would be a waste of resources and create a lot of unnecessary data traffic.\n\nThe alternative is to create a subscription which will POST a payload to a \"well-known\" URL whenever a value has\nchanged.",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Subscription CRUD Actions",
 			"item": [
 				{
 					"name": "Create a Subscription (Product)",
@@ -17,26 +134,33 @@
 						"header": [
 							{
 								"key": "content-type",
-								"value": "application/json"
+								"value": "application/ld+json"
+							},
+							{
+								"key": "NGSILD-Tenant",
+								"value": "openiot",
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"description\": \"Notify me of all product price changes\",\n  \"subject\": {\n    \"entities\": [\n      {\n        \"idPattern\": \".*\", \"type\": \"Product\"\n      }\n    ],\n     \"condition\": {\n      \"attrs\": [ \"price\" ]\n    }\n  },\n  \"notification\": {\n    \"http\": {\n      \"url\": \"http://context-provider:3000/subscription/price-change\"\n    }\n  }\n}"
+							"raw": "{\n  \"description\": \"Notify me of all product price changes\",\n  \"type\": \"Subscription\",\n  \"entities\": [{\"type\": \"Product\"}],\n  \"watchedAttributes\": [\"price\"],\n  \"notification\": {\n    \"format\": \"keyValues\",\n    \"endpoint\": {\n      \"uri\": \"http://tutorial:3000/subscription/price-change\",\n      \"accept\": \"application/json\"\n    }\n  },\n   \"@context\": \"http://context-provider:3000/data-models/ngsi-context.jsonld\"\n}"
 						},
 						"url": {
-							"raw": "http://{{orion}}/v2/subscriptions/",
+							"raw": "http://{{orion}}/ngsi-ld/v1/subscriptions/",
 							"protocol": "http",
 							"host": [
 								"{{orion}}"
 							],
 							"path": [
-								"v2",
+								"ngsi-ld",
+								"v1",
 								"subscriptions",
 								""
 							]
 						},
-						"description": "This example creates a new subscription. The subscription will fire an asynchronous notification to a URL\nwhenever the context is changed and the conditions of the subscription - *Any Changes to Product prices* - are met.\n\nNew subscriptions can be added by making a POST request to the `/v2/subscriptions/` endpoint.\n\nThe `subject` section of the request states that the subscription will be fired whenever the `price` attribute of\nany **Product** entity is altered.\n\nThe `notification` section of the body states that a POST request containing all affected entities will\nbe sent to the `http://context-provider:3000/subscription/price-change` endpoint.\n\n\nSubscription ids are auto-generated when the subscription is created and returned in the header of the response.\n\n---\nSubsequent requests will create duplicate subscriptions"
+						"description": "This example creates a new subscription. The subscription will fire an asynchronous notification to a URL whenever the\ncontext is changed and the conditions of the subscription - Any Changes to Product prices - are met.\n\nNew subscriptions can be added by making a POST request to the `/ngsi-ld/v1/subscriptions/` endpoint.\n\nThe subject section of the request states that the subscription will be fired whenever the price attribute of any\nProduct entity is altered.\n\nThe notification section of the body states that a POST request containing all affected entities will be sent to the\n`http://tutorial:3000/subscription/price-change` endpoint."
 					},
 					"response": []
 				},
@@ -44,25 +168,32 @@
 					"name": "Delete a Subscription",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "NGSILD-Tenant",
+								"value": "openiot",
+								"type": "text",
+								"disabled": true
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}:1026/v2/subscriptions/5ae079b86e4f353c5163c939",
+							"raw": "http://{{orion}}/ngsi-ld/v1/subscriptions/urn:ngsi-ld:Subscription:5fd8a6ff9d82fd9d6ab1ce75",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"{{orion}}"
 							],
-							"port": "1026",
 							"path": [
-								"v2",
+								"ngsi-ld",
+								"v1",
 								"subscriptions",
-								"5ae079b86e4f353c5163c939"
+								"urn:ngsi-ld:Subscription:5fd8a6ff9d82fd9d6ab1ce75"
 							]
 						},
-						"description": "This example deletes the Subscription with `id=5ae079b86e4f353c5163c939` from the context.\n\nSubscriptions can be deleted by making a DELETE request to the `/v2/subscriptions/<subscription-id>` endpoint.\n\nThe Subscription id had been auto-generated when the subscription was created.\n\n---\nSubsequent requests using the same `id` will result in an error response since the subscription no longer exists"
+						"description": "This example deletes the Subscription with `id=urn:ngsi-ld:Subscription:5fd8a6ff9d82fd9d6ab1ce75` from the context.\n\nSubscriptions can be deleted by making a DELETE request to the `/ngsi-ld/v1/subscriptions/<subscription-id>` endpoint.\n"
 					},
 					"response": []
 				},
@@ -74,26 +205,32 @@
 							{
 								"key": "content-type",
 								"value": "application/json"
+							},
+							{
+								"key": "NGSILD-Tenant",
+								"value": "openiot",
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"status\": \"active\",\n    \"notification\": {\n        \"http\": {\n            \"url\": \"http://context-provider:3000/notify/price-change\"\n        }\n    }\n}"
+							"raw": "{\n    \"notification\": {\n        \"format\": \"normalized\",\n        \"endpoint\": {\n            \"uri\": \"http://tutorial:3000/subscription/price-change\",\n            \"accept\": \"application/json\"\n        }\n    }\n}"
 						},
 						"url": {
-							"raw": "http://{{host}}:1026/v2/subscriptions/5ae07c7e6e4f353c5163c93e",
+							"raw": "http://{{orion}}/ngsi-ld/v1/subscriptions/urn:ngsi-ld:Subscription:5fd8a7259d82fd9d6ab1ce76",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"{{orion}}"
 							],
-							"port": "1026",
 							"path": [
-								"v2",
+								"ngsi-ld",
+								"v1",
 								"subscriptions",
-								"5ae07c7e6e4f353c5163c93e"
+								"urn:ngsi-ld:Subscription:5fd8a7259d82fd9d6ab1ce76"
 							]
 						},
-						"description": "This example amends an existing subscription with the id `5ae07c7e6e4f353c5163c93e` and updates the `notification` URL.\n\nSubscriptions can be updated making a PATCH request to the `/v2/subscriptions/<subscription-id>` endpoint.\n\nThe Subscription id had been auto-generated when the subscription was created."
+						"description": "This example amends an existing subscription with the ID `urn:ngsi-ld:Subscription:5fd8a6ff9d82fd9d6ab1ce75` and updates the notification URL.\n\nSubscriptions can be updated making a PATCH request to the `/ngsi-ld/v1/subscriptions/<subscription-id>` endpoint."
 					},
 					"response": []
 				},
@@ -101,24 +238,28 @@
 					"name": "List all Subscriptions",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"subject\": {\n        \"entities\": [{\n          \"id\": \"\"  \n        }],\n        \"condition\": {\n            \"attrs\": [\"capacity\"]\n        }\n    },\n    \"notification\": {\n        \"http\": {\n            \"url\": \"http://localhost:8000\"\n        }\n    }\n}"
-						},
+						"header": [
+							{
+								"key": "NGSILD-Tenant",
+								"value": "openiot",
+								"type": "text",
+								"disabled": true
+							}
+						],
 						"url": {
-							"raw": "http://{{orion}}/v2/subscriptions/",
+							"raw": "http://{{orion}}/ngsi-ld/v1/subscriptions/",
 							"protocol": "http",
 							"host": [
 								"{{orion}}"
 							],
 							"path": [
-								"v2",
+								"ngsi-ld",
+								"v1",
 								"subscriptions",
 								""
 							]
 						},
-						"description": "This example lists all subscriptions by making a GET request to the `/v2/subscriptions/` endpoint.\n\nThe `notification` section of each subscription will also include the last time the conditios of the subscription\nwere met, and whether associated the POST action was successful."
+						"description": "This example lists all subscriptions by making a GET request to the `/ngsi-ld/v1/subscriptions/` endpoint. The list of subscriptions is limited to the tenant defined by the `NGSILD-Tenant` header (or the default tenant if  the `NGSILD-Tenant` header is not sent )\n\nThe notification section of each subscription will also include the last time the conditions of the subscription were\nmet, and whether associated the POST action was successful."
 					},
 					"response": []
 				},
@@ -126,91 +267,38 @@
 					"name": "Read the detail of a Subscription",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"subject\": {\n        \"entities\": [{\n          \"id\": \"\"  \n        }],\n        \"condition\": {\n            \"attrs\": [\"capacity\"]\n        }\n    },\n    \"notification\": {\n        \"http\": {\n            \"url\": \"http://localhost:8000\"\n        }\n    }\n}"
-						},
+						"header": [
+							{
+								"key": "NGSILD-Tenant",
+								"value": "openiot",
+								"type": "text",
+								"disabled": true
+							}
+						],
 						"url": {
-							"raw": "http://{{orion}}/v2/subscriptions/5aead3361587e1918de90aba",
+							"raw": "http://{{orion}}/ngsi-ld/v1/subscriptions/urn:ngsi-ld:Subscription:5fd8a7259d82fd9d6ab1ce76",
 							"protocol": "http",
 							"host": [
 								"{{orion}}"
 							],
 							"path": [
-								"v2",
+								"ngsi-ld",
+								"v1",
 								"subscriptions",
-								"5aead3361587e1918de90aba"
+								"urn:ngsi-ld:Subscription:5fd8a7259d82fd9d6ab1ce76"
 							]
 						},
-						"description": "This example obtains the full details of a subscription with a given id.\n\nThe response includes additional details in the `notification` section showing \nthe last time the conditions of the subscription were met, and whether associated the POST \naction was successful.\n\nSubscription details can be read by making a GET request to the `/v2/subscriptions/<subscription-id>` endpoint.\n\nThe Subscription id had been auto-generated when the subscription was created."
-					},
-					"response": []
-				},
-				{
-					"name": "Create a Subscription ( Store 1) - Low Stock",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"description\": \"Notify me of low stock in Store 001\",\n  \"subject\": {\n    \"entities\": [\n      {\n        \"idPattern\": \".*\",\n        \"type\": \"InventoryItem\"\n      }\n    ],\n     \"condition\": {\n      \"attrs\": [\n        \"shelfCount\"\n      ],\n      \"expression\": {\n        \"q\": \"shelfCount<10;refStore==urn:ngsi-ld:Store:001\"\n      }\n    }\n  },\n  \"notification\": {\n    \"http\": {\n      \"url\": \"http://context-provider:3000/subscription/low-stock-store001\"\n    },\n    \"attrsFormat\" : \"keyValues\"\n  }\n}"
-						},
-						"url": {
-							"raw": "http://{{orion}}/v2/subscriptions",
-							"protocol": "http",
-							"host": [
-								"{{orion}}"
-							],
-							"path": [
-								"v2",
-								"subscriptions"
-							]
-						},
-						"description": "This example creates a new subscription which will only fire under specific conditions - \n*low stock for Store 001* - and will only return key-value pairs\nfor the entity affected. The subscription will fire an asynchronous notification to a URL\nwhenever the context is changed and only when all of the conditions of the subscription are met.\n\nNew subscriptions can be added by making a POST request to the `/v2/subscriptions/` endpoint.\n\n* The `subject` section of the request states that the subscription will be checked whenever the `shelfCount` attribute of\n  any **InventoryItem** entity is altered.\n* The `expression` section of the request states that the subscription will only fire if the `shelfCount` is below 10 items\n  and the **InventoryItem** entity belongs to `Store:001`\n* The `notification` section of the body states that a POST request containing all affected entities will\n  be sent to the `http://context-provider:3000/subscription/low-stock-store001` endpoint. . The `attrsFormat` attribute informs\n  the context broker to only send key-value pairs\n\n---\nSubsequent requests will create duplicate subscriptions"
-					},
-					"response": []
-				},
-				{
-					"name": "Create a Subscription ( Store 2) - Low Stock",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"description\": \"Notify me of low stock in Store 002\",\n  \"subject\": {\n    \"entities\": [\n      {\n        \"idPattern\": \".*\",\n        \"type\": \"InventoryItem\"\n      }\n    ],\n     \"condition\": {\n      \"attrs\": [\n        \"shelfCount\"\n      ],\n      \"expression\": {\n        \"q\": \"shelfCount<10;refStore==urn:ngsi-ld:Store:002\"\n      }\n    }\n  },\n  \"notification\": {\n    \"http\": {\n      \"url\": \"http://context-provider:3000/subscription/low-stock-store002\"\n    },\n    \"attrsFormat\" : \"keyValues\"\n  }\n}"
-						},
-						"url": {
-							"raw": "http://{{orion}}/v2/subscriptions",
-							"protocol": "http",
-							"host": [
-								"{{orion}}"
-							],
-							"path": [
-								"v2",
-								"subscriptions"
-							]
-						},
-						"description": "This example creates a new subscription which will only fire under specific conditions - *low stock for Store 002* -  and will only return \nkey-value pairs for the entity affected. The subscription will fire an asynchronous notification to a URL\nwhenever the context is changed and only when all of the conditions of the subscription are met.\n\nNew subscriptions can be added by making a POST request to the `/v2/subscriptions/` endpoint.\n\n* The `subject` section of the request states that the subscription will be checked whenever the `shelfCount` attribute of\n  any **InventoryItem** entity is altered.\n* The `expression` section of the request states that the subscription will only fire if the `shelfCount` is below 10 items\n  and the **InventoryItem** entity belongs to `Store:002`\n* The `notification` section of the body states that a POST request containing all affected entities will\n  be sent to the `http://context-provider:3000/subscription/low-stock-store002` endpoint. The `attrsFormat` attribute informs\n  the context broker to only send key-value pairs\n\n---\nSubsequent requests will create duplicate subscriptions"
+						"description": "This example obtains the full details of a subscription with a given ID.\n\nThe response includes additional details in the notification section showing the last time the conditions of the\nsubscription were met, and whether associated the POST action was successful.\n\nSubscription details can be read by making a GET request to the `/ngsi-ld/v1/subscriptions/<subscription-id>` endpoint."
 					},
 					"response": []
 				}
 			],
+			"description": "The **CRUD** operations for subscriptions map on to the expected HTTP verbs under the `/ngsi-ld/v1/subscriptions/` endpoint.\n\n-   **Create** - HTTP POST\n-   **Read** - HTTP GET\n-   **Update** - HTTP PATCH\n-   **Delete** - HTTP DELETE\n\nThe `<subscription-id>` is auto generated when the subscription is created and returned in Header of the POST response\nto be used by the other operation thereafter.\n",
 			"event": [
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "d605e1da-1bc2-4e19-9f42-2a9efe1ec34f",
+						"id": "d95c9bf6-6839-41d6-acd2-4e0b1bf686f0",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -220,115 +308,22 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "3ed79691-91f2-49f5-8dd0-7af009166ae9",
+						"id": "5dcbce8a-d48b-4e69-aaee-f36464b9fb97",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
-				}
-			]
-		},
-		{
-			"name": "Amending Context Data",
-			"description": "The tutorial assumes that users will buy the products from the web app,\nhowever Postman commands are also provided for convenience.\n\n* `http://localhost:3000/app/monitor`\n* `http://localhost:3000/app/store/urn:ngsi-ld:Store:002`",
-			"item": [
-				{
-					"name": "Amend the price of a product",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "text/plain"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "89"
-						},
-						"url": {
-							"raw": "http://{{orion}}/v2/entities/urn:ngsi-ld:Product:001/attrs/price/value",
-							"protocol": "http",
-							"host": [
-								"{{orion}}"
-							],
-							"path": [
-								"v2",
-								"entities",
-								"urn:ngsi-ld:Product:001",
-								"attrs",
-								"price",
-								"value"
-							]
-						},
-						"description": "This example reduces the price of a can of  Beer to 0.89 €.\n\nIt updates the value of the `price` attribute of the Entity with `id=urn:ngsi-ld:Product:001`\n\nExisiting attribute values can be altered by making a PUT request to the `/v2/entities/<entity>/attrs/<attribute>/value` endpoint."
-					},
-					"response": []
-				},
-				{
-					"name": "Reduce the Shelf count",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "text/plain"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "5"
-						},
-						"url": {
-							"raw": "http://{{orion}}/v2/entities/urn:ngsi-ld:InventoryItem:005/attrs/shelfCount/value",
-							"protocol": "http",
-							"host": [
-								"{{orion}}"
-							],
-							"path": [
-								"v2",
-								"entities",
-								"urn:ngsi-ld:InventoryItem:005",
-								"attrs",
-								"shelfCount",
-								"value"
-							]
-						},
-						"description": "This example reduces the number of beer cans left on sale in **Checkpoint Markt**\n(`store:002`) down to 5. If a subscription has been set up, a warning will be sent to the warehouse. \n\nThe value of the `shelfCount` attribute of the Entity with `id=urn:ngsi-ld:InventoryItem:005`can be \naltered by making a PUT request to the `/v2/entities/<entity>/attrs/<attribute>/value` endpoint."
-					},
-					"response": []
 				}
 			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "c43b57f2-84cc-4d57-8c6d-5b4260399699",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"id": "cc26f7d9-301c-48e2-891f-3c336c18fe96",
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				}
-			]
+			"protocolProfileBehavior": {}
 		}
 	],
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "a25c858c-0646-4514-85e8-f6f9aeafc5be",
+				"id": "032f7c5a-96d3-4972-90ce-dd40619ee3a2",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -338,7 +333,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "f81ca278-51ac-41c1-a4e6-66baed8434f2",
+				"id": "6fd88c3c-53e3-4e85-b5cd-5be33c429dbd",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -348,11 +343,10 @@
 	],
 	"variable": [
 		{
-			"id": "5233454b-40e2-480f-8382-5f3946b096c6",
+			"id": "2aa953cb-4e83-4963-8ae8-ea95934666ad",
 			"key": "orion",
-			"value": "localhost:1026",
-			"type": "string",
-			"description": ""
+			"value": "localhost:1026"
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }

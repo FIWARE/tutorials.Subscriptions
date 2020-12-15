@@ -15,9 +15,9 @@ use NGSI subscriptions within their own code.
 
 The tutorial refers to devices and actions made within the browser combined with [cUrl](https://ec.haxx.se/)
 commands. The cUrl commands are also available as
-[Postman documentation](https://fiware.github.io/tutorials.Subscriptions/).
+[Postman documentation](https://fiware.github.io/tutorials.Subscriptions/ngsi-ld).
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/18ea15017244c70d1fe4)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/7f7b555ed4169e27bcef)
 
 ## Contents
 
@@ -202,9 +202,13 @@ enter any cUrl commands.
 
 Details of various buildings around the farm can be found in the tutorial application. Open `http://localhost:3000/app/farm/urn:ngsi-ld:Building:farm001` to display a building with an associated filling sensor and thermostat.
 
+![](https://fiware.github.io/tutorials.Subscriptions/img/fmis.png)
+
 #### Event Monitor
 
 The event monitor can be found at: `http://localhost:3000/app/monitor`.
+
+![](https://fiware.github.io/tutorials.Subscriptions/img/low-stock-farm.png)
 
 ## Setting up a simple Subscription
 
@@ -253,7 +257,7 @@ Go to the Device Monitor `http://localhost:3000/app/farm/urn:ngsi-ld:Building:fa
 
 #### `http://localhost:3000/app/monitor`
 
-![](https://fiware.github.io/tutorials.Subscriptions/img/products-subscription.png)
+![](https://fiware.github.io/tutorials.Subscriptions/img/low-stock-farm.png)
 
 #### Subscription Payload:
 
@@ -303,7 +307,7 @@ This business logic emits socket I/O events to any registered parties (such as t
 
 #### :two: Request:
 
-This second subsscription will fire when the `filling` level is between 0.6 and 0.4. The `format` attribute has been altered to inform the subscriber using NGSI-LD normalized format.
+This second subscription will fire when the `filling` level is between 0.6 and 0.4. The `format` attribute has been altered to inform the subscriber using NGSI-LD normalized format.
 
 ```console
 curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
@@ -364,7 +368,7 @@ Because the `accept` attribute has been set to `application/json`, the `@context
 
 Context brokers may offer additional custom payload formats (typically prefixed with an `x-`). The Orion-LD broker offers a backwards compatible **NGSI-v2** payload option for legacy systems.
 
-This third subsscription will fire when the `filling` level is below 0.4. The `format` attribute has been altered to inform the subscriber using NGSI-v2 normalized format.
+This third subscription will fire when the `filling` level is below 0.4. The `format` attribute has been altered to inform the subscriber using NGSI-v2 normalized format.
 
 
 ```console
@@ -518,7 +522,7 @@ curl -iX PATCH \
 
 ### List all Subscriptions
 
-This example lists all subscriptions by making a GET request to the `/ngsi-ld/v1/subscriptions/` endpoint.
+This example lists all subscriptions by making a GET request to the `/ngsi-ld/v1/subscriptions/` endpoint. The list of subscriptions is limited to the tenant defined by the `NGSILD-Tenant` header (or the default tenant if  the `NGSILD-Tenant` header is not sent )
 
 The notification section of each subscription will also include the last time the conditions of the subscription were
 met, and whether associated the POST action was successful.
