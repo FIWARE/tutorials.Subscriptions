@@ -380,7 +380,7 @@ an attribute within the payload body.
 #### :three: Request:
 
 Context brokers may offer additional custom payload formats (typically prefixed with an `x-`). The Orion-LD broker
-offers a backwards compatible **NGSI-v2** payload option for legacy systems.
+offers a backward compatible **NGSI-v2** payload option for legacy systems.
 
 This third subscription will fire when the `filling` level is below 0.4. The `format` attribute has been altered to
 inform the subscriber using NGSI-v2 normalized format.
@@ -445,8 +445,8 @@ When a `low-stock-farm001-ngsiv2` event is fired, the response is a normalzed NG
 As can be seen, by default the attributes are returned using URN long names. It is also possible to request that the
 Orion-LD context broker pre-applies a compaction operation to the payload.
 
--   `x-nsgiv2-keyValues` - Key Value pairs with URN attribute names
--   `x-nsgiv2-keyValues-compacted` - Key Value pairs with short name attribute aliases
+-   `x-nsgiv2-keyValues` - Key-value pairs with URN attribute names
+-   `x-nsgiv2-keyValues-compacted` - Key-value pairs with short name attribute aliases
 -   `x-ngsiv2-normalized` - NGSI-v2 normalized payload with URN attribute names
 -   `x-ngsiv2-normalized-compacted`- NGSI-v2 normalized payload pairs with short name attribute aliases
 
