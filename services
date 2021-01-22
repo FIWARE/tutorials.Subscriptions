@@ -78,8 +78,7 @@ waitForContext () {
 
 waitForIoTAgent () {
 	echo -e "\n⏳ Waiting for \033[1;36mIoT-Agent\033[0m to be available\n"
-	getHeartbeat "${IOT_AGENT}"
-	while [ "${response}" -eq 000 ]
+	while ! [ `docker inspect --format='{{.State.Health.Status}}' fiware-iot-agent` == "healthy" ]
 	do
 		echo -e "\nIoT Agent HTTP state: ${response} (waiting for 200)"
 		pause 3
@@ -87,8 +86,17 @@ waitForIoTAgent () {
 	done
 }
 
+waitForMongo () {
+	echo -e "\n⏳ Waiting for \033[1mMongoDB\033[0m to be available\n"
+	while ! [ `docker inspect --format='{{.State.Health.Status}}' db-mongo` == "healthy" ]
+	do 
+		sleep 1
+	done
+}
+
 loadData () {
 	export CONTEXT_BROKER="$1" 
+	waitForMongo
 	addDatabaseIndex
 	waitForContext
 	waitForOrion
