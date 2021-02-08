@@ -117,8 +117,8 @@ loadData () {
 
 stoppingContainers () {
 	echo "Stopping containers"
-	docker-compose --log-level ERROR -f docker-compose/orion-ld.yml -p fiware down -v --remove-orphans
-	#docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml -p fiware down -v --remove-orphans
+	docker-compose --env-file=.env --log-level ERROR -f docker-compose/orion-ld.yml -p fiware down -v --remove-orphans
+	#docker-compose --env-file=.env --log-level ERROR -f docker-compose/scorpio-aaio.yml -p fiware down -v --remove-orphans
 }
 
 addDatabaseIndex () {
@@ -184,7 +184,7 @@ case "${command}" in
 		echo -e "- \033[1;36mIoT-Agent\033[0m is configured for the UltraLight Protocol"
 		echo -e "- \033[1mTutorial\033[0m displays a web app to manipulate the context directly"
 		echo ""
-		docker-compose --log-level ERROR -f docker-compose/orion-ld.yml -p fiware up -d --remove-orphans
+		docker-compose --env-file=.env --log-level ERROR -f docker-compose/orion-ld.yml -p fiware up -d --remove-orphans
 		loadData orion:1026
 		displayServices
 		echo -e "Now open \033[4mhttp://localhost:3000/app/monitor\033[0m"
@@ -197,7 +197,7 @@ case "${command}" in
 		;;
 	"create")
 		echo "Pulling Docker images"
-		docker-compose --log-level ERROR -f docker-compose/orion-ld.yml -p fiware pull
+		docker-compose --env-file=.env --log-level ERROR -f docker-compose/orion-ld.yml -p fiware pull
 		;;
 	*)
 		echo "Command not Found."
