@@ -190,12 +190,15 @@ case "${command}" in
 		echo -e "Now open \033[4mhttp://localhost:3000/app/monitor\033[0m"
 		;;
 	"stop")
+		export $(cat .env | grep "#" -v)
 		stoppingContainers
 		;;
 	"start")
+		export $(cat .env | grep "#" -v)
 		./services orion
 		;;
 	"create")
+		export $(cat .env | grep "#" -v)
 		echo "Pulling Docker images"
 		docker-compose --env-file=.env --log-level ERROR -f docker-compose/orion-ld.yml -p fiware pull
 		;;
