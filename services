@@ -194,7 +194,7 @@ case "${command}" in
 		echo -e "- \033[1;36mIoT-Agent\033[0m is configured for the UltraLight Protocol"
 		echo -e "- \033[1mTutorial\033[0m displays a web app to manipulate the context directly"
 		echo ""
-		docker-compose --log-level ERROR -p fiware up -d --remove-orphans
+		docker-compose --log-level ERROR -f docker-compose/orion-ld.yml -p fiware up -d --remove-orphans
 		waitForMongo
 		addDatabaseIndex
 		waitForOrion
