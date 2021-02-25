@@ -18,6 +18,8 @@ The cUrl commands are also available as
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/7f7b555ed4169e27bcef)
 
+-   このチュートリアルは[日本語](README.ja.md)でもご覧いただけます。
+
 ## Contents
 
 <details>
@@ -138,7 +140,7 @@ from exposed ports.
 ![](https://fiware.github.io/tutorials.Subscriptions/img/architecture-ld.png)
 
 The necessary configuration information can be seen in the services section of the associated `docker-compose.yml` file.
-It has been described in a previous tutorial
+It has been described in a previous tutorial.
 
 # Prerequisites
 
@@ -152,7 +154,7 @@ technology which allows to different components isolated into their respective e
 -   To install Docker on Linux follow the instructions [here](https://docs.docker.com/install/)
 
 **Docker Compose** is a tool for defining and running multi-container Docker applications. A
-[YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Entity-Relationships/master/docker-compose.yml) is used
+[YAML file](https://raw.githubusercontent.com/FIWARE/tutorials.Subscriptions/NGSI-LD/docker-compose/orion-ld.yml) is used
 configure the required services for the application. This means all container services can be brought up in a single
 command. Docker Compose is installed by default as part of Docker for Windows and Docker for Mac, however Linux users
 will need to follow the instructions found [here](https://docs.docker.com/compose/install/)
@@ -539,7 +541,7 @@ curl -iX PATCH \
 
 This example lists all subscriptions by making a GET request to the `/ngsi-ld/v1/subscriptions/` endpoint. The list of
 subscriptions is limited to the tenant defined by the `NGSILD-Tenant` header (or the default tenant if the
-`NGSILD-Tenant` header is not sent )
+`NGSILD-Tenant` header is not sent)
 
 The notification section of each subscription will also include the last time the conditions of the subscription were
 met, and whether associated the POST action was successful.
@@ -576,4 +578,4 @@ the other [tutorials in this series](https://fiware-tutorials.rtfd.io)
 
 ## License
 
-[MIT](LICENSE) © 2020 FIWARE Foundation e.V.
+[MIT](LICENSE) © 2020-2021 FIWARE Foundation e.V.
