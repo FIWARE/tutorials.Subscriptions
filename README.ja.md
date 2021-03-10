@@ -82,7 +82,7 @@ IoT センサ・データに基づくスマート・ソリューションの場�
 ## スマート・アグリフード・システム内のエンティティ
 
 エンティティ間のリレーションシップは、次のように定義されます :
- 
+
 ![](https://fiware.github.io/tutorials.Subscriptions/img/ngsi-ld-entities.png)
 
 <A name="farm-management-information-system-frontend"></A>
@@ -114,7 +114,7 @@ IoT センサ・データに基づくスマート・ソリューションの場�
 # アーキテクチャ
 
 このアプリケーションは、
-[Orion-LD Context Broker](https://fiware-orion.readthedocs.io/en/latest/), 
+[Orion-LD Context Broker](https://fiware-orion.readthedocs.io/en/latest/),
 [IoT Agent for UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/),
 というの2つの FIWARE コンポーネントのみを使用します。アプリケーションを _"Powered by FIWARE"_ と認定するには、
 NGSI-LD Context Broker を使用するだけで十分です。
@@ -172,7 +172,7 @@ NGSI-LD Context Broker を使用するだけで十分です。
 
 **Docker Compose** は、マルチコンテナ Docker アプリケーションを定義して実行するためのツールです。
 [YAML file](https://raw.githubusercontent.com/FIWARE/tutorials.Subscriptions/NGSI-LD/docker-compose/orion-ld.yml)
-ファイルは、アプリケーションのために必要なサービスを構成するために使用します。つまり、すべてのコンテナ・サービスは 
+ファイルは、アプリケーションのために必要なサービスを構成するために使用します。つまり、すべてのコンテナ・サービスは
 1つのコマンドで呼び出すことができます。Docker Compose は、デフォルトで Docker for Windows と Docker for Mac
 の一部としてインストールされますが、Linux ユーザは[ここ](https://docs.docker.com/compose/install/)に記載されている
 手順に従う必要があります。
@@ -264,7 +264,7 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 --data-raw '{
   "description": "Notify me of low feedstock on Farm:001",
   "type": "Subscription",
-  "entities": [{"type": "FillingSensor"}],
+  "entities": [{"type": "FillingLevelSensor"}],
   "watchedAttributes": ["filling"],
   "q": "filling>0.6;filling<0.8;controllingAsset==urn:ngsi-ld:Building:farm001",
   "notification": {
@@ -281,13 +281,13 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 
 POST リクエストのボディは2つの部分で構成され、リクエストの最初のセクション (`entities`, `type`,
 `watchedAttributes`, `q` で構成）は、サブスクリプションの `filling` 属性がチェックされるたびに
-チェックされることを示しています。 **FillingSensor** エンティティが変更されます。これは `q`
+チェックされることを示しています。 **FillingLevelSensor** エンティティが変更されます。これは `q`
 パラメータによってさらに洗練され、実際のサブスクリプションは `filling` 属性が0.8を下回った場合のみ、
-**Building** `urn:ngsi-ld:Building:farm001` にリンクされた **FillingSensor** エンティティに対して
+**Building** `urn:ngsi-ld:Building:farm001` にリンクされた **FillingLevelSensor** エンティティに対して
 のみ起動されます。
 
 ボディの `notification` セクションには、サブスクリプションの条件が満たされると、影響を受けるすべての
-**FillingSensor** エンティティを含んだ POST リクエストが URL
+**FillingLevelSensor** エンティティを含んだ POST リクエストが URL
 `http://tutorial:3000/subscription/low-stock-farm001`に送信されると記載されています。
 これは請負業者自身のシステムによって処理されます。
 
@@ -315,7 +315,7 @@ IoT デバイスは現在、建物とは別のテナントを使用してプロ�
     "data": [
         {
             "id": "urn:ngsi-ld:Device:filling001",
-            "type": "FillingSensor",
+            "type": "FillingLevelSensor",
             "controllingAsset": "urn:ngsi-ld:Building:farm001",
             "filling": 0.59
         }
@@ -360,7 +360,7 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 --data-raw '{
   "description": "Notify me of low feedstock on Farm:001",
   "type": "Subscription",
-  "entities": [{"type": "FillingSensor"}],
+  "entities": [{"type": "FillingLevelSensor"}],
   "watchedAttributes": ["filling"],
   "q": "filling>0.4;filling<0.6;controllingAsset==urn:ngsi-ld:Building:farm001",
   "notification": {
@@ -388,7 +388,7 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
     "data": [
         {
             "id": "urn:ngsi-ld:Device:filling001",
-            "type": "FillingSensor",
+            "type": "FillingLevelSensor",
             "filling": {
                 "type": "Property",
                 "value": 0.25,
@@ -423,7 +423,7 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 --data-raw '{
   "description": "Notify me of low feedstock on Farm:001",
   "type": "Subscription",
-  "entities": [{"type": "FillingSensor"}],
+  "entities": [{"type": "FillingLevelSensor"}],
   "watchedAttributes": ["filling"],
   "q": "filling<0.4;controllingAsset==urn:ngsi-ld:Building:farm001",
   "notification": {
@@ -449,7 +449,7 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
     "data": [
         {
             "id": "urn:ngsi-ld:Device:filling001",
-            "type": "https://uri.etsi.org/ngsi-ld/default-context/FillingSensor",
+            "type": "https://uri.etsi.org/ngsi-ld/default-context/FillingLevelSensor",
             "https://w3id.org/saref#fillingLevel": {
                 "type": "Property",
                 "value": 0.33,
@@ -543,7 +543,7 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 この例では、`id=urn:ngsi-ld:Subscription:5fd228838b9b83697b855a72` のサブスクリプションをコンテキスト
 から削除します。
 
-サブスクリプションは、`/ngsi-ld/v1/subscriptions/<subscription-id>` エンドポイントに DELETE 
+サブスクリプションは、`/ngsi-ld/v1/subscriptions/<subscription-id>` エンドポイントに DELETE
 リクエストを行うことで削除できます。
 
 #### :five: リクエスト:
