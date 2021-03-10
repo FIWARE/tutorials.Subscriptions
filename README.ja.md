@@ -266,9 +266,9 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
   "type": "Subscription",
   "entities": [{"type": "FillingLevelSensor"}],
   "watchedAttributes": ["filling"],
-  "q": "filling>0.6;filling<0.8;controllingAsset==urn:ngsi-ld:Building:farm001",
+  "q": "filling>0.6;filling<0.8;controlledAsset==urn:ngsi-ld:Building:farm001",
   "notification": {
-    "attributes": ["filling", "controllingAsset"],
+    "attributes": ["filling", "controlledAsset"],
     "format": "keyValues",
     "endpoint": {
       "uri": "http://tutorial:3000/subscription/low-stock-farm001",
@@ -316,7 +316,7 @@ IoT デバイスは現在、建物とは別のテナントを使用してプロ�
         {
             "id": "urn:ngsi-ld:Device:filling001",
             "type": "FillingLevelSensor",
-            "controllingAsset": "urn:ngsi-ld:Building:farm001",
+            "controlledAsset": "urn:ngsi-ld:Building:farm001",
             "filling": 0.59
         }
     ]
@@ -326,7 +326,7 @@ IoT デバイスは現在、建物とは別のテナントを使用してプロ�
 ファーム管理情報システムのコードは、次のように 受信した POST リクエストを処理します:
 
 ```javascript
-const NOTIFY_ATTRIBUTES = ["controllingAsset", "type", "filling", "humidity", "temperature"];
+const NOTIFY_ATTRIBUTES = ["controlledAsset", "type", "filling", "humidity", "temperature"];
 
 router.post("/subscription/:type", (req, res) => {
     monitor("notify", req.params.type + " received", req.body);
@@ -362,9 +362,9 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
   "type": "Subscription",
   "entities": [{"type": "FillingLevelSensor"}],
   "watchedAttributes": ["filling"],
-  "q": "filling>0.4;filling<0.6;controllingAsset==urn:ngsi-ld:Building:farm001",
+  "q": "filling>0.4;filling<0.6;controlledAsset==urn:ngsi-ld:Building:farm001",
   "notification": {
-    "attributes": ["filling", "controllingAsset"],
+    "attributes": ["filling", "controlledAsset"],
     "format": "normalized",
     "endpoint": {
       "uri": "http://tutorial:3000/subscription/low-stock-farm001-ngsild",
@@ -395,7 +395,7 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
                 "unitCode": "C62",
                 "observedAt": "2020-12-09T16:25:12.000Z"
             },
-            "controllingAsset": {
+            "controlledAsset": {
                 "type": "Relationship",
                 "object": "urn:ngsi-ld:Building:farm001",
                 "observedAt": "2020-12-09T16:25:12.000Z"
@@ -425,9 +425,9 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
   "type": "Subscription",
   "entities": [{"type": "FillingLevelSensor"}],
   "watchedAttributes": ["filling"],
-  "q": "filling<0.4;controllingAsset==urn:ngsi-ld:Building:farm001",
+  "q": "filling<0.4;controlledAsset==urn:ngsi-ld:Building:farm001",
   "notification": {
-    "attributes": ["filling", "controllingAsset"],
+    "attributes": ["filling", "controlledAsset"],
     "format": "x-ngsiv2-normalized",
     "endpoint": {
       "uri": "http://tutorial:3000/subscription/low-stock-farm001-ngsiv2",
@@ -462,7 +462,7 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
                     "observedAt": "2020-12-10T10:11:57.000Z"
                 }
             },
-            "https://uri.etsi.org/ngsi-ld/default-context/controllingAsset": {
+            "https://uri.etsi.org/ngsi-ld/default-context/controlledAsset": {
                 "type": "Relationship",
                 "value": "urn:ngsi-ld:Building:farm001",
                 "metadata": {

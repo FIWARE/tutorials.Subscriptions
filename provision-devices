@@ -199,7 +199,7 @@ curl -s -o /dev/null -X POST \
      "entity_name": "urn:ngsi-ld:Device:temperature001",
      "entity_type": "TemperatureSensor",
      "static_attributes": [
-         {"name": "controllingAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm001"}
+         {"name": "controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm001"}
      ]
    },
    {
@@ -208,7 +208,7 @@ curl -s -o /dev/null -X POST \
       "entity_type": "Water",
       "endpoint": "http://context-provider:3001/iot/water001",
       "static_attributes": [
-        {"name": "controllingAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:barn001"}
+        {"name": "controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:barn001"}
       ]
     },
     {
@@ -217,7 +217,7 @@ curl -s -o /dev/null -X POST \
       "entity_type": "FillingLevelSensor",
       "endpoint": "http://context-provider:3001/iot/filling001",
       "static_attributes": [
-        {"name": "controllingAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm001"}
+        {"name": "controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm001"}
       ]
     }, 
     {
@@ -226,7 +226,7 @@ curl -s -o /dev/null -X POST \
       "entity_type": "Tractor",
       "endpoint": "http://context-provider:3001/iot/tractor001",
       "static_attributes": [
-          {"name": "controllingAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm001"}
+          {"name": "controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm001"}
       ]
     }
   ]
@@ -250,7 +250,7 @@ curl -s -o /dev/null -X POST \
      "entity_name": "urn:ngsi-ld:Device:temperature002",
      "entity_type": "TemperatureSensor",
      "static_attributes": [
-         {"name": "controllingAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm002"}
+         {"name": "controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm002"}
      ]
    },
    {
@@ -259,7 +259,7 @@ curl -s -o /dev/null -X POST \
       "entity_type": "Water",
       "endpoint": "http://context-provider:3001/iot/water002",
       "static_attributes": [
-        {"name": "controllingAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:barn002"}
+        {"name": "controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:barn002"}
       ]
     },
     {
@@ -268,7 +268,7 @@ curl -s -o /dev/null -X POST \
       "entity_type": "FillingLevelSensor",
       "endpoint": "http://context-provider:3001/iot/filling002",
       "static_attributes": [
-        {"name": "controllingAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm002"}
+        {"name": "controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm002"}
       ]
     }, 
     {
@@ -277,7 +277,7 @@ curl -s -o /dev/null -X POST \
       "entity_type": "Tractor",
       "endpoint": "http://context-provider:3001/iot/tractor002",
       "static_attributes": [
-          {"name": "controllingAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm002"}
+          {"name": "controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm002"}
       ]
     }
   ]
@@ -301,7 +301,7 @@ curl -s -o /dev/null -X POST \
      "entity_name": "urn:ngsi-ld:Device:temperature003",
      "entity_type": "TemperatureSensor",
      "static_attributes": [
-         {"name": "controllingAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm003"}
+         {"name": "controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm003"}
      ]
    },
    {
@@ -310,7 +310,7 @@ curl -s -o /dev/null -X POST \
       "entity_type": "Water",
       "endpoint": "http://context-provider:3001/iot/water003",
       "static_attributes": [
-        {"name": "controllingAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:barn003"}
+        {"name": "controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:barn003"}
       ]
     },
     {
@@ -319,7 +319,7 @@ curl -s -o /dev/null -X POST \
       "entity_type": "FillingLevelSensor",
       "endpoint": "http://context-provider:3001/iot/filling003",
       "static_attributes": [
-        {"name": "controllingAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm003"}
+        {"name": "controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm003"}
       ]
     }, 
     {
@@ -328,7 +328,7 @@ curl -s -o /dev/null -X POST \
       "entity_type": "Tractor",
       "endpoint": "http://context-provider:3001/iot/tractor003",
       "static_attributes": [
-          {"name": "controllingAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm003"}
+          {"name": "controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm003"}
       ]
     }
   ]
@@ -353,7 +353,7 @@ curl -s -o /dev/null -X POST \
      "entity_name": "urn:ngsi-ld:Device:temperature004",
      "entity_type": "TemperatureSensor",
      "static_attributes": [
-         {"name": "controllingAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm004"}
+         {"name": "controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm004"}
      ]
    },
    {
@@ -362,7 +362,7 @@ curl -s -o /dev/null -X POST \
       "entity_type": "Water",
       "endpoint": "http://context-provider:3001/iot/water004",
       "static_attributes": [
-        {"name": "controllingAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:barn004"}
+        {"name": "controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:barn004"}
       ]
     },
     {
@@ -371,7 +371,7 @@ curl -s -o /dev/null -X POST \
       "entity_type": "FillingLevelSensor",
       "endpoint": "http://context-provider:3001/iot/filling004",
       "static_attributes": [
-        {"name": "controllingAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm004"}
+        {"name": "controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm004"}
       ]
     }, 
     {
@@ -380,7 +380,7 @@ curl -s -o /dev/null -X POST \
       "entity_type": "Tractor",
       "endpoint": "http://context-provider:3001/iot/tractor004",
       "static_attributes": [
-          {"name": "controllingAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm004"}
+          {"name": "controlledAsset", "type": "Relationship","value": "urn:ngsi-ld:Building:farm004"}
       ]
     }
   ]
