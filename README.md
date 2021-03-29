@@ -154,10 +154,10 @@ technology which allows to different components isolated into their respective e
 -   To install Docker on Linux follow the instructions [here](https://docs.docker.com/install/)
 
 **Docker Compose** is a tool for defining and running multi-container Docker applications. A
-[YAML file](https://raw.githubusercontent.com/FIWARE/tutorials.Subscriptions/NGSI-LD/docker-compose/orion-ld.yml) is used
-configure the required services for the application. This means all container services can be brought up in a single
-command. Docker Compose is installed by default as part of Docker for Windows and Docker for Mac, however Linux users
-will need to follow the instructions found [here](https://docs.docker.com/compose/install/)
+[YAML file](https://raw.githubusercontent.com/FIWARE/tutorials.Subscriptions/NGSI-LD/docker-compose/orion-ld.yml) is
+used configure the required services for the application. This means all container services can be brought up in a
+single command. Docker Compose is installed by default as part of Docker for Windows and Docker for Mac, however Linux
+users will need to follow the instructions found [here](https://docs.docker.com/compose/install/)
 
 You can check your current **Docker** and **Docker Compose** versions using the following commands:
 
@@ -253,9 +253,9 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 
 The body of the POST request consists of two parts, the first section of the request (consisting of `entities`, `type`,
 `watchedAttributes` and `q`)states that the subscription will be checked whenever the `filling` attribute of a
-**FillingLevelSensor** entity is altered. This is further refined by the `q` parameter so that the actual subscription is
-only fired for any **FillingLevelSensor** entity linked to the **Building** `urn:ngsi-ld:Building:farm001` and only when the
-`filling` attribute drops below 0.8
+**FillingLevelSensor** entity is altered. This is further refined by the `q` parameter so that the actual subscription
+is only fired for any **FillingLevelSensor** entity linked to the **Building** `urn:ngsi-ld:Building:farm001` and only
+when the `filling` attribute drops below 0.8
 
 The notification section of the body states that once the conditions of the subscription have been met, a POST request
 containing all affected **FillingLevelSensor** entities will be sent to the URL
