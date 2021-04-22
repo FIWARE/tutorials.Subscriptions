@@ -1,4 +1,4 @@
-# Subscriptions[<img src="https://img.shields.io/badge/NGSI-LD-d6604d.svg" width="90"  align="left" />]("https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.03.01_60/gs_cim009v010301p.pdf)[<img src="https://fiware.github.io/tutorials.Subscriptions/img/fiware.png" align="left" width="162">](https://www.fiware.org/)<br/>
+# Subscriptions[<img src="https://img.shields.io/badge/NGSI-LD-d6604d.svg" width="90"  align="left" />](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.04.01_60/gs_cim009v010401p.pdf)[<img src="https://fiware.github.io/tutorials.Subscriptions/img/fiware.png" align="left" width="162">](https://www.fiware.org/)<br/>
 
 [![FIWARE Core Context Management](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/core.svg)](https://github.com/FIWARE/catalogue/blob/master/core/README.md)
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.Subscriptions.svg)](https://opensource.org/licenses/MIT)
@@ -9,7 +9,7 @@
 
 このチュートリアルでは、NGSI-LD ユーザに、コンテキスト・データ・サブスクリプションを作成および管理する方法について
 説明します。チュートリアルは、
-ユーザが [NGSI-LD](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.03.01_60/gs_cim009v010301p.pdf)
+ユーザが [NGSI-LD](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.04.01_60/gs_cim009v010401p.pdf)
 サブスクリプション/通知のパラダイムを理解し、独自のコード内で NGSI サブスクリプションを使用する方法を説明するため、
 以前の例で作成したエンティティと [スマート・ファーム](https://github.com/FIWARE/tutorials.Getting-Started/tree/NGSI-LD)
 ・アプリケーションに基づいて構築されています。
@@ -126,12 +126,12 @@ NGSI-LD Context Broker を使用するだけで十分です。
 
 -   FIWARE
     [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) は、
-    [NGSI-LD](https://forge.etsi.org/swagger/ui/?url=https://forge.etsi.org/gitlab/NGSI-LD/NGSI-LD/raw/master/spec/updated/full_api.json)
+    [NGSI-LD](https://forge.etsi.org/swagger/ui/?url=https://forge.etsi.org/rep/NGSI-LD/NGSI-LD/raw/master/spec/updated/generated/full_api.json)
     を使用してリクエストを受信します
 -   FIWARE
     [IoT Agent for UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
     は、
-    [NGSI-LD](https://forge.etsi.org/swagger/ui/?url=https://forge.etsi.org/gitlab/NGSI-LD/NGSI-LD/raw/master/spec/updated/full_api.json)
+    [NGSI-LD](https://forge.etsi.org/swagger/ui/?url=https://forge.etsi.org/rep/NGSI-LD/NGSI-LD/raw/master/spec/updated/generated/full_api.json)
     を使用してノースバウンド・リクエストを受信し、それらを
     [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
     に変換します
