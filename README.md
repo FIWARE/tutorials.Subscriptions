@@ -247,7 +247,7 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
       "accept": "application/json"
     }
   },
-   "@context": "http://context-provider:3000/data-models/ngsi-context.jsonld"
+   "@context": "http://context/ngsi-context.jsonld"
 }'
 ```
 
@@ -341,7 +341,7 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
       "accept": "application/json"
     }
   },
-   "@context": "http://context-provider:3000/data-models/ngsi-context.jsonld"
+   "@context": "http://context/ngsi-context.jsonld"
 }'
 ```
 
@@ -404,7 +404,7 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
       "accept": "application/json"
     }
   },
-   "@context": "http://context-provider:3000/data-models/ngsi-context.jsonld"
+   "@context": "http://context/ngsi-context.jsonld"
 }'
 ```
 
@@ -451,7 +451,68 @@ Orion-LD context broker pre-applies a compaction operation to the payload.
 -   `x-ngsiv2-normalized` - NGSI-v2 normalized payload with URN attribute names
 -   `x-ngsiv2-normalized-compacted`- NGSI-v2 normalized payload pairs with short name attribute aliases
 
+
 The set of available custom formats will vary between Context Brokers.
+
+# Sending notifications to an MQTT Server
+
+"MQTT is a publish-subscribe-based messaging protocol used in the internet of Things. It works on top of the TCP/IP
+protocol, and is designed for connections with remote locations where a "small code footprint" is required or the
+network bandwidth is limited. The goal is to provide a protocol, which is bandwidth-efficient and uses little battery
+power."<sup>[1](#footnote1)</sup> NGSI-LD Context brokers can send notifications via MQTT just as easily as sending them via HTTP.
+
+## Setting up an MQTT Subscription
+
+This `keyValues` subscription will fire when the `filling` level is between 0.4 and 0.2. The `endpoint` attribute has been
+altered to use the MQTT protocol
+
+#### :four: Request:
+
+```console
+curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
+-H 'Content-Type: application/ld+json' \
+-H 'NGSILD-Tenant: openiot' \
+--data-raw '{
+  "description": "Notify me of low feedstock on Farm:001",
+  "type": "Subscription",
+  "entities": [{"type": "FillingLevelSensor"}],
+  "watchedAttributes": ["filling"],
+  "q": "filling>0.2;filling<0.4;controlledAsset==urn:ngsi-ld:Building:farm001",
+  "notification": {
+    "attributes": ["filling", "controlledAsset"],
+    "format": "keyValues",
+    "endpoint": {
+      "uri": "mqtt://mosquitto:1883/entities",
+      "accept": "application/json",
+      "notifierInfo": [
+        {
+          "key": "MQTT-QoS",
+          "value": "1"
+        }
+      ]
+    }
+  },
+   "@context": "http://context/ngsi-context.jsonld"
+}'
+```
+
+
+### Start an MQTT Subscriber (:new: Terminal)
+
+To check that the lines of communication are open, we can subscribe to a given topic, and see that we are
+able to receive something when a message is published.
+
+Open a **new terminal**, and create a new running `mqtt-subscriber` Docker container as follows:
+
+```console
+docker run -it --rm --name mqtt-subscriber \
+  --network fiware_default efrecon/mqtt-client sub -h mosquitto -t "/#"
+```
+
+The terminal will then be ready to receive events
+
+
+
 
 # Subscription CRUD Actions
 
@@ -496,7 +557,7 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
       "accept": "application/json"
     }
   },
-   "@context": "http://context-provider:3000/data-models/ngsi-context.jsonld"
+   "@context": "http://context/ngsi-context.jsonld"
 }'
 ```
 
@@ -569,6 +630,10 @@ curl -X GET \
   --url 'http://localhost:1026/ngsi-ld/v1/subscriptions/5aead3361587e1918de90aba'
 ```
 
+
+
+
+
 # Next Steps
 
 Want to learn how to add more complexity to your application by adding advanced features? You can find out by reading
@@ -579,3 +644,12 @@ the other [tutorials in this series](https://fiware-tutorials.rtfd.io)
 ## License
 
 [MIT](LICENSE) © 2020-2021 FIWARE Foundation e.V.
+
+---
+
+### Footnotes
+
+<a name="footnote1"></a>
+
+-   [Wikipedia: MQTT](https://en.wikipedia.org/wiki/MQTT) - a central communication point (known as the MQTT broker)
+    which is in charge of dispatching all messages between services
