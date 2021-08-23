@@ -2,13 +2,18 @@
 #
 #  Command Line Interface to start all services associated with the Getting-Started Tutorial
 #
-#  For this tutorial the commands are merely a convenience script to run docker-compose
+#  For this tutorial the commands are merely a convenience script to run docker compose
 #
 
 set -e
 
 
-if (( $# != 1 )); then
+dockerCmd="docker compose"
+if (( $# == 2 )); then
+    dockerCmd="docker-compose"
+fi
+
+if (( $# < 1 )); then
 	echo "Illegal number of parameters"
 	echo "usage: services [create|orion|scorpio|stop]"
 	exit 1
@@ -119,8 +124,8 @@ stoppingContainers () {
 	echo -e "Force removal of \033[1mmqtt-subscriber\033[0m"
 	(docker stop mqtt-subscriber &>/dev/null) || (echo -e "\033[1mmqtt-subscriber\033[0m not running")
 	echo "Stopping containers"
-	docker-compose --env-file=.env --log-level ERROR -f docker-compose/orion-ld.yml -p fiware down -v --remove-orphans
-	#docker-compose --env-file=.env --log-level ERROR -f docker-compose/scorpio-aaio.yml -p fiware down -v --remove-orphans
+	${dockerCmd} --env-file=.env -f docker-compose/orion-ld.yml down -v --remove-orphans
+	#${dockerCmd} --env-file=.env -f docker-compose/scorpio-aaio.yml down -v --remove-orphans
 }
 
 addDatabaseIndex () {
@@ -196,7 +201,7 @@ case "${command}" in
 		echo -e "- \033[1;36mIoT-Agent\033[0m is configured for the UltraLight Protocol"
 		echo -e "- \033[1mTutorial\033[0m displays a web app to manipulate the context directly"
 		echo ""
-		docker-compose --log-level ERROR -f docker-compose/orion-ld.yml -p fiware up -d --remove-orphans
+		${dockerCmd} -f docker-compose/orion-ld.yml up -d --remove-orphans
 		waitForMongo
 		addDatabaseIndex
 		waitForOrion
@@ -210,13 +215,13 @@ case "${command}" in
 		;;
 	"start")
 		export $(cat .env | grep "#" -v)
-		./services orion
+		./services orion $2
 		;;
 	"create")
 		export $(cat .env | grep "#" -v)
 		echo "Pulling Docker images"
 		docker pull curlimages/curl
-		docker-compose --env-file=.env --log-level ERROR -f docker-compose/orion-ld.yml -p fiware pull
+		${dockerCmd} --env-file=.env -f docker-compose/orion-ld.yml pull
 		;;
 	*)
 		echo "Command not Found."

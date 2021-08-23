@@ -73,7 +73,7 @@ services:
       - IOTA_JSON_LD_CONTEXT=http://context/ngsi-context.jsonld
       - IOTA_FALLBACK_TENANT=openiot
     healthcheck:
-      interval: 5s
+      interval: 15s
 
   # Tutorial acts as a series of dummy IoT Sensors over HTTP
   tutorial:
