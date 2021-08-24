@@ -64,7 +64,7 @@ curl -s -o /dev/null -X POST \
    },
    "provider": {
      "http": {
-       "url": "http://context-provider:3000/proxy/v1/random/weatherConditions"
+       "url": "http://tutorial:3000/proxy/v1/random/weatherConditions"
      },
      "legacyForwarding": true
    },
@@ -89,7 +89,7 @@ curl -s -o /dev/null -X POST \
    },
    "provider": {
      "http": {
-       "url": "http://context-provider:3000/proxy/v1/catfacts/tweets"
+       "url": "http://tutorial:3000/proxy/v1/catfacts/tweets"
      },
      "legacyForwarding": true
    },
@@ -118,7 +118,7 @@ curl -s -o /dev/null -X POST \
 #   },
 #   "provider": {
 #     "http": {
-#       "url": "http://context-provider:3000/proxy/weather/number/temperature:temp,relativeHumidity:humidity/berlin%2cde"
+#       "url": "http://tutorial:3000/proxy/weather/number/temperature:temp,relativeHumidity:humidity/berlin%2cde"
 #     },
 #      "legacyForwarding": true
 #   }
@@ -142,7 +142,7 @@ curl -s -o /dev/null -X POST \
 #   },
 #   "provider": {
 #     "http": {
-#       "url": "http://context-provider:3000/proxy/twitter/list/tweets:text/FIWARE"
+#       "url": "http://tutorial:3000/proxy/twitter/list/tweets:text/FIWARE"
 #     },
 #      "legacyForwarding": true
 #   }
