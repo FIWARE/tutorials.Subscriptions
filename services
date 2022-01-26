@@ -158,7 +158,7 @@ stoppingContainers () {
 	NETWORKS=$(docker network ls  --filter "label=org.fiware=tutorial" -q) 
 	if [[ -n $NETWORKS ]]; then 
 		echo "Removing tutorial networks"
-		docker volume rm $NETWORKS
+		docker network rm $NETWORKS
 	fi
 
 }
