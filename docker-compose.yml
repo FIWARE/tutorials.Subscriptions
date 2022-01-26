@@ -94,6 +94,8 @@ services:
     
 
 networks:
+  labels:
+      org.fiware: 'tutorial'
   default:
     ipam:
       config:
