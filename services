@@ -144,7 +144,7 @@ loadData () {
 }
 
 stoppingContainers () {
-	CONTAINERS=$(docker ps -aq)
+	CONTAINERS=$(docker ps --filter "label=org.fiware=tutorial" -aq)
 	if [[ -n $CONTAINERS ]]; then 
 		echo "Stopping containers"
 		docker rm -f $CONTAINERS

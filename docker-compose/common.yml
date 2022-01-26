@@ -20,6 +20,8 @@ version: "3.5"
 services:
   # @context file is served from here
   ld-context:
+    labels:
+      org.fiware: 'tutorial'
     image: httpd:alpine
     hostname: context
     container_name: fiware-ld-context
@@ -32,6 +34,8 @@ services:
 
   # Databases
   mongo-db:
+    labels:
+      org.fiware: 'tutorial'
     image: mongo:${MONGO_DB_VERSION}
     hostname: mongo-db
     container_name: db-mongo
@@ -52,6 +56,8 @@ services:
 
     # Tutorial acts as a series of dummy IoT Sensors over HTTP
   tutorial:
+    labels:
+      org.fiware: 'tutorial'
     image: fiware/tutorials.ngsi-ld
     hostname: iot-sensors
     container_name: fiware-tutorial

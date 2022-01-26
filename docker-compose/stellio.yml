@@ -1,6 +1,8 @@
 version: '3.5'
 services:
   zookeeper:
+    labels:
+      org.fiware: 'tutorial'
     image: confluentinc/cp-zookeeper:5.4.1
     container_name: zookeeper
     ports:
@@ -11,6 +13,8 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
 
   kafka:
+    labels:
+      org.fiware: 'tutorial'
     image: confluentinc/cp-kafka:5.4.1
     container_name: kafka
     ports:
@@ -27,6 +31,8 @@ services:
       - zookeeper
 
   api-gateway:
+    labels:
+      org.fiware: 'tutorial'
     container_name: stellio-api-gateway
     hostname: stellio
     image: stellio/stellio-api-gateway:${STELLIO_DOCKER_TAG}
@@ -36,6 +42,8 @@ services:
       - "${STELLIO_PORT}:8080"
 
   entity-service:
+    labels:
+      org.fiware: 'tutorial'
     container_name: stellio-entity-service
     image: stellio/stellio-entity-service:${STELLIO_DOCKER_TAG}
     environment:
@@ -48,6 +56,8 @@ services:
       - kafka
 
   search-service:
+    labels:
+      org.fiware: 'tutorial'
     container_name: stellio-search-service
     image: stellio/stellio-search-service:${STELLIO_DOCKER_TAG}
     environment:
@@ -64,6 +74,8 @@ services:
       - kafka
 
   subscription-service:
+    labels:
+      org.fiware: 'tutorial'
     container_name: stellio-subscription-service
     image: stellio/stellio-subscription-service:${STELLIO_DOCKER_TAG}
     environment:
@@ -81,6 +93,8 @@ services:
 
   # Databases
   neo4j:
+    labels:
+      org.fiware: 'tutorial'
     image: neo4j:4.2
     hostname: neo4j
     container_name: db-neo4j
@@ -97,6 +111,8 @@ services:
       - 7687:7687
 
   postgres:
+    labels:
+      org.fiware: 'tutorial'
     image: stellio/stellio-timescale-postgis:2.3.0-pg13
     hostname: postgres
     container_name: db-postgres

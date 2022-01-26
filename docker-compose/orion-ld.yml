@@ -22,6 +22,8 @@ services:
 
   # Orion is the context broker
   orion:
+    labels:
+      org.fiware: 'tutorial'
     image: fiware/orion-ld:${ORION_LD_VERSION}
     hostname: orion
     container_name: fiware-orion
