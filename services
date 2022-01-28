@@ -214,7 +214,7 @@ waitForOrion () {
 	while ! [ `docker inspect --format='{{.State.Health.Status}}' fiware-orion` == "healthy" ]
 	do
 	  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://localhost:1026/version'` " (waiting for 200)"
-	  sleep 1
+	  sleep 5
 	done
 }
 
