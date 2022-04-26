@@ -35,6 +35,8 @@ The cUrl commands are also available as
 -   [Start Up](#start-up)
 -   [Using Subscriptions](#using-subscriptions)
     -   [Setting up a simple Subscription](#setting-up-a-simple-subscription)
+-   [Sending notifications to an MQTT Server](#sending-notifications-to-an-mqtt-server)
+    -   [Setting up an MQTT Subscription](#setting-up-an-mqtt-subscription)
 -   [Subscription CRUD Actions](#subscription-crud-actions)
     -   [Creating a Subscription](#creating-a-subscription)
     -   [Delete a Subscription](#delete-a-subscription)
