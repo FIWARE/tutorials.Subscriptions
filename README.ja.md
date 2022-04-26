@@ -35,6 +35,8 @@
 -   [起動](#start-up)
 -   [サブスクリプションの使用](#using-subscriptions)
     -   [単純なサブスクリプションの設定](#setting-up-a-simple-subscription)
+-   [MQTT サーバへの通知の送信](#sending-notifications-to-an-mqtt-server)
+    -   [MQTT サブスクリプションの設定](#setting-up-an-mqtt-subscription)
 -   [サブスクリプションの CRUD アクション](#subscription-crud-actions)
     -   [サブスクリプションの作成](#creating-a-subscription)
     -   [サブスクリプションの削除](#delete-a-subscription)
@@ -140,7 +142,6 @@ NGSI-LD Context Broker を使用するだけで十分です。
         データ情報を保持するために使用します
     -   デバイスの URLs や Keys などのデバイス情報を保持するために **IoT Agent** によって使用されます
 -   **チュートリアル・アプリケーション** は次のことを行います:
-    -   システム内のコンテキスト・エンティティを定義する静的な `@context` ファイルを提供します
     -   HTTP上で実行される [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
         プロトコルを使用して、ダミーの[農業用 IoT デバイス](https://github.com/FIWARE/tutorials.IoT-Sensors/tree/NGSI-LD)
         のセットとして機能します
@@ -184,7 +185,7 @@ docker-compose -v
 docker version
 ```
 
-Docker バージョン 18.03 以降と Docker Compose 1.21 以上を使用していることを確認し、
+Docker バージョン 20.10 以降と Docker Compose 1.29 以上を使用していることを確認し、
 必要に応じてアップグレードしてください。
 
 <A name="prerequisites"></A>
@@ -484,6 +485,67 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 
 使用可能なカスタム形式のセットは、Context Broker によって異なります。
 
+<a name="sending-notifications-to-an-mqtt-server"></a>
+
+# MQTT サーバへの通知の送信
+
+"MQTTは、IoT (the internet of Things) で使用されるパブリッシュ/サブスクライブ・ベースのメッセージング・プロトコルです。TCP/ IP
+プロトコル上で機能し、"小さなコード・フットプリント" が必要とされるか、またはネットワーク帯域幅に制限がある、リモート・
+ロケーションとの接続用に設計されています。目標は、帯域幅効率が高く、バッテリー電力をほとんど使用しないプロトコルを提供すること
+です。"<sup>[1](#footnote1)</sup> NGSI-LD Context brokers は、HTTP 経由で通知を送信するのと同じくらい簡単に MQTT 経由で通知を送信
+できます。
+
+<a name="setting-up-an-mqtt-subscription"></a>
+
+## MQTT サブスクリプションの設定
+
+この `keyValues` サブスクリプションは、`filling` レベルが 0.4 と 0.2 の間にあるときに起動します。`endpoint` 属性が MQTT
+プロトコルを使用するように変更されました。
+
+#### :four: リクエスト:
+
+```console
+curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
+-H 'Content-Type: application/ld+json' \
+-H 'NGSILD-Tenant: openiot' \
+--data-raw '{
+  "description": "Notify me of low feedstock on Farm:001",
+  "type": "Subscription",
+  "entities": [{"type": "FillingLevelSensor"}],
+  "watchedAttributes": ["filling"],
+  "q": "filling>0.2;filling<0.4;controlledAsset==urn:ngsi-ld:Building:farm001",
+  "notification": {
+    "attributes": ["filling", "controlledAsset"],
+    "format": "keyValues",
+    "endpoint": {
+      "uri": "mqtt://mosquitto:1883/entities",
+      "accept": "application/json",
+      "notifierInfo": [
+        {
+          "key": "MQTT-QoS",
+          "value": "1"
+        }
+      ]
+    }
+  },
+   "@context": "http://context/ngsi-context.jsonld"
+}'
+```
+
+### MQTT サブスクライバを開始 (:new: ターミナル)
+
+通信回線が開いていることを確認するために、特定のトピックをサブスクライブし、メッセージが公開されたときに
+何かを受信できることを確認できます。
+
+**新しいターミナル**を開き、次のように新しい実行中の `mqtt-subscriber` Docker コンテナを作成します:
+
+```console
+docker run -it --rm --name mqtt-subscriber \
+  --network fiware_default efrecon/mqtt-client sub -h mosquitto -t "/#"
+```
+
+これで、端末はイベントを受信する準備が整います。
+
 <a name="subscription-crud-actions"></a>
 
 # サブスクリプションの CRUD アクション
@@ -631,3 +693,10 @@ curl -X GET \
 ## License
 
 [MIT](LICENSE) © 2021 FIWARE Foundation e.V.
+
+### 脚注
+
+<a name="footnote1"></a>
+
+-   [Wikipedia: MQTT](https://en.wikipedia.org/wiki/MQTT) - サービス間のすべてのメッセージのディスパッチを担当する
+    中央通信ポイント (MQTT broker と呼ばれる)
