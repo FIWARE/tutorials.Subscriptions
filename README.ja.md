@@ -4,9 +4,7 @@
 [![FIWARE Core Context Management](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/core.svg)](https://github.com/FIWARE/catalogue/blob/master/core/README.md)
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.Subscriptions.svg)](https://opensource.org/licenses/MIT)
 [![Support badge](https://img.shields.io/badge/tag-fiware-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware)
-
-<br/>
-[![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
+<br/> [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
 <!-- prettier-ignore -->
 
@@ -27,7 +25,7 @@
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/18ea15017244c70d1fe4)
 
-## 内容
+## コンテンツ
 
 <details>
 <summary>詳細 <b>(クリックして拡大)</b></summary>
@@ -182,7 +180,7 @@ FIWARE"_ と認定するには、Orion Context Broker を使用するだけで�
 
 **Docker Compose** は、マルチコンテナ Docker アプリケーションを定義して実行する
 ためのツールです
-。[YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Subscriptions/master/docker-compose.yml)
+。[YAML file](https://raw.githubusercontent.com/FIWARE/tutorials.Subscriptions/NGSI-v2/docker-compose.yml)
 ファイルは、アプリケーションのために必要なサービスを構成するために使用します。つ
 まり、すべてのコンテナ・サービスは 1 つのコマンドで呼び出すことができます
 。Docker Compose は、デフォルトで Docker for Windows と Docker for Mac の一部と
@@ -198,7 +196,7 @@ docker-compose -v
 docker version
 ```
 
-Docker バージョン 18.03 以降と Docker Compose 1.29 以上を使用していることを確認
+Docker バージョン 20.10 以降と Docker Compose 1.29 以上を使用していることを確認
 し、必要に応じてアップグレードしてください。
 
 <A name="prerequisites"></A>
@@ -312,20 +310,15 @@ POST リクエストのボディは、2 つの部分で構成されています�
 
 ```javascript
 router.post("/subscription/:type", (req, res) => {
-    _.forEach(req.body.data, item => {
-        broadcastEvents(req, item, [
-            "refStore",
-            "refProduct",
-            "refShelf",
-            "type"
-        ]);
+    _.forEach(req.body.data, (item) => {
+        broadcastEvents(req, item, ["refStore", "refProduct", "refShelf", "type"]);
     });
     res.status(204).send();
 });
 
 function broadcastEvents(req, item, types) {
     const message = req.params.type + " received";
-    _.forEach(types, type => {
+    _.forEach(types, (type) => {
         if (item[type]) {
             req.app.get("io").emit(item[type], message);
         }
@@ -575,7 +568,7 @@ curl -X DELETE \
 
 ### 既存のサブスクリプションの更新
 
-この例では、id `5ae07c7e6e4f353c5163c93e` を持つ既存のサブスクリプションを修正し
+この例では、ID `5ae07c7e6e4f353c5163c93e` を持つ既存のサブスクリプションを修正し
 、通知 URL を更新します。
 
 サブスクリプションを更新して、`/v2/subscriptions/<subscription-id>` エンドポイン
@@ -618,7 +611,7 @@ curl -X GET \
 
 ### サブスクリプションの詳細を読み込む
 
-この例では、特定の id を持つサブスクリプションの完全な詳細を取得します。
+この例では、特定の ID を持つサブスクリプションの完全な詳細を取得します。
 
 レスポンスには、`notification` セクションに、サブスクリプションの条件が最後に満
 たされたことと、POST アクションが成功したかどうかを示す追加の詳細が含まれていま
@@ -647,4 +640,4 @@ curl -X GET \
 
 ## License
 
-[MIT](LICENSE) © 2018-2020 FIWARE Foundation e.V.
+[MIT](LICENSE) © 2018-2022 FIWARE Foundation e.V.
