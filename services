@@ -250,7 +250,7 @@ case "${command}" in
 		${dockerCmd} -f docker-compose/common.yml -f docker-compose/scorpio-aaio.yml up -d --remove-orphans --renew-anon-volumes
 		waitForMongo
 		addDatabaseIndex
-		waitForOrion
+		waitForScorpio
 		loadData scorpio:9090
 		displayServices
 		echo -e "Now open \033[4mhttp://localhost:3000/app/monitor\033[0m"
@@ -267,7 +267,7 @@ case "${command}" in
 		waitForMongo
 		addDatabaseIndex
 		waitForStellio
-		loadData orion:1026
+		loadData stellio:1026
 		displayServices
 		echo -e "Now open \033[4mhttp://localhost:3000/app/monitor\033[0m"
 		;;

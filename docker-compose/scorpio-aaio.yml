@@ -84,6 +84,14 @@ services:
       - postgres
       - kafka
 
+
+  # IoT-Agent connects to the Scorpio Broker
+  iot-agent:
+    environment:
+      #- IOTA_DEFAULT_RESOURCE=/iot/d
+      - IOTA_CB_HOST=scorpio # name of the context broker to update context
+      - IOTA_CB_PORT=${SCORPIO_PORT} # port the context broker listens on to update context
+
   # Tutorial acts as a series of dummy IoT Sensors over HTTP and connects to the Scorpio Broker
   tutorial:
     environment:

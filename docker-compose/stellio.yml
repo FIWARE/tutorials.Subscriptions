@@ -150,6 +150,14 @@ services:
       start_period: 10s
 
 
+  # IoT-Agent connects to the Stellio Broker
+  iot-agent:
+    environment:
+      #- IOTA_DEFAULT_RESOURCE=/iot/d
+      - IOTA_CB_HOST=stellio # name of the context broker to update context
+      - IOTA_CB_PORT=${STELLIO_PORT} # port the context broker listens on to update context
+
+
   # Tutorial acts as a series of dummy IoT Sensors over HTTP and connects to the Stellio Broker
   tutorial:
     environment:
