@@ -175,10 +175,6 @@
 								"disabled": true
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "http://{{orion}}/ngsi-ld/v1/subscriptions/urn:ngsi-ld:Subscription:5fd8a6ff9d82fd9d6ab1ce75",
 							"protocol": "http",
