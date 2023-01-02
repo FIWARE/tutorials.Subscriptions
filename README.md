@@ -169,7 +169,7 @@ docker-compose -v
 docker version
 ```
 
-Please ensure that you are using Docker version 20.10 or higher and Docker Compose 1.29  or higher and upgrade if
+Please ensure that you are using Docker version 20.10 or higher and Docker Compose 1.29 or higher and upgrade if
 necessary.
 
 ## Cygwin
@@ -454,7 +454,6 @@ Orion-LD context broker pre-applies a compaction operation to the payload.
 -   `x-ngsiv2-normalized` - NGSI-v2 normalized payload with URN attribute names
 -   `x-ngsiv2-normalized-compacted`- NGSI-v2 normalized payload pairs with short name attribute aliases
 
-
 The set of available custom formats will vary between Context Brokers.
 
 # Sending notifications to an MQTT Server
@@ -462,12 +461,13 @@ The set of available custom formats will vary between Context Brokers.
 "MQTT is a publish-subscribe-based messaging protocol used in the internet of Things. It works on top of the TCP/IP
 protocol, and is designed for connections with remote locations where a "small code footprint" is required or the
 network bandwidth is limited. The goal is to provide a protocol, which is bandwidth-efficient and uses little battery
-power."<sup>[1](#footnote1)</sup> NGSI-LD Context brokers can send notifications via MQTT just as easily as sending them via HTTP.
+power."<sup>[1](#footnote1)</sup> NGSI-LD Context brokers can send notifications via MQTT just as easily as sending them
+via HTTP.
 
 ## Setting up an MQTT Subscription
 
-This `keyValues` subscription will fire when the `filling` level is between 0.4 and 0.2. The `endpoint` attribute has been
-altered to use the MQTT protocol
+This `keyValues` subscription will fire when the `filling` level is between 0.4 and 0.2. The `endpoint` attribute has
+been altered to use the MQTT protocol
 
 #### :four: Request:
 
@@ -499,11 +499,10 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 }'
 ```
 
-
 ### Start an MQTT Subscriber (:new: Terminal)
 
-To check that the lines of communication are open, we can subscribe to a given topic, and see that we are
-able to receive something when a message is published.
+To check that the lines of communication are open, we can subscribe to a given topic, and see that we are able to
+receive something when a message is published.
 
 Open a **new terminal**, and create a new running `mqtt-subscriber` Docker container as follows:
 
@@ -513,9 +512,6 @@ docker run -it --rm --name mqtt-subscriber \
 ```
 
 The terminal will then be ready to receive events
-
-
-
 
 # Subscription CRUD Actions
 
@@ -632,10 +628,6 @@ Subscription details can be read by making a GET request to the `/ngsi-ld/v1/sub
 curl -X GET \
   --url 'http://localhost:1026/ngsi-ld/v1/subscriptions/5aead3361587e1918de90aba'
 ```
-
-
-
-
 
 # Next Steps
 
