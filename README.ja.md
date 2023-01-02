@@ -19,6 +19,7 @@
 としても利用できます。
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/7f7b555ed4169e27bcef)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/FIWARE/tutorials.Subscriptions/tree/NGSI-LD)
 
 ## コンテンツ
 
