@@ -285,7 +285,7 @@ case "${command}" in
 		waitForMongo
 		addDatabaseIndex
 		waitForStellio
-		loadData stellio:1026
+		loadData stellio:8080
 		displayServices
 		echo -e "Now open \033[4mhttp://localhost:3000/app/monitor\033[0m"
 		;;

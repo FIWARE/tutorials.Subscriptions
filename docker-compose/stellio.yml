@@ -6,6 +6,7 @@ services:
     labels:
       org.fiware: 'tutorial'
     image: stellio/stellio-api-gateway:${STELLIO_DOCKER_TAG}
+    platform: linux/amd64
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     ports:
@@ -16,6 +17,7 @@ services:
     labels:
       org.fiware: 'tutorial'
     image: stellio/stellio-search-service:${STELLIO_DOCKER_TAG}
+    platform: linux/amd64
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_R2DBC_URL=r2dbc:postgresql://postgres/stellio_search
@@ -37,6 +39,7 @@ services:
     labels:
       org.fiware: 'tutorial'
     image: stellio/stellio-subscription-service:${STELLIO_DOCKER_TAG}
+    platform: linux/amd64
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_R2DBC_URL=r2dbc:postgresql://postgres/stellio_subscription
@@ -101,14 +104,6 @@ services:
       timeout: 5s
       retries: 20
       start_period: 10s
-
-  # IoT-Agent connects to the Stellio Broker
-  iot-agent:
-    environment:
-      #- IOTA_DEFAULT_RESOURCE=/iot/d
-      - IOTA_CB_HOST=stellio # name of the context broker to update context
-      - IOTA_CB_PORT=${STELLIO_PORT} # port the context broker listens on to update context
-
 
   # Tutorial acts as a series of dummy IoT Sensors over HTTP and connects to the Stellio Broker
   tutorial:
