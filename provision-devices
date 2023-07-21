@@ -83,7 +83,7 @@ curl -s -o /dev/null -X POST \
       "commands": [
         {"name": "add", "type": "Property"},
         {"name": "remove", "type": "Property"},
-        {"name": "remove", "type": "refill"}
+	{"name": "refill", "type": "Property"}
       ],
       "static_attributes": [
         {"name": "supportedProtocol", "type": "Property", "value": ["ul20"]},
