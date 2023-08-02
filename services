@@ -226,7 +226,8 @@ waitForOrion () {
 
 displayServices () {
 	echo ""
-	docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" --filter name=fiware-*
+	docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" --filter name="$1"
+
 	echo ""
 }
 
@@ -246,11 +247,11 @@ case "${command}" in
 		echo -e "- Data models \033[1m@context\033[0m (Smart Farm) is supplied externally"
 		echo ""
 		${dockerCmd} -f docker-compose/common.yml -f docker-compose/orion-ld.yml up -d --remove-orphans --renew-anon-volumes
+		displayServices "orion|fiware"
 		waitForMongo
 		addDatabaseIndex
 		waitForOrion
 		loadData orion:1026
-		displayServices
 		echo -e "Now open \033[4mhttp://localhost:3000/app/monitor\033[0m"
 		;;
 	"scorpio")
@@ -264,11 +265,11 @@ case "${command}" in
 		echo -e "- Data models \033[1m@context\033[0m (Smart Farm) is supplied externally"
 		echo ""
 		${dockerCmd} -f docker-compose/common.yml -f docker-compose/scorpio-aaio.yml up -d --remove-orphans --renew-anon-volumes
+		displayServices "scorpio|fiware"
 		waitForMongo
 		addDatabaseIndex
 		waitForScorpio
 		loadData scorpio:9090
-		displayServices
 		echo -e "Now open \033[4mhttp://localhost:3000/app/monitor\033[0m"
 		;;
 	"stellio")
@@ -282,11 +283,11 @@ case "${command}" in
 		echo -e "- Data models \033[1m@context\033[0m (Smart Farm) is supplied externally"
 		echo ""
 		${dockerCmd} -f docker-compose/common.yml -f docker-compose/stellio.yml up -d --remove-orphans --renew-anon-volumes
+		displayServices "stellio|fiware"
 		waitForMongo
 		addDatabaseIndex
 		waitForStellio
 		loadData stellio:8080
-		displayServices
 		echo -e "Now open \033[4mhttp://localhost:3000/app/monitor\033[0m"
 		;;
 	"stop")
