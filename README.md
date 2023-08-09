@@ -188,7 +188,7 @@ cd tutorials.Subscriptions
 git checkout NGSI-LD
 
 ./services create;
-./services orion;
+./services [orion|scorpio|stellio]
 ```
 
 This command will also import seed data from the previous Farm Management Information System example on startup, and

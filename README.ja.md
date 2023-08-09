@@ -210,7 +210,7 @@ cd tutorials.Subscriptions
 git checkout NGSI-LD
 
 ./services create;
-./services orion;
+./services [orion|scorpio|stellio]
 ```
 
 このコマンドは、起動時に前のファーム管理情報システムの例からシードデータをインポートし、ファームに一連のダミー
