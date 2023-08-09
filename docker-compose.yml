@@ -22,8 +22,6 @@ services:
   orion:
     labels:
       org.fiware: 'tutorial'
-    labels:
-      org.fiware: 'tutorial'
     image: quay.io/fiware/orion:${ORION_VERSION}
     hostname: orion
     container_name: fiware-orion
@@ -75,8 +73,6 @@ services:
 
   # Database
   mongo-db:
-    labels:
-      org.fiware: 'tutorial'
     labels:
       org.fiware: 'tutorial'
     image: mongo:${MONGO_DB_VERSION}
