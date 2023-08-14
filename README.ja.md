@@ -677,7 +677,7 @@ curl -X GET \
 
 ```console
 curl -X GET \
-  --url 'http://localhost:1026/ngsi-ld/v1/subscriptions/5aead3361587e1918de90aba'
+  --url 'http://localhost:1026/ngsi-ld/v1/subscriptions/urn:ngsi-ld:Subscription:5aead3361587e1918de90aba'
 ```
 
 <a name="next-steps"></a>
