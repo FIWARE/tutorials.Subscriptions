@@ -68,7 +68,7 @@ waitForScorpio () {
 	while [ "${response}" -eq 000 ]
 	do
 		echo -e "Context Broker HTTP state: ${response} (waiting for 500)"
-		pause 60
+		pause 6
 		getHeartbeat "${SCORPIO}"
 	done
 }
@@ -265,7 +265,7 @@ case "${command}" in
 		echo -e "- \033[1mTutorial\033[0m displays a web app to manipulate the context directly"
 		echo -e "- Data models \033[1m@context\033[0m (Smart Farm) is supplied externally"
 		echo ""
-		${dockerCmd} -f docker-compose/common.yml -f docker-compose/scorpio-aaio.yml up -d --remove-orphans --renew-anon-volumes
+		${dockerCmd} -f docker-compose/common.yml -f docker-compose/scorpio.yml up -d --remove-orphans --renew-anon-volumes
 		displayServices "scorpio|fiware"
 		waitForMongo
 		addDatabaseIndex
@@ -305,7 +305,7 @@ case "${command}" in
 		export $(cat .env | grep "#" -v)
 		echo "Pulling Docker images"
 		docker pull -q quay.io/curl/curl
-		${dockerCmd} -f docker-compose/common.yml -f docker-compose/scorpio-aaio.yml -f docker-compose/orion-ld.yml -f docker-compose/stellio.yml pull
+		${dockerCmd} -f docker-compose/common.yml -f docker-compose/scorpio.yml -f docker-compose/orion-ld.yml -f docker-compose/stellio.yml pull
 		;;
 	*)
 		echo "Command not Found."

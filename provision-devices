@@ -7,9 +7,6 @@
 set -e
 
 
-
-
-
 printf "⏳ Provisioning IoT devices "
 
 
@@ -17,7 +14,7 @@ printf "⏳ Provisioning IoT devices "
 # Create a service groups for all UltraLight IoT devices
 #
 
-curl -s -o /dev/null -X POST \
+curl -s  -X POST \
   'http://iot-agent:4041/iot/services' \
   -H 'Content-Type: application/json' \
   -H 'fiware-service: openiot' \
@@ -26,7 +23,7 @@ curl -s -o /dev/null -X POST \
  "services": [
    {
      "apikey":      "321701236",
-     "cbroker":     "http://orion:1026",
+     "cbroker":     "'"${CONTEXT_BROKER}"'",
      "entity_type": "TemperatureSensor",
      "resource":    "/iot/d",
      "protocol":    "PDI-IoTA-UltraLight",
@@ -46,7 +43,7 @@ curl -s -o /dev/null -X POST \
    },
    {
      "apikey":      "548027571",
-     "cbroker":     "http://orion:1026",
+     "cbroker":     "'"${CONTEXT_BROKER}"'",
      "entity_type": "SoilSensor",
      "resource":    "/iot/d",
      "protocol":    "PDI-IoTA-UltraLight",
@@ -66,7 +63,7 @@ curl -s -o /dev/null -X POST \
    },
    {
      "apikey":      "854782081",
-     "cbroker":     "http://orion:1026",
+     "cbroker":     "'"${CONTEXT_BROKER}"'",
      "entity_type": "FillingLevelSensor",
      "resource":    "/iot/d",
      "protocol":    "PDI-IoTA-UltraLight",
@@ -83,7 +80,7 @@ curl -s -o /dev/null -X POST \
       "commands": [
         {"name": "add", "type": "Property"},
         {"name": "remove", "type": "Property"},
-	{"name": "refill", "type": "Property"}
+	      {"name": "refill", "type": "Property"}
       ],
       "static_attributes": [
         {"name": "supportedProtocol", "type": "Property", "value": ["ul20"]},
@@ -94,7 +91,7 @@ curl -s -o /dev/null -X POST \
    },
    {
      "apikey":      "110990",
-     "cbroker":     "http://orion:1026",
+     "cbroker":     "'"${CONTEXT_BROKER}"'",
      "entity_type": "Device",
      "resource":    "/iot/d",
      "protocol":    "PDI-IoTA-UltraLight",
@@ -116,7 +113,7 @@ curl -s -o /dev/null -X POST \
    },
    {
      "apikey":      "98699",
-     "cbroker":     "http://orion:1026",
+     "cbroker":     "'"${CONTEXT_BROKER}"'",
      "entity_type": "Device",
      "resource":    "/iot/d",
      "protocol":    "PDI-IoTA-UltraLight",
@@ -139,7 +136,7 @@ curl -s -o /dev/null -X POST \
    },
    {
      "apikey":      "112903447",
-     "cbroker":     "http://orion:1026",
+     "cbroker":     "'"${CONTEXT_BROKER}"'",
      "entity_type": "Water",
      "resource":    "/iot/d",
      "protocol":    "PDI-IoTA-UltraLight",
@@ -157,7 +154,7 @@ curl -s -o /dev/null -X POST \
    },
    {
      "apikey":      "1067386313",
-     "cbroker":     "http://orion:1026",
+     "cbroker":     "'"${CONTEXT_BROKER}"'",
      "entity_type": "Tractor",
      "resource":    "/iot/d",
      "protocol":    "PDI-IoTA-UltraLight",
@@ -386,4 +383,5 @@ curl -s -o /dev/null -X POST \
   ]
 }
 '
+
 echo -e " \033[1;32mdone\033[0m"
