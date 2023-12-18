@@ -267,7 +267,7 @@ git checkout NGSI-v2
 ドポイントに POST リクエストを行うことで、新しいサブスクリプションを追加できます
 :
 
-#### :one: リクエスト :
+#### 1️⃣ リクエスト :
 
 ```console
 curl -iX POST \
@@ -341,7 +341,7 @@ function broadcastEvents(req, item, types) {
 ビールのボトルの価格を 0.89 ユーロに下げましょう。これはプログラムではまだできま
 せんので、次のように curl コマンドを使用して実行する必要があります :
 
-#### :two: リクエスト :
+#### 2️⃣ リクエスト :
 
 ```console
 curl -iX PUT \
@@ -403,7 +403,7 @@ curl -iX PUT \
 以下で、アイテムがストア 001 にあることをテストします。これは、他のストアが通知
 によって邪魔されないようにビジネス・ロジックを設定できることを意味します。
 
-#### :three: リクエスト :
+#### 3️⃣ リクエスト :
 
 次のコマンドは、ストア 001 の在庫不足通知です :
 
@@ -429,7 +429,7 @@ curl -iX POST \
 }'
 ```
 
-#### :four: リクエスト :
+#### 4️⃣ リクエスト :
 
 次のコマンドは、ストア 002 の在庫不足通知です :
 
@@ -522,7 +522,7 @@ POST レスポンスのヘッダに返されると自動的に生成されます
 POST リクエストが `http://tutorial:3000/subscription/price-change endpoint` エン
 ドポイントに送信されることが記載されています。
 
-#### :five: リクエスト :
+#### 5️⃣ リクエスト :
 
 ```console
 curl -iX POST \
@@ -558,7 +558,7 @@ curl -iX POST \
 サブスクリプションは、`/v2/subscriptions/<subscription-id>` エンドポイントに
 DELETE リクエストを行うことで削除できます。
 
-#### :six: リクエスト :
+#### 6️⃣ リクエスト :
 
 ```console
 curl -X DELETE \
@@ -575,7 +575,7 @@ curl -X DELETE \
 サブスクリプションを更新して、`/v2/subscriptions/<subscription-id>` エンドポイン
 トへの PATCH リクエストを行うことができます。
 
-#### :seven: リクエスト :
+#### 7️⃣  リクエスト :
 
 ```console
 curl -iX PATCH \
@@ -601,7 +601,7 @@ curl -iX PATCH \
 各サブスクリプションの通知セクションには、サブスクリプションの条件が最後に満たさ
 れた時刻、および POST アクションが成功したかどうかが含まれます。
 
-#### :eight: リクエスト :
+#### 8️⃣  リクエスト :
 
 ```console
 curl -X GET \
@@ -621,7 +621,7 @@ curl -X GET \
 サブスクリプションの詳細は、`/v2/subscriptions/<subscription-id>` エンドポイント
 に GET リクエストを行うことで読み取ることができます。
 
-#### :nine: リクエスト :
+#### 9️⃣ リクエスト :
 
 ```console
 curl -X GET \

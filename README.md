@@ -178,7 +178,8 @@ git checkout NGSI-v2
 This command will also import seed data from the previous
 [Stock Management example](https://github.com/FIWARE/tutorials.Context-Providers) on startup.
 
-> :information_source: **Note:** If you want to clean up and start over again you can do so with the following command:
+> [!NOTE]
+> If you want to clean up and start over again you can do so with the following command:
 >
 > ```console
 > ./services stop
@@ -210,7 +211,7 @@ frequently so this would be a waste of resources and create a lot of unnecessary
 The alternative is to create a subscription which will POST a payload to a "well-known" URL whenever a price has
 changed. A new subscription can be added by making a POST request to the `/v2/subscriptions/` endpoint as shown below:
 
-#### :one: Request:
+#### 1️⃣ Request:
 
 ```console
 curl -iX POST \
@@ -278,7 +279,7 @@ the product prices remain the same - for example apples remain at 0.99€
 Let's reduce the price of apples to 0.89€. This can't be done programmatically yet, so it has to be done with a curl
 command as shown:
 
-#### :two: Request:
+#### 2️⃣ Request:
 
 ```console
 curl -iX PUT \
@@ -328,7 +329,7 @@ The subscription is tested whenever the `shelfCount` of an **InventoryItem** is 
 `"q": "shelfCount<10;refStore==urn:ngsi-ld:Store:001` tests that the `shelfCount` is below ten and that the item is in
 store 001. This means that we can set up our business logic so that other stores wont be bothered by notifications.
 
-#### :three: Request:
+#### 3️⃣ Request:
 
 The following command is a low stock notification for Store 001
 
@@ -354,7 +355,7 @@ curl -iX POST \
 }'
 ```
 
-#### :four: Request:
+#### 4️⃣ Request:
 
 The following command is a low stock notification for Store 002
 
@@ -435,7 +436,7 @@ Product entity is altered.
 The notification section of the body states that a POST request containing all affected entities will be sent to the
 `http://tutorial:3000/subscription/price-change` endpoint.
 
-#### :five: Request:
+#### 5️⃣ Request:
 
 ```console
 curl -iX POST \
@@ -467,7 +468,7 @@ This example deletes the Subscription with `id=5ae079b86e4f353c5163c939` from th
 
 Subscriptions can be deleted by making a DELETE request to the `/v2/subscriptions/<subscription-id>` endpoint.
 
-#### :six: Request:
+#### 6️⃣ Request:
 
 ```console
 curl -X DELETE \
@@ -480,7 +481,7 @@ This example amends an existing subscription with the ID `5ae07c7e6e4f353c5163c9
 
 Subscriptions can be updated making a PATCH request to the `/v2/subscriptions/<subscription-id>` endpoint.
 
-#### :seven: Request:
+#### 7️⃣  Request:
 
 ```console
 curl -iX PATCH \
@@ -503,7 +504,7 @@ This example lists all subscriptions by making a GET request to the `/v2/subscri
 The notification section of each subscription will also include the last time the conditions of the subscription were
 met, and whether associated the POST action was successful.
 
-#### :eight: Request:
+#### 8️⃣  Request:
 
 ```console
 curl -X GET \
@@ -519,7 +520,7 @@ subscription were met, and whether associated the POST action was successful.
 
 Subscription details can be read by making a GET request to the `/v2/subscriptions/<subscription-id>` endpoint.
 
-#### :nine: Request:
+#### 9️⃣ Request:
 
 ```console
 curl -X GET \
