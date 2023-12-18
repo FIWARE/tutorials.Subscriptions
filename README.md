@@ -194,7 +194,8 @@ git checkout NGSI-LD
 This command will also import seed data from the previous Farm Management Information System example on startup, and
 provision a series of dummy devices on the farm.
 
-> :information_source: **Note:** If you want to clean up and start over again you can do so with the following command:
+> [!NOTE]
+>  If you want to clean up and start over again you can do so with the following command:
 >
 > ```console
 > ./services stop
@@ -230,7 +231,7 @@ The alternative is to create a subscription which will POST a payload to a "well
 changed. A new subscription can be added by making a POST request to the `/ngsi-ld/v1/subscriptions/` endpoint as shown
 below:
 
-#### :one: Request:
+#### 1️⃣ Request:
 
 ```console
 curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
@@ -321,7 +322,7 @@ function broadcastEvents(req, item, types) {
 This business logic emits socket I/O events to any registered parties (such as the contractor who will then refill the
 barn.)
 
-#### :two: Request:
+#### 2️⃣ Request:
 
 This second subscription will fire when the `filling` level is between 0.6 and 0.4. The `format` attribute has been
 altered to inform the subscriber using NGSI-LD normalized format.
@@ -381,7 +382,7 @@ When a `low-stock-farm001-ngsild` event is fired, the response is as shown:
 Because the `accept` attribute has been set to `application/json`, the `@context` is sent as a `Link` header rather than
 an attribute within the payload body.
 
-#### :three: Request:
+#### 3️⃣ Request:
 
 Context brokers may offer additional custom payload formats (typically prefixed with an `x-`). The Orion-LD broker
 offers a backward compatible **NGSI-v2** payload option for legacy systems.
@@ -469,7 +470,7 @@ via HTTP.
 This `keyValues` subscription will fire when the `filling` level is between 0.4 and 0.2. The `endpoint` attribute has
 been altered to use the MQTT protocol
 
-#### :four: Request:
+#### 4️⃣ Request:
 
 ```console
 curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
@@ -539,7 +540,7 @@ Product entity is altered.
 The notification section of the body states that a POST request containing all affected entities will be sent to the
 `http://tutorial:3000/subscription/price-change` endpoint.
 
-#### :four: Request:
+#### 4️⃣ Request:
 
 ```console
 curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
@@ -566,7 +567,7 @@ This example deletes the Subscription with `id=urn:ngsi-ld:Subscription:5fd22883
 
 Subscriptions can be deleted by making a DELETE request to the `/ngsi-ld/v1/subscriptions/<subscription-id>` endpoint.
 
-#### :five: Request:
+#### 5️⃣ Request:
 
 ```console
 curl -X DELETE \
@@ -580,7 +581,7 @@ the notification URL.
 
 Subscriptions can be updated making a PATCH request to the `/ngsi-ld/v1/subscriptions/<subscription-id>` endpoint.
 
-#### :six: Request:
+#### 6️⃣ Request:
 
 ```console
 curl -iX PATCH \
@@ -606,7 +607,7 @@ subscriptions is limited to the tenant defined by the `NGSILD-Tenant` header (or
 The notification section of each subscription will also include the last time the conditions of the subscription were
 met, and whether associated the POST action was successful.
 
-#### :seven: Request:
+#### 7️⃣ Request:
 
 ```console
 curl -X GET \
@@ -622,7 +623,7 @@ subscription were met, and whether associated the POST action was successful.
 
 Subscription details can be read by making a GET request to the `/ngsi-ld/v1/subscriptions/<subscription-id>` endpoint.
 
-#### :eight: Request:
+#### 8️⃣ Request:
 
 ```console
 curl -X GET \

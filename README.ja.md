@@ -257,7 +257,7 @@ IoT デバイスをプロビジョニングします。
 以下に示すように、`/ngsi-ld/v1/subscriptions/` エンドポイントに POST リクエストを行うことで、
 新しいサブスクリプションを追加できます:
 
-#### :one: リクエスト:
+#### 1️⃣ リクエスト:
 
 ```console
 curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
@@ -350,7 +350,7 @@ function broadcastEvents(req, item, types) {
 
 このビジネスロジックは、登録された関係者 (納屋を補充する請負業者など) にソケット I/O イベントを発行します。
 
-#### :two: リクエスト:
+#### 2️⃣ リクエスト:
 
 この2番目のサブスクリプションは、`filling` level (充填レベル) が0.6〜0.4のときに発生します。`format` 属性は、
 NGSI-LD 正規化フォーマット (normalized format) を使用してサブスクライバーに通知するように変更されました。
@@ -410,7 +410,7 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 `accept` 属性が `application/json` に設定されているため、`@context` はペイロード・ボディ内の属性ではなく
 `Link` ヘッダとして送信されます。
 
-#### :three: リクエスト:
+#### 3️⃣ リクエスト:
 
 Context broker は、追加のカスタム・ペイロード形式 (通常は `x-` で始まる) を提供する場合があります。Orion-LD
 Broker は、レガシー・システムに下位互換性のある **NGSI-v2** ペロード・オプションを提供します。
@@ -503,7 +503,7 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 この `keyValues` サブスクリプションは、`filling` レベルが 0.4 と 0.2 の間にあるときに起動します。`endpoint` 属性が MQTT
 プロトコルを使用するように変更されました。
 
-#### :four: リクエスト:
+#### 4️⃣ リクエスト:
 
 ```console
 curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
@@ -578,7 +578,7 @@ HTTP 動詞にマップされます。
 ボディの `notification` セクションには、影響を受けるすべてのエンティティを含む POST リクエストが
 `http://tutorial:3000/subscription/price-change` エンドポイントに送信されることが記述されています。
 
-#### :four: リクエスト:
+#### 4️⃣ リクエスト:
 
 ```console
 curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
@@ -609,7 +609,7 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 サブスクリプションは、`/ngsi-ld/v1/subscriptions/<subscription-id>` エンドポイントに DELETE
 リクエストを行うことで削除できます。
 
-#### :five: リクエスト:
+#### 5️⃣ リクエスト:
 
 ```console
 curl -X DELETE \
@@ -626,7 +626,7 @@ curl -X DELETE \
 サブスクリプションは、`/ngsi-ld/v1/subscriptions/<subscription-id>` エンドポイントに PATCH
 リクエストを行うことで更新できます。
 
-#### :six: リクエスト:
+#### 6️⃣ リクエスト:
 
 ```console
 curl -iX PATCH \
@@ -654,7 +654,7 @@ curl -iX PATCH \
 各サブスクリプションの `notification` セクションには、サブスクリプションの条件が最後に満たされた時刻、
 および関連付けられた POSTアクションが成功したかどうかも含まれます。
 
-#### :seven: リクエスト:
+#### 7️⃣ リクエスト:
 
 ```console
 curl -X GET \
@@ -673,7 +673,7 @@ curl -X GET \
 サブスクリプションの詳細は、`/ngsi-ld/v1/subscriptions/<subscription-id>` エンドポイントに GET
 リクエストを行うことで読み取ることができます。
 
-#### :eight: リクエスト:
+#### 8️⃣ リクエスト:
 
 ```console
 curl -X GET \
