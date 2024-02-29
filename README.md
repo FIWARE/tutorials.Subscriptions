@@ -7,7 +7,7 @@
 <br/> [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
 This tutorial teaches FIWARE users about how to create and manage context data subscriptions. The tutorial builds on the
-entities and [Stock Management Frontend](https://github.com/FIWARE/tutorials.Step-by-Step/tree/master/context-provider)
+entities and [Stock Management Frontend](https://github.com/FIWARE/tutorials.NGSI-v2/tree/master/context-provider)
 application created in the previous [example](https://github.com/FIWARE/tutorials.Accessing-Context/) to enable users to
 understand the [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) Subscribe/Notify paradigm and how to
 use NGSI subscriptions within their own code.
