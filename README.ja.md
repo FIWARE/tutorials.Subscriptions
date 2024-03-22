@@ -1,4 +1,4 @@
-# Subscriptions[<img src="https://img.shields.io/badge/NGSI-LD-d6604d.svg" width="90"  align="left" />](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.07.01_60/gs_cim009v010701p.pdf)[<img src="https://fiware.github.io/tutorials.Subscriptions/img/fiware.png" align="left" width="162">](https://www.fiware.org/)<br/>
+# Subscriptions[<img src="https://img.shields.io/badge/NGSI-LD-d6604d.svg" width="90"  align="left" />](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.08.01_60/gs_cim009v010801p.pdf)[<img src="https://fiware.github.io/tutorials.Subscriptions/img/fiware.png" align="left" width="162">](https://www.fiware.org/)<br/>
 
 [![FIWARE Core Context Management](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/core.svg)](https://github.com/FIWARE/catalogue/blob/master/core/README.md)
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.Subscriptions.svg)](https://opensource.org/licenses/MIT)
@@ -9,7 +9,7 @@
 
 このチュートリアルでは、NGSI-LD ユーザに、コンテキスト・データ・サブスクリプションを作成および管理する方法について
 説明します。チュートリアルは、
-ユーザが [NGSI-LD](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.07.01_60/gs_cim009v010701p.pdf)
+ユーザが [NGSI-LD](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.08.01_60/gs_cim009v010801p.pdf)
 サブスクリプション/通知のパラダイムを理解し、独自のコード内で NGSI サブスクリプションを使用する方法を説明するため、
 以前の例で作成したエンティティと [スマート・ファーム](https://github.com/FIWARE/tutorials.Getting-Started/tree/NGSI-LD)
 ・アプリケーションに基づいて構築されています。
