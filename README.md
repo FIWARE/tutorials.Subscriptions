@@ -199,8 +199,7 @@ git checkout NGSI-LD
 This command will also import seed data from the previous Farm Management Information System example on startup, and
 provision a series of dummy devices on the farm.
 
-> [!NOTE]
->  If you want to clean up and start over again you can do so with the following command:
+> [!NOTE] If you want to clean up and start over again you can do so with the following command:
 >
 > ```console
 > ./services stop
