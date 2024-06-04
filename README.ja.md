@@ -32,7 +32,7 @@
 -   [アーキテクチャ](#architecture)
 -   [前提条件](#prerequisites)
     -   [Docker](#docker)
-    -   [Cygwin](#cygwin)
+    -   [WSL](#wsl)
 -   [起動](#start-up)
 -   [サブスクリプションの使用](#using-subscriptions)
     -   [単純なサブスクリプションの設定](#setting-up-a-simple-subscription)
@@ -191,9 +191,9 @@ Docker バージョン 20.10 以降と Docker Compose 1.29 以上を使用して
 
 <A name="prerequisites"></A>
 
-## Cygwin
+## WSL
 
-シンプルな bash スクリプトを使用してサービスを開始します。Windows ユーザは [cygwin](http://www.cygwin.com/)
+シンプルな bash スクリプトを使用してサービスを開始します。Windows ユーザは [を使用して Windows に Linux をインストールする方法](https://learn.microsoft.com/ja-jp/windows/wsl/install)
 をダウンロードして、Windows 上の Linux ディストリビューションと同様のコマンドライン機能を提供する必要があります。
 
 <A name="start-up"></A>
