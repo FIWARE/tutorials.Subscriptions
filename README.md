@@ -183,6 +183,7 @@ This command will also import seed data from the previous
 [Stock Management example](https://github.com/FIWARE/tutorials.Context-Providers) on startup.
 
 > [!NOTE]
+>
 > If you want to clean up and start over again you can do so with the following command:
 >
 > ```console
@@ -485,7 +486,7 @@ This example amends an existing subscription with the ID `5ae07c7e6e4f353c5163c9
 
 Subscriptions can be updated making a PATCH request to the `/v2/subscriptions/<subscription-id>` endpoint.
 
-#### 7️⃣  Request:
+#### 7️⃣ Request:
 
 ```console
 curl -iX PATCH \
@@ -508,7 +509,7 @@ This example lists all subscriptions by making a GET request to the `/v2/subscri
 The notification section of each subscription will also include the last time the conditions of the subscription were
 met, and whether associated the POST action was successful.
 
-#### 8️⃣  Request:
+#### 8️⃣ Request:
 
 ```console
 curl -X GET \
