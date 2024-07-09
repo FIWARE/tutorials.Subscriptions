@@ -27,7 +27,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"description\": \"Notify me of low feedstock on Farm:001\",\n  \"type\": \"Subscription\",\n  \"entities\": [{\"type\": \"FillingLevelSensor\"}],\n  \"watchedAttributes\": [\"filling\"],\n  \"q\": \"filling>0.6;filling<0.8;controlledAsset==urn:ngsi-ld:Building:farm001\",\n  \"notification\": {\n    \"attributes\": [\"filling\", \"controlledAsset\"],\n    \"format\": \"keyValues\",\n    \"endpoint\": {\n      \"uri\": \"http://tutorial:3000/subscription/low-stock-farm001\",\n      \"accept\": \"application/json\"\n    }\n  },\n   \"@context\": \"http://context/ngsi-context.jsonld\"\n}"
+							"raw": "{\n  \"description\": \"Notify me of low feedstock on Farm:001\",\n  \"type\": \"Subscription\",\n  \"entities\": [{\"type\": \"FillingLevelSensor\"}],\n  \"watchedAttributes\": [\"filling\"],\n  \"q\": \"filling>0.6;filling<0.8;controlledAsset==urn:ngsi-ld:Building:farm001\",\n  \"notification\": {\n    \"attributes\": [\"filling\", \"controlledAsset\"],\n    \"format\": \"keyValues\",\n    \"endpoint\": {\n      \"uri\": \"http://tutorial:3000/subscription/low-stock-farm001\",\n      \"accept\": \"application/json\"\n    }\n  },\n   \"@context\": \"http://context/user-context.jsonld\"\n}"
 						},
 						"url": {
 							"raw": "http://{{orion}}/ngsi-ld/v1/subscriptions/",
@@ -64,7 +64,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"description\": \"Notify me of low feedstock on Farm:001\",\n  \"type\": \"Subscription\",\n  \"entities\": [{\"type\": \"FillingLevelSensor\"}],\n  \"watchedAttributes\": [\"filling\"],\n  \"q\": \"filling>0.4;filling<0.6;controlledAsset==urn:ngsi-ld:Building:farm001\",\n  \"notification\": {\n    \"attributes\": [\"filling\", \"controlledAsset\"],\n    \"format\": \"normalized\",\n    \"endpoint\": {\n      \"uri\": \"http://tutorial:3000/subscription/low-stock-farm001-ngsild\",\n      \"accept\": \"application/json\"\n    }\n  },\n   \"@context\": \"http://context/ngsi-context.jsonld\"\n}"
+							"raw": "{\n  \"description\": \"Notify me of low feedstock on Farm:001\",\n  \"type\": \"Subscription\",\n  \"entities\": [{\"type\": \"FillingLevelSensor\"}],\n  \"watchedAttributes\": [\"filling\"],\n  \"q\": \"filling>0.4;filling<0.6;controlledAsset==urn:ngsi-ld:Building:farm001\",\n  \"notification\": {\n    \"attributes\": [\"filling\", \"controlledAsset\"],\n    \"format\": \"normalized\",\n    \"endpoint\": {\n      \"uri\": \"http://tutorial:3000/subscription/low-stock-farm001-ngsild\",\n      \"accept\": \"application/json\"\n    }\n  },\n   \"@context\": \"http://context/user-context.jsonld\"\n}"
 						},
 						"url": {
 							"raw": "http://{{orion}}/ngsi-ld/v1/subscriptions/",
@@ -101,7 +101,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"description\": \"Notify me of low feedstock on Farm:001\",\n  \"type\": \"Subscription\",\n  \"entities\": [{\"type\": \"FillingLevelSensor\"}],\n  \"watchedAttributes\": [\"filling\"],\n  \"q\": \"filling<0.4;controlledAsset==urn:ngsi-ld:Building:farm001\",\n  \"notification\": {\n    \"attributes\": [\"filling\", \"controlledAsset\"],\n    \"format\": \"x-ngsiv2-normalized\",\n    \"endpoint\": {\n      \"uri\": \"http://tutorial:3000/subscription/low-stock-farm001-ngsiv2\",\n      \"accept\": \"application/json\"\n    }\n  },\n   \"@context\": \"http://context/ngsi-context.jsonld\"\n}"
+							"raw": "{\n  \"description\": \"Notify me of low feedstock on Farm:001\",\n  \"type\": \"Subscription\",\n  \"entities\": [{\"type\": \"FillingLevelSensor\"}],\n  \"watchedAttributes\": [\"filling\"],\n  \"q\": \"filling<0.4;controlledAsset==urn:ngsi-ld:Building:farm001\",\n  \"notification\": {\n    \"attributes\": [\"filling\", \"controlledAsset\"],\n    \"format\": \"x-ngsiv2-normalized\",\n    \"endpoint\": {\n      \"uri\": \"http://tutorial:3000/subscription/low-stock-farm001-ngsiv2\",\n      \"accept\": \"application/json\"\n    }\n  },\n   \"@context\": \"http://context/user-context.jsonld\"\n}"
 						},
 						"url": {
 							"raw": "http://{{orion}}/ngsi-ld/v1/subscriptions/",
@@ -144,7 +144,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"description\": \"Notify me of all product price changes\",\n  \"type\": \"Subscription\",\n  \"entities\": [{\"type\": \"Product\"}],\n  \"watchedAttributes\": [\"price\"],\n  \"notification\": {\n    \"format\": \"keyValues\",\n    \"endpoint\": {\n      \"uri\": \"http://tutorial:3000/subscription/price-change\",\n      \"accept\": \"application/json\"\n    }\n  },\n   \"@context\": \"http://context/ngsi-context.jsonld\"\n}"
+							"raw": "{\n  \"description\": \"Notify me of all product price changes\",\n  \"type\": \"Subscription\",\n  \"entities\": [{\"type\": \"Product\"}],\n  \"watchedAttributes\": [\"price\"],\n  \"notification\": {\n    \"format\": \"keyValues\",\n    \"endpoint\": {\n      \"uri\": \"http://tutorial:3000/subscription/price-change\",\n      \"accept\": \"application/json\"\n    }\n  },\n   \"@context\": \"http://context/user-context.jsonld\"\n}"
 						},
 						"url": {
 							"raw": "http://{{orion}}/ngsi-ld/v1/subscriptions/",
@@ -339,6 +339,10 @@
 		{
 			"key": "ngsi-context.jsonld",
 			"value": "http://context/ngsi-context.jsonld"
+		},
+		{
+			"key": "user-context.jsonld",
+			"value": "http://context/user-context.jsonld"
 		}
 	]
 }
