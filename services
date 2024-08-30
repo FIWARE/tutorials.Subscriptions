@@ -169,30 +169,9 @@ stoppingContainers () {
 
 }
 
-addDatabaseIndex () {
-	echo -e "Create \033[1mMongoDB\033[0m database indexes ..."
-	docker exec  db-mongo mongo --eval '
-	conn = new Mongo();db.createCollection("orion");
-	db = conn.getDB("orion");
-	db.createCollection("entities");
-	db.entities.createIndex({"_id.servicePath": 1, "_id.id": 1, "_id.type": 1}, {unique: true});
-	db.entities.createIndex({"_id.type": 1}); 
-	db.entities.createIndex({"_id.id": 1});' > /dev/null
-	echo -e " \033[1;32mdone\033[0m"
-
-	docker exec  db-mongo mongo --eval '
-	conn = new Mongo();db.createCollection("orion-openiot");
-	db = conn.getDB("orion-openiot");
-	db.createCollection("entities");
-	db.entities.createIndex({"_id.servicePath": 1, "_id.id": 1, "_id.type": 1}, {unique: true});
-	db.entities.createIndex({"_id.type": 1}); 
-	db.entities.createIndex({"_id.id": 1});' > /dev/null
-	echo -e " \033[1;32mdone\033[0m"
-}
-
 addIoTDatabaseIndex () {
 	echo -e "Adding appropriate \033[1mMongoDB\033[0m indexes for \033[1;36mIoT-Agent\033[0m  ..."
-	docker exec  db-mongo mongo --eval '
+	docker exec db-mongo mongosh --eval '
 	conn = new Mongo();
 	db = conn.getDB("iotagentul");
 	db.getCollectionNames().forEach(c=>db[c].drop());
@@ -249,7 +228,6 @@ case "${command}" in
 		${dockerCmd} -f docker-compose/common.yml -f docker-compose/orion-ld.yml up -d --remove-orphans --renew-anon-volumes
 		displayServices "orion|fiware"
 		waitForMongo
-		addDatabaseIndex
 		waitForOrion
 		loadData orion:1026
 		echo -e "\033[1;34m${command}\033[0m is now running and exposed on localhost:${EXPOSED_PORT}"
@@ -268,7 +246,6 @@ case "${command}" in
 		${dockerCmd} -f docker-compose/common.yml -f docker-compose/scorpio.yml up -d --remove-orphans --renew-anon-volumes
 		displayServices "scorpio|fiware"
 		waitForMongo
-		addDatabaseIndex
 		waitForScorpio
 		loadData scorpio:9090
 		echo -e "\033[1;34m${command}\033[0m is now running and exposed on localhost:${EXPOSED_PORT}"
@@ -287,7 +264,6 @@ case "${command}" in
 		${dockerCmd} -f docker-compose/common.yml -f docker-compose/stellio.yml up -d --remove-orphans --renew-anon-volumes
 		displayServices "stellio|fiware"
 		waitForMongo
-		addDatabaseIndex
 		waitForStellio
 		loadData stellio:8080
 		echo -e "\033[1;34m${command}\033[0m is now running and exposed on localhost:${EXPOSED_PORT}"
