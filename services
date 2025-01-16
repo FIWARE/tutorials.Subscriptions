@@ -255,7 +255,7 @@ case "${command}" in
 		export $(cat .env | grep "#" -v)
 		stoppingContainers
 		waitForCoreContext
-		echo -e "Starting containers:   \033[1;34mStellio\033[0m, \033[1;36mIoT-Agent\033[0m, \033[1mTutorial\033[0m, a linked data \033[1mContext\033[0m and a \033[1mMongoDB\033[0m database."
+		echo -e "Starting containers:  \033[1;34mStellio\033[0m, \033[1;36mIoT-Agent\033[0m, \033[1mTutorial\033[0m, \033[1mKafka\033[0m, \033[1mPostgreSQL/TimescaleDB\033[0m, and a linked data \033[1mContext\033[0m."
 		echo -e "- \033[1;34mStellio\033[0m is the context broker" 
 		echo -e "- \033[1;36mIoT-Agent\033[0m is configured for the UltraLight Protocol"
 		echo -e "- \033[1mTutorial\033[0m displays a web app to manipulate the context directly"
