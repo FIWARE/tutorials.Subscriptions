@@ -16,7 +16,7 @@
 This tutorial teaches NGSI-LD users about how to create and manage context data subscriptions. The tutorial builds on
 the entities and [Smart Farm](https://github.com/FIWARE/tutorials.Getting-Started/tree/NGSI-LD) application created in
 the previous examples to enable users to understand the
-[NGSI-LD](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.08.01_60/gs_cim009v010801p.pdf) Subscribe/Notify
+[NGSI-LD](https://cim.etsi.org/NGSI-LD/official/0--1.html) Subscribe/Notify
 paradigm and how to use NGSI subscriptions within their own code.
 
 The tutorial refers to devices and actions made within the browser combined with [cUrl](https://ec.haxx.se/) commands.
