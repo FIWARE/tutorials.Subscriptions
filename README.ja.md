@@ -260,7 +260,8 @@ IoT デバイスをプロビジョニングします。
 #### 1️⃣ リクエスト:
 
 ```console
-curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
+curl -L -X POST \
+  'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 -H 'Content-Type: application/ld+json' \
 -H 'NGSILD-Tenant: openiot' \
 --data-raw '{
@@ -356,7 +357,8 @@ function broadcastEvents(req, item, types) {
 NGSI-LD 正規化フォーマット (normalized format) を使用してサブスクライバーに通知するように変更されました。
 
 ```console
-curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
+curl -L -X POST \
+  'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 -H 'Content-Type: application/ld+json' \
 -H 'NGSILD-Tenant: openiot' \
 --data-raw '{
@@ -419,7 +421,8 @@ Broker は、レガシー・システムに下位互換性のある **NGSI-v2** 
 正規化フォーマットを使用してサブスクライバーに通知するように変更されました。
 
 ```console
-curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
+curl -L -X POST \
+  'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 -H 'Content-Type: application/ld+json' \
 -H 'NGSILD-Tenant: openiot' \
 --data-raw '{
@@ -506,7 +509,8 @@ curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 #### 4️⃣ リクエスト:
 
 ```console
-curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
+curl -L -X POST \
+  'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 -H 'Content-Type: application/ld+json' \
 -H 'NGSILD-Tenant: openiot' \
 --data-raw '{
@@ -581,7 +585,8 @@ HTTP 動詞にマップされます。
 #### 4️⃣ リクエスト:
 
 ```console
-curl -L -X POST 'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
+curl -L -X POST \
+  'http://localhost:1026/ngsi-ld/v1/subscriptions/' \
 -H 'Content-Type: application/ld+json' \
 --data-raw '{
   "description": "Notify me of all product price changes",
