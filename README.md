@@ -15,9 +15,8 @@
 
 This tutorial teaches NGSI-LD users about how to create and manage context data subscriptions. The tutorial builds on
 the entities and [Smart Farm](https://github.com/FIWARE/tutorials.Getting-Started/tree/NGSI-LD) application created in
-the previous examples to enable users to understand the
-[NGSI-LD](https://cim.etsi.org/NGSI-LD/official/front-page.html) Subscribe/Notify
-paradigm and how to use NGSI subscriptions within their own code.
+the previous examples to enable users to understand the [NGSI-LD](https://cim.etsi.org/NGSI-LD/official/front-page.html)
+Subscribe/Notify paradigm and how to use NGSI subscriptions within their own code.
 
 The tutorial refers to devices and actions made within the browser combined with [cUrl](https://ec.haxx.se/) commands.
 The cUrl commands are also available as
@@ -651,7 +650,7 @@ the other [tutorials in this series](https://fiware-tutorials.rtfd.io)
 
 ## License
 
-[MIT](LICENSE) © 2020-2025 FIWARE Foundation e.V.
+[MIT](LICENSE) © 2020-2026 FIWARE Foundation e.V.
 
 ---
 
