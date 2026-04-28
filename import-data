@@ -192,5 +192,63 @@ curl -s -o /dev/null -X POST 'http://'"${CONTEXT_BROKER}"'/ngsi-ld/v1/entityOper
     }
   }
 ]'
+#
+#  Add ids for actuators
+#
+curl -s -o /dev/null -X POST 'http://'"${CONTEXT_BROKER}"'/ngsi-ld/v1/entityOperations/upsert' \
+    -H 'Content-Type: application/json' \
+    -H 'Link: <'"${TUTORIAL_DATA_MODELS_CONTEXT}"'>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+    -H 'NGSILD-Tenant: openiot' \
+    -H 'Accept: application/ld+json' \
+    --data-raw '[
+  {
+    "id": "urn:ngsi-ld:Device:tractor001",
+    "type": "Tractor"
+  },
+  {
+    "id": "urn:ngsi-ld:Device:tractor002",
+    "type": "Tractor"
+  },
+  {
+    "id": "urn:ngsi-ld:Device:tractor003",
+    "type": "Tractor"
+  },
+  {
+    "id": "urn:ngsi-ld:Device:tractor004",
+    "type": "Tractor"
+  },
+  {
+    "id": "urn:ngsi-ld:Device:water001",
+    "type": "Water"
+  },
+  {
+    "id": "urn:ngsi-ld:Device:water002",
+    "type": "Water"
+  },
+  {
+    "id": "urn:ngsi-ld:Device:water003",
+    "type": "Water"
+  },
+  {
+    "id": "urn:ngsi-ld:Device:water004",
+    "type": "Water"
+  },
+  {
+    "id": "urn:ngsi-ld:Device:filling001",
+    "type": "FillingLevelSensor"
+  },
+  {
+    "id": "urn:ngsi-ld:Device:filling002",
+    "type": "FillingLevelSensor"
+  },
+  {
+    "id": "urn:ngsi-ld:Device:filling003",
+    "type": "FillingLevelSensor"
+  },
+  {
+    "id": "urn:ngsi-ld:Device:filling004",
+    "type": "FillingLevelSensor"
+  }
+]'
 
 echo -e " \033[1;32mdone\033[0m"

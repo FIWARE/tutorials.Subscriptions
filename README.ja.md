@@ -107,7 +107,7 @@ IoT センサ・データに基づくスマート・ソリューションの場�
 このチュートリアルの目的のために、一連のダミーの農業用 IoT デバイスが作成され、Context Broker に接続されます。
 使用されているアーキテクチャとプロトコルの詳細は、
 [IoT センサ・チュートリアル](https://github.com/FIWARE/tutorials.IoT-Sensors/tree/NGSI-LD) にあります。
-各デバイスの状態は、UltraLight デバイス・モニタの Web ページにあります:
+各デバイスの状態は、JSON デバイス・モニタの Web ページにあります:
 `http://localhost:3000/device/monitor`
 
 ![FIWARE Monitor](https://fiware.github.io/tutorials.Subscriptions/img/farm-devices.png)
@@ -118,7 +118,7 @@ IoT センサ・データに基づくスマート・ソリューションの場�
 
 このアプリケーションは、
 [Orion-LD Context Broker](https://fiware-orion.readthedocs.io/en/latest/),
-[IoT Agent for UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/),
+[IoT Agent for JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/),
 というの2つの FIWARE コンポーネントのみを使用します。アプリケーションを _"Powered by FIWARE"_ と認定するには、
 NGSI-LD Context Broker を使用するだけで十分です。
 
@@ -132,18 +132,18 @@ NGSI-LD Context Broker を使用するだけで十分です。
     [NGSI-LD](https://forge.etsi.org/swagger/ui/?url=https://forge.etsi.org/rep/NGSI-LD/NGSI-LD/raw/master/spec/updated/generated/full_api.json)
     を使用してリクエストを受信します
 -   FIWARE
-    [IoT Agent for UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+    [IoT Agent for JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
     は、
     [NGSI-LD](https://forge.etsi.org/swagger/ui/?url=https://forge.etsi.org/rep/NGSI-LD/NGSI-LD/raw/master/spec/updated/generated/full_api.json)
     を使用してノースバウンド・リクエストを受信し、それらを
-    [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+    [JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
     に変換します
 -   [MongoDB](https://www.mongodb.com/) データベース :
     -   **Orion Context Broker** が、データ・エンティティ、サブスクリプション、レジストレーションなどのコンテキスト・
         データ情報を保持するために使用します
     -   デバイスの URLs や Keys などのデバイス情報を保持するために **IoT Agent** によって使用されます
 -   **チュートリアル・アプリケーション** は次のことを行います:
-    -   HTTP上で実行される [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+    -   HTTP上で実行される [JSON](https://fiware-iotagent-json.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
         プロトコルを使用して、ダミーの[農業用 IoT デバイス](https://github.com/FIWARE/tutorials.IoT-Sensors/tree/NGSI-LD)
         のセットとして機能します
 
