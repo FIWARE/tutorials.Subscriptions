@@ -8,17 +8,23 @@
 
 set -e
 
-BROKER="http://localhost:1026"
-CONTEXT="http://localhost:3004/user-context.jsonld"
+export $(cat .env | grep "#" -v)
+
+BROKER="http://orion:1026"
+CONTEXT="http://context/user-context.jsonld"
 TENANT="openiot"
 DEVICES=("water001" "water002" "water003" "water004")
 
 failures=0
 
+run_curl () {
+    docker run --rm --network fiware_default quay.io/curl/curl:"${CURL_VERSION}" "$@"
+}
+
 send_on_command () {
     local device="$1"
     local status
-    status=$(curl -s -o /dev/null -w "%{http_code}" \
+    status=$(run_curl -s -o /dev/null -w "%{http_code}" \
         -L -X PATCH \
         "${BROKER}/ngsi-ld/v1/entities/urn:ngsi-ld:Device:${device}/attrs/on" \
         -H "NGSILD-Tenant: ${TENANT}" \
@@ -35,7 +41,7 @@ send_on_command () {
 check_on_status () {
     local device="$1"
     local response
-    response=$(curl -s \
+    response=$(run_curl -s \
         "${BROKER}/ngsi-ld/v1/entities/urn:ngsi-ld:Device:${device}" \
         -H "NGSILD-Tenant: ${TENANT}" \
         -H "Link: <${CONTEXT}>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\"" \
