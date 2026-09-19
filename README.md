@@ -249,7 +249,7 @@ curl -L -X POST \
   "type": "Subscription",
   "entities": [{"type": "FillingLevelSensor"}],
   "watchedAttributes": ["filling"],
-  "q": "filling>0.6;filling<0.8;controlledAsset==%22urn:ngsi-ld:Building:farm001%22",
+  "q": "filling>0.6;filling<0.8;controlledAsset==\"urn:ngsi-ld:Building:farm001\"",
   "notification": {
     "attributes": ["filling", "controlledAsset"],
     "format": "keyValues",
@@ -344,7 +344,7 @@ curl -L -X POST \
   "type": "Subscription",
   "entities": [{"type": "FillingLevelSensor"}],
   "watchedAttributes": ["filling"],
-  "q": "filling>0.4;filling<0.6;controlledAsset==%22urn:ngsi-ld:Building:farm001%22",
+  "q": "filling>0.4;filling<0.6;controlledAsset==\"urn:ngsi-ld:Building:farm001\"",
   "notification": {
     "attributes": ["filling", "controlledAsset"],
     "format": "normalized",
@@ -408,7 +408,7 @@ curl -L -X POST \
   "type": "Subscription",
   "entities": [{"type": "FillingLevelSensor"}],
   "watchedAttributes": ["filling"],
-  "q": "filling<0.4;controlledAsset==%22urn:ngsi-ld:Building:farm001%22",
+  "q": "filling<0.4;controlledAsset==\"urn:ngsi-ld:Building:farm001\"",
   "notification": {
     "attributes": ["filling", "controlledAsset"],
     "format": "x-ngsiv2-normalized",
@@ -459,8 +459,8 @@ When a `low-stock-farm001-ngsiv2` event is fired, the response is a normalzed NG
 As can be seen, by default the attributes are returned using URN long names. It is also possible to request that the
 Orion-LD context broker pre-applies a compaction operation to the payload.
 
--   `x-nsgiv2-keyValues` - Key-value pairs with URN attribute names
--   `x-nsgiv2-keyValues-compacted` - Key-value pairs with short name attribute aliases
+-   `x-ngsiv2-keyValues` - Key-value pairs with URN attribute names
+-   `x-ngsiv2-keyValues-compacted` - Key-value pairs with short name attribute aliases
 -   `x-ngsiv2-normalized` - NGSI-v2 normalized payload with URN attribute names
 -   `x-ngsiv2-normalized-compacted`- NGSI-v2 normalized payload pairs with short name attribute aliases
 
@@ -491,7 +491,7 @@ curl -L -X POST \
   "type": "Subscription",
   "entities": [{"type": "FillingLevelSensor"}],
   "watchedAttributes": ["filling"],
-  "q": "filling>0.2;filling<0.4;controlledAsset==%22urn:ngsi-ld:Building:farm001%22",
+  "q": "filling>0.2;filling<0.4;controlledAsset==\"urn:ngsi-ld:Building:farm001\"",
   "notification": {
     "attributes": ["filling", "controlledAsset"],
     "format": "keyValues",
