@@ -269,7 +269,7 @@ curl -L -X POST \
   "type": "Subscription",
   "entities": [{"type": "FillingLevelSensor"}],
   "watchedAttributes": ["filling"],
-  "q": "filling>0.6;filling<0.8;controlledAsset==%22urn:ngsi-ld:Building:farm001%22",
+  "q": "filling>0.6;filling<0.8;controlledAsset==\"urn:ngsi-ld:Building:farm001\"",
   "notification": {
     "attributes": ["filling", "controlledAsset"],
     "format": "keyValues",
@@ -366,7 +366,7 @@ curl -L -X POST \
   "type": "Subscription",
   "entities": [{"type": "FillingLevelSensor"}],
   "watchedAttributes": ["filling"],
-  "q": "filling>0.4;filling<0.6;controlledAsset==%22urn:ngsi-ld:Building:farm001%22",
+  "q": "filling>0.4;filling<0.6;controlledAsset==\"urn:ngsi-ld:Building:farm001\"",
   "notification": {
     "attributes": ["filling", "controlledAsset"],
     "format": "normalized",
@@ -430,7 +430,7 @@ curl -L -X POST \
   "type": "Subscription",
   "entities": [{"type": "FillingLevelSensor"}],
   "watchedAttributes": ["filling"],
-  "q": "filling<0.4;controlledAsset==%22urn:ngsi-ld:Building:farm001%22",
+  "q": "filling<0.4;controlledAsset==\"urn:ngsi-ld:Building:farm001\"",
   "notification": {
     "attributes": ["filling", "controlledAsset"],
     "format": "x-ngsiv2-normalized",
@@ -482,8 +482,8 @@ curl -L -X POST \
 ご覧のとおり、デフォルトでは、属性は URN の長い名前を使用して返されます。Orion-LD Context Broker が
 ペイロードに圧縮操作を事前に適用するようにリクエストすることもできます。
 
--   `x-nsgiv2-keyValues` - URN 属性名を持つキーと値のペア
--   `x-nsgiv2-keyValues-compacted` - 短い名前の属性エイリアスを持つキーと値のペア
+-   `x-ngsiv2-keyValues` - URN 属性名を持つキーと値のペア
+-   `x-ngsiv2-keyValues-compacted` - 短い名前の属性エイリアスを持つキーと値のペア
 -   `x-ngsiv2-normalized` - URN 属性名を持つ NGSI-v2 正規化ペイロード
 -   `x-ngsiv2-normalized-compacted`- 短い名前の属性エイリアスを持つ NGSI-v 2正規化ペイロードのペア
 
@@ -518,7 +518,7 @@ curl -L -X POST \
   "type": "Subscription",
   "entities": [{"type": "FillingLevelSensor"}],
   "watchedAttributes": ["filling"],
-  "q": "filling>0.2;filling<0.4;controlledAsset==%22urn:ngsi-ld:Building:farm001%22",
+  "q": "filling>0.2;filling<0.4;controlledAsset==\"urn:ngsi-ld:Building:farm001\"",
   "notification": {
     "attributes": ["filling", "controlledAsset"],
     "format": "keyValues",
