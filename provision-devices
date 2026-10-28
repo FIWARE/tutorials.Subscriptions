@@ -14,7 +14,7 @@ printf "⏳ Provisioning IoT devices "
 # Create a service groups for all JSON IoT devices
 #
 
-curl -s  -X POST \
+curl -sS  -X POST \
   'http://iot-agent:4041/iot/services' \
   -H 'Content-Type: application/json' \
   -H 'fiware-service: openiot' \
@@ -184,7 +184,7 @@ curl -s  -X POST \
 # Provision actuators for Farm 001
 #
 
-curl -s -o /dev/null -X POST \
+curl -sS -o /dev/null -X POST \
   'http://iot-agent:4041/iot/devices' \
   -H 'Content-Type: application/json' \
   -H 'fiware-service: openiot' \
@@ -239,7 +239,7 @@ curl -s -o /dev/null -X POST \
 # Provision actuators for Farm 002
 #
 
-curl -s -o /dev/null -X POST \
+curl -sS -o /dev/null -X POST \
   'http://iot-agent:4041/iot/devices' \
   -H 'Content-Type: application/json' \
   -H 'fiware-service: openiot' \
@@ -294,7 +294,7 @@ curl -s -o /dev/null -X POST \
 # Provision actuators for Farm 003
 #
 
-curl -s -o /dev/null -X POST \
+curl -sS -o /dev/null -X POST \
   'http://iot-agent:4041/iot/devices' \
   -H 'Content-Type: application/json' \
   -H 'fiware-service: openiot' \
@@ -350,7 +350,7 @@ curl -s -o /dev/null -X POST \
 # Provision actuators for Farm 004
 #
 
-curl -s -o /dev/null -X POST \
+curl -sS -o /dev/null -X POST \
   'http://iot-agent:4041/iot/devices' \
   -H 'Content-Type: application/json' \
   -H 'fiware-service: openiot' \
